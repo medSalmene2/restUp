@@ -10,6 +10,7 @@ import Loisir from "./screens/Loisir";
 const Stack = createStackNavigator();
 
 export default function App() {
+  const image = require("./assets/image.png");
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
