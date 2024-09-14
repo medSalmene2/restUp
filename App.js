@@ -1,29 +1,51 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Service from "./components/Service";
-import Contact from "./components/Contact";
+import { StyleSheet } from "react-native";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/Home';
+import MedicalAssistance from './screens/Paramedical';
+import DailyNeeds from "./screens/DailyNeeds";
+import Loisir from "./screens/Loisir";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const image = require("./assets/image.png");
   return (
-    <View style={styles.container}>
-      <Contact image={image} stars={5} name={"salmene ghar"} job={"employee"} />
-      <Service
-        bgColor={"red"}
-        textColor={"blue"}
-        image={image}
-        text={"hello"}
-      />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Home" 
+          component={HomeScreen} 
+          options={{ title: 'Home Screen' }}
+        />
+        <Stack.Screen 
+          name="MedicalAssistance" 
+          component={MedicalAssistance} 
+          options={{ title: 'Medical Assistance' }} 
+        />
+          <Stack.Screen 
+          name="DailyNeeds" 
+          component={DailyNeeds} 
+          options={{ title: 'Daily Needs' }} 
+        />
+          <Stack.Screen 
+          name="Loisir" 
+          component={Loisir} 
+          options={{ title: 'Entertainment' }} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#EAF2F8",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "#EAF2F8",
     justifyContent: "center",
   },
 });
