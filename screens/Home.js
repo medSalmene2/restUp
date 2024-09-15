@@ -113,6 +113,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("List", {
               serviceTitle: "مساعدة شبه طبية",
               subServices: paramedical,
+              image: require("../assets/paraMedical.jpg"),
             })
           }
           style={[styles.button, { backgroundColor: "#48C9B0" }]}>
@@ -123,6 +124,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("List", {
               serviceTitle: "حاجيات يومية",
               subServices: dailyNeeds,
+              image: require("../assets/dailyNeeds.png"),
             })
           }
           style={[styles.button, { backgroundColor: "#8E44AD" }]}>
@@ -133,6 +135,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("List", {
               serviceTitle: "ترفيه",
               subServices: entertainment,
+              image: require("../assets/entertainment.jpg"),
             })
           }
           style={[styles.button, { backgroundColor: "#E91E63" }]}>
@@ -144,6 +147,7 @@ export default function HomeScreen({ navigation }) {
             navigation.navigate("List", {
               serviceTitle: "تنقل",
               subServices: transport,
+              image: require("../assets/transport.jpg"),
             })
           }>
           <Text style={styles.buttonText}>تنقل</Text>

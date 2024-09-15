@@ -1,21 +1,21 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Contact from "../components/Contact";
 
 const FinalSubService = ({ route }) => {
-  const image = require("../assets/image.png");
-  const { subServiceTitle, description } = route.params;
+  const contactImage = require("../assets/image.png");
+  const { description, image } = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>{subServiceTitle}</Text>
+      <Image source={image} style={{ width: "95%", height: "15%" , alignSelf:"center" }} />
       <View style={{ margin: 10 }}>
         <Text style={{ textAlign: "center" }}>{description}</Text>
       </View>
       <ScrollView>
-        <Contact name={"صالحة"} job={"منضفة"} image={image} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={image} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={image} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={image} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
       </ScrollView>
     </View>
   );

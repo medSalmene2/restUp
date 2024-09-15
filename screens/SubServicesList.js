@@ -4,18 +4,22 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from "react-native";
 import React from "react";
 import Service from "../components/Service";
 import { useNavigation } from "@react-navigation/native";
 
 const SubServicesList = ({ route }) => {
-  const { serviceTitle, subServices } = route.params;
+  const { subServices, image } = route.params;
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
+      <Image
+        source={image}
+        style={{ width: "95%", height: "15%", alignSelf: "center" , marginBottom:20 }}
+      />
       <ScrollView>
-        <Text style={styles.heading}>{serviceTitle}</Text>
         {subServices.map((subService, index) => (
           <TouchableOpacity
             style={styles.optionButton}
@@ -24,6 +28,7 @@ const SubServicesList = ({ route }) => {
               navigation.navigate("FinalSubService", {
                 subServiceTitle: subService.serviceTitle,
                 description: subService.description,
+                image,
               });
             }}>
             <Service
