@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/Home';
-import MedicalAssistance from './screens/Paramedical';
-import DailyNeeds from "./screens/DailyNeeds";
-import Loisir from "./screens/Loisir";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./screens/Home";
+import FinalSubService from "./screens/FinalSubService";
+import SubServicesList from "./screens/SubServicesList";
 
 const Stack = createStackNavigator();
 
@@ -13,26 +12,25 @@ export default function App() {
   const image = require("./assets/image.png");
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} 
-          options={{ title: 'Home Screen' }}
+      <Stack.Navigator initialRouteName='Home'>
+        <Stack.Screen
+          name='FinalSubService'
+          component={FinalSubService}
+          options={({ route }) => ({
+            title: route.params?.subServiceTitle || "الخدمة", // Set dynamic title
+          })}
         />
-        <Stack.Screen 
-          name="MedicalAssistance" 
-          component={MedicalAssistance} 
-          options={{ title: 'Medical Assistance' }} 
+        <Stack.Screen
+          name='Home'
+          component={HomeScreen}
+          options={{ title: "Home Screen" }}
         />
-          <Stack.Screen 
-          name="DailyNeeds" 
-          component={DailyNeeds} 
-          options={{ title: 'Daily Needs' }} 
-        />
-          <Stack.Screen 
-          name="Loisir" 
-          component={Loisir} 
-          options={{ title: 'Entertainment' }} 
+        <Stack.Screen
+          name='List'
+          component={SubServicesList}
+          options={({ route }) => ({
+            title: route.params?.serviceTitle || "قائمة الخدمات", // Set dynamic title
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
