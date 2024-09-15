@@ -55,10 +55,10 @@ export default SubServicesList;
 
 const styles = StyleSheet.create({
   optionButton: {
-    backgroundColor: "#64b5f6",
+    // backgroundColor: "#64b5f6",
     borderRadius: 10,
     padding: 12,
-    marginBottom: 12,
+    marginBottom: 5,
     alignItems: "center",
   },
   container: {
