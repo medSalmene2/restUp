@@ -7,7 +7,7 @@ export default function Loisir() {
      
       <ScrollView>
        
-        <Text style={styles.heading}>ترفيه</Text>
+        <Text style={styles.heading}>تنقل</Text>
 
 
         <TouchableOpacity style={styles.optionButton}>

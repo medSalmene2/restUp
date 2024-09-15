@@ -16,7 +16,7 @@ export default function Service({ image, bgColor, text, textColor }) {
 
 const styles = StyleSheet.create({
   container: bgColor => ({
-    width: "85%",
+    width: "100%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

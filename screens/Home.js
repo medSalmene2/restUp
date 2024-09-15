@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Service from '../components/Service';
+
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -36,6 +38,11 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity style={[styles.button, {backgroundColor: '#FF5722'}]}>
           <Text style={styles.buttonText}>تنقل</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.button, ]}>
+        <Service image={require('../assets/logo.png')} bgColor={"#FF5722"}/>
+        </TouchableOpacity>
+        
 
       </View>
 
