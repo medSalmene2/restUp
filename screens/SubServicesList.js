@@ -10,7 +10,6 @@ import Service from "../components/Service";
 
 const SubServicesList = ({ route }) => {
   const { serviceTitle, subServices } = route.params;
-  console.log(route.params);
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -21,6 +20,7 @@ const SubServicesList = ({ route }) => {
               bgColor={service.color}
               text={service.serviceTitle}
               textColor={"black"}
+              image={require("../assets/image.png")}
             />
           </TouchableOpacity>
         ))}
