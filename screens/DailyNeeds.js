@@ -1,29 +1,44 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import Service from "../components/Service";
 
 export default function DailyNeeds() {
+
+
+  const bgColors = ["red"]; // to populate the colors here
   return (
     <View style={styles.container}>
-     
       <ScrollView>
-       
         <Text style={styles.heading}>حاجيات يومية</Text>
+        {staticServices.map((service, index) => (
+          <TouchableOpacity style={styles.optionButton} key={index}>
+            <Service
+              bgColor={bgColors[index]}
+              text={service}
+              textColor={"black"}
+            />
+          </TouchableOpacity>
+        ))}
 
-
-        <TouchableOpacity style={styles.optionButton}>
+        {/* <TouchableOpacity style={styles.optionButton}>
           <Text style={styles.optionText}>خدمات التسوق والتوصيل</Text>
-        </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
           <Text style={styles.optionText}> إعداد وتوصيل الوجبات </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.optionText}>  المساعدة في النظافة الشخصية </Text>
+          <Text style={styles.optionText}> المساعدة في النظافة الشخصية </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.optionText}>  خدمات التنظيف المنزلي </Text>
+          <Text style={styles.optionText}> خدمات التنظيف المنزلي </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
@@ -31,7 +46,7 @@ export default function DailyNeeds() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
-          <Text style={styles.optionText}>  إدارة الأدوية</Text>
+          <Text style={styles.optionText}> إدارة الأدوية</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.optionButton}>
@@ -48,8 +63,7 @@ export default function DailyNeeds() {
 
         <TouchableOpacity style={styles.optionButton}>
           <Text style={styles.optionText}> خدمات إصلاحات وصيانة المنزل </Text>
-        </TouchableOpacity>
-
+        </TouchableOpacity> */}
 
         <View style={styles.requestContainer}>
           <Text style={styles.requestText}>يمكنك الطلب</Text>
@@ -65,25 +79,25 @@ export default function DailyNeeds() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e0f7fa', 
+    backgroundColor: "#e0f7fa",
     padding: 16,
   },
   heading: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: '#0288d1',
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "#0288d1",
+    textAlign: "center",
     marginBottom: 16,
   },
   profileCard: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
+    flexDirection: "row",
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 12,
     marginBottom: 16,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 2, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
+    shadowColor: "#000", // Shadow for iOS
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -99,57 +113,57 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   role: {
     fontSize: 16,
-    color: '#757575',
+    color: "#757575",
   },
   ratingLabel: {
     fontSize: 14,
-    color: '#757575',
+    color: "#757575",
   },
   rating: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   ratingText: {
     fontSize: 18,
-    color: '#FFD700', // Gold color for stars
+    color: "#FFD700", // Gold color for stars
   },
   optionButton: {
-    backgroundColor: '#64b5f6', 
+    backgroundColor: "#64b5f6",
     borderRadius: 10,
     padding: 12,
     marginBottom: 12,
-    alignItems: 'center',
+    alignItems: "center",
   },
   optionText: {
     fontSize: 18,
-    color: '#fff',
+    color: "#fff",
   },
   requestContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 16,
   },
   requestText: {
     fontSize: 18,
-    color: '#0288d1',
+    color: "#0288d1",
   },
   micButton: {
-    backgroundColor: '#ff5252', 
+    backgroundColor: "#ff5252",
     borderRadius: 50,
     width: 50,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 16,
   },
   micText: {
     fontSize: 24,
-    color: '#fff',
+    color: "#fff",
   },
 });
