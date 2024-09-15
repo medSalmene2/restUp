@@ -3,7 +3,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/Home";
-import FinalService from "./screens/FinalService";
+import FinalSubService from "./screens/FinalSubService";
 import SubServicesList from "./screens/SubServicesList";
 
 const Stack = createStackNavigator();
@@ -14,9 +14,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen
-          name='FinalService'
-          component={FinalService}
-          options={{ title: "FinalService" }}
+          name='FinalSubService'
+          component={FinalSubService}
+          options={({ route }) => ({
+            title: route.params?.subServiceTitle || "الخدمة", // Set dynamic title
+          })}
         />
         <Stack.Screen
           name='Home'
@@ -26,7 +28,9 @@ export default function App() {
         <Stack.Screen
           name='List'
           component={SubServicesList}
-          options={{ title: "Services List" }}
+          options={({ route }) => ({
+            title: route.params?.serviceTitle || "قائمة الخدمات", // Set dynamic title
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

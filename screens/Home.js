@@ -1,18 +1,16 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeScreen({ navigation }) {
   // u can change background color of service with color attribute in below arrays
   const dailyNeeds = [
-    { serviceTitle: "خدمات التسوق والتوصيل", description: "", color: "black" },
+    {
+      serviceTitle: "خدمات التسوق والتوصيل",
+      description:
+        "تنظيم وسائل نقل جماعية لزيارة الأماكن السياحية أو المشاركة في الأنشطة الترفيهية.",
+      color: "black",
+    },
     { serviceTitle: "إعداد وتوصيل الوجبات", description: "", color: "" },
     { serviceTitle: "المساعدة في النظافة الشخصية", description: "", color: "" },
     { serviceTitle: "خدمات التنظيف المنزلي", description: "", color: "" },
