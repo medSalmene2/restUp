@@ -1,8 +1,22 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Linking } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { IconButton } from "react-native-paper";
 
 const Contact = ({ image, name, job, stars }) => {
+  const makeCall = async () => {
+    const phoneNumber = "tel:92066519";
+    try {
+      const supported = await Linking.canOpenURL(phoneNumber);
+      if (supported) {
+        await Linking.openURL(phoneNumber);
+      } else {
+        Alert.alert("This device doesn't support making calls");
+      }
+    } catch (err) {
+      console.error("Error making call: ", err);
+    }
+  };
   return (
     <View style={styles.card}>
       <Image source={image} style={styles.image} />
@@ -17,6 +31,12 @@ const Contact = ({ image, name, job, stars }) => {
             ))}
         </View>
       </View>
+      <IconButton
+        icon='phone'
+        size={22}
+        onPress={makeCall}
+        style={{ alignSelf: "flex-start" }}
+      />
     </View>
   );
 };
@@ -36,7 +56,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   infoContainer: {
-    marginRight: 15,
+    marginHorizontal: 15,
     flex: 1,
   },
   name: {
