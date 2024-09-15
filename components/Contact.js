@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginHorizontal: 15,
     flex: 1,
+    // backgroundColor: "red",
+    alignItems: "flex-end",
   },
   name: {
     fontSize: 18,
