@@ -28,14 +28,14 @@ const SubServicesList = ({ route }) => {
               navigation.navigate("FinalSubService", {
                 subServiceTitle: subService.serviceTitle,
                 description: subService.description,
-                image,
+                image ,
               });
             }}>
             <Service
               bgColor={subService.color}
               text={subService.serviceTitle}
               textColor={"black"}
-              image={require("../assets/image.png")}
+              image={subService.image}
             />
           </TouchableOpacity>
         ))}
