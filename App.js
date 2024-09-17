@@ -5,6 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/Home";
 import FinalSubService from "./screens/FinalSubService";
 import SubServicesList from "./screens/SubServicesList";
+import Login from "./screens/Login";
+import Signup from "./screens/SignUp";
 
 const Stack = createStackNavigator();
 
@@ -12,7 +14,23 @@ export default function App() {
   const image = require("./assets/image.png");
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Navigator initialRouteName='Login'>
+      <Stack.Screen
+          name='Login'
+          component={Login}
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
+
+        <Stack.Screen
+          name='Signup'
+          component={Signup}
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
+        
         <Stack.Screen
           name='FinalSubService'
           component={FinalSubService}

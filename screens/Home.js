@@ -239,7 +239,7 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <View style={styles.logoSection}>
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
+        <Image source={require("../assets/Logo.png")} style={styles.logo} />
       </View>
 
       <View>
@@ -327,8 +327,8 @@ const styles = StyleSheet.create({
     marginBottom: 70,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 250,
+    height: 250,
   },
   button: {
     padding: 15,
