@@ -233,30 +233,35 @@ export default function HomeScreen({ navigation }) {
       description:
         "توفير وسائل نقل للمشاركة في الأنشطة الاجتماعية، مثل الأندية والرحلات.",
       color: "#D84315", // Deep red-orange
+      image: require("../assets/34.jpg")
     },
     {
       serviceTitle: "نقل الأشخاص ذوي الإعاقة ",
       description:
         "سيارات مجهزة بمقاعد مخصصة ووسائل لدعم الأشخاص الذين يعانون من مشاكل الحركة.",
       color: "#BF360C", // Very dark reddish-orange
+      image: require("../assets/35.jpeg")
     },
     {
       serviceTitle: "النقل بالطلب ",
       description:
         "خدمات حجز مسبق للنقل المخصص للأشخاص المسنين بناءً على احتياجاتهم الفردية.",
       color: "#FF8A65", // Lighter shade
+      image: require("../assets/36.jpg")
     },
     {
       serviceTitle: "خدمات التوصيل اليومية ",
       description:
         "توصيل البقالة والأدوية والاحتياجات اليومية إلى منازل كبار السن.",
       color: "#FF7043", // Light orange-red
+      image: require("../assets/37.jpg")
     },
     {
       serviceTitle: "الرحلات الجماعية للترفيه ",
       description:
         "تنظيم وسائل نقل جماعية لزيارة الأماكن السياحية أو المشاركة في الأنشطة الترفيهية.",
       color: "#FFAB91", // Soft light orange
+      image: require("../assets/38.jpg")
     },
   ];
   

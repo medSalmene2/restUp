@@ -17,7 +17,7 @@ const SubServicesList = ({ route }) => {
     <View style={styles.container}>
       <Image
         source={image}
-        style={{ width: "95%", height: "15%", alignSelf: "center" , marginBottom:20 }}
+        style={{ width: "95%", height: "25%", alignSelf: "center" , marginBottom:20 }}
       />
       <ScrollView>
         {subServices.map((subService, index) => (
@@ -28,7 +28,7 @@ const SubServicesList = ({ route }) => {
               navigation.navigate("FinalSubService", {
                 subServiceTitle: subService.serviceTitle,
                 description: subService.description,
-                image ,
+                image: subService.image ,
               });
             }}>
             <Service
