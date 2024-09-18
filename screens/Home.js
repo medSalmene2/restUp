@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-
+import * as Speech from "expo-speech";
 export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
   const dailyNeeds = [
@@ -17,6 +17,20 @@ export default function HomeScreen({ navigation }) {
         "تقديم وجبات يومية متوازنة ومخصصة للاحتياجات الغذائية لكبار السن.",
       color: "#7E3DA1", // Slightly darker shade
       image: require("../assets/2.jpg"),
+      promotion: [
+        {
+          image: require("../assets/man2.png"),
+          name: "محمود",
+          job: "طباخ",
+          stars: 5,
+        },
+        {
+          image: require("../assets/man.png"),
+          name: "علي",
+          job: "طباخ",
+          stars: 5,
+        },
+      ],
     },
     {
       serviceTitle: "المساعدة في النظافة الشخصية",
@@ -75,7 +89,14 @@ export default function HomeScreen({ navigation }) {
       description: "تقديم خدمات التمريض في المنزل.",
       color: "#48C9B0",
       image: require("../assets/11.jpeg"),
-      promotion: [{ image: require("../assets/image.png"), name: "محمود", job: "منضف", stars: 5 }],
+      promotion: [
+        {
+          image: require("../assets/doctor.png"),
+          name: "محمود",
+          job: "ممرض",
+          stars: 5,
+        },
+      ],
     },
     {
       serviceTitle: "العلاج الطبيعي",
@@ -94,7 +115,14 @@ export default function HomeScreen({ navigation }) {
       description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
       color: "#3DAF93",
       image: require("../assets/14.jpg"),
-      promotion: [{ image: require("../assets/image.png"), name: "احمد", job: "ممرض", stars: 4 }],
+      promotion: [
+        {
+          image: require("../assets/image.png"),
+          name: "احمد",
+          job: "ممرض",
+          stars: 4,
+        },
+      ],
     },
     {
       serviceTitle: "الرعاية التنفسية",
@@ -144,7 +172,9 @@ export default function HomeScreen({ navigation }) {
         "توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية.",
       color: "#E91E63", // Base color
       image: require("../assets/21.png"),
-      promotion: [{ image: require("../assets/image.png"), name: "", job: "", stars: "" }],
+      promotion: [
+        { image: require("../assets/image.png"), name: "", job: "", stars: "" },
+      ],
     },
     {
       serviceTitle: "الأنشطة الرياضية الخفيفة ",
@@ -236,7 +266,9 @@ export default function HomeScreen({ navigation }) {
         "توفير وسائل نقل للمشاركة في الأنشطة الاجتماعية، مثل الأندية والرحلات.",
       color: "#D84315", // Deep red-orange
       image: require("../assets/34.jpg"),
-      promotion: [{ image: require("../assets/image.png"), name: "", job: "", stars: "" }],
+      promotion: [
+        { image: require("../assets/image.png"), name: "", job: "", stars: "" },
+      ],
     },
 
     {
@@ -285,49 +317,56 @@ export default function HomeScreen({ navigation }) {
 
       <View>
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            Speech.speak("مساعدة شبه طبية", { language: "ar" });
+
             navigation.navigate("List", {
               serviceTitle: "مساعدة شبه طبية",
               subServices: paramedical,
               image: require("../assets/paraMedical.jpg"),
-            })
-          }
+            });
+          }}
           style={[styles.button, { backgroundColor: "#48C9B0" }]}>
           <Text style={styles.buttonText}>مساعدة شبه طبية</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            Speech.speak("حاجيات يومية", { language: "ar" });
+
             navigation.navigate("List", {
               serviceTitle: "حاجيات يومية",
               subServices: dailyNeeds,
               image: require("../assets/dailyNeeds.png"),
-            })
-          }
+            });
+          }}
           style={[styles.button, { backgroundColor: "#8E44AD" }]}>
           <Text style={styles.buttonText}>حاجيات يومية</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            Speech.speak("ترفيه", { language: "ar" });
             navigation.navigate("List", {
               serviceTitle: "ترفيه",
               subServices: entertainment,
               image: require("../assets/entertainment.jpg"),
-            })
-          }
+            });
+          }}
           style={[styles.button, { backgroundColor: "#E91E63" }]}>
           <Text style={styles.buttonText}>ترفيه</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+            Speech.speak("تنقل", { language: "ar" });
+
             navigation.navigate("List", {
               serviceTitle: "تنقل",
               subServices: transport,
               image: require("../assets/transport.jpg"),
-            })
-          }
+            });
+          }}
           style={[styles.button, { backgroundColor: "#FF5722" }]}>
           <Text style={styles.buttonText}>تنقل</Text>
         </TouchableOpacity>

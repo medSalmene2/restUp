@@ -51,6 +51,7 @@ const SubServicesList = ({ route }) => {
             </TouchableOpacity>
             {subService.promotion?.map(promoted => (
               <Contact
+                key={promoted.name}
                 name={promoted.name}
                 job={promoted.job}
                 stars={5}
