@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import Contact from "../components/Contact";
 
 export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
@@ -75,7 +76,7 @@ export default function HomeScreen({ navigation }) {
       description: "تقديم خدمات التمريض في المنزل.",
       color: "#48C9B0",
       image: require("../assets/11.jpeg"),
-      promotion: [{ image: require("../assets/image.png"), name: "محمود", job: "منضف", stars: 5 }],
+      promotion: [{ image: require("../assets/mahmoud.jpg"), name: "محمود", job: "منضف", stars: 5 }],
     },
     {
       serviceTitle: "العلاج الطبيعي",
@@ -94,7 +95,7 @@ export default function HomeScreen({ navigation }) {
       description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
       color: "#3DAF93",
       image: require("../assets/14.jpg"),
-      promotion: [{ image: require("../assets/image.png"), name: "احمد", job: "ممرض", stars: 4 }],
+      promotion: [{ image: require("../assets/ahmed.png"), name: "احمد", job: "ممرض", stars: 4 }],
     },
     {
       serviceTitle: "الرعاية التنفسية",

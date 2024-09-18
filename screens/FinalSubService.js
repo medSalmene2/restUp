@@ -4,6 +4,8 @@ import Contact from "../components/Contact";
 
 const FinalSubService = ({ route }) => {
   const contactImage = require("../assets/image.png");
+  const salha = require("../assets/salha.jpg");
+  const salwa = require("../assets/salwa.jpg");
   const { description, image } = route.params;
   return (
     <View style={styles.container}>
@@ -12,10 +14,10 @@ const FinalSubService = ({ route }) => {
         <Text style={{ textAlign: "center" }}>{description}</Text>
       </View>
       <ScrollView>
-        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={salha} stars={5} />
+        <Contact name={"سلوى"} job={"منضفة"} image={salwa} stars={5} />
+        {/* <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
+        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} /> */}
       </ScrollView>
     </View>
   );
