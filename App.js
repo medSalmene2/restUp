@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,11 +7,12 @@ import SubServicesList from "./screens/SubServicesList";
 import { IconButton } from "react-native-paper";
 import ProfileScreen from "./screens/ProfileScreen";
 import Map from "./screens/Map";
+import Login from "./screens/Login";
+import Signup from "./screens/SignUp";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const image = require("./assets/image.png");
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -31,6 +31,20 @@ export default function App() {
             />
           ),
         })}>
+        <Stack.Screen
+          name='Login'
+          component={Login}
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
+        <Stack.Screen
+          name='Signup'
+          component={Signup}
+          options={({ route }) => ({
+            headerShown: false,
+          })}
+        />
         <Stack.Screen
           name='FinalSubService'
           component={FinalSubService}
@@ -58,7 +72,6 @@ export default function App() {
             headerRight: null,
           })}
         />
-
         <Stack.Screen
           name='Map'
           component={Map}
