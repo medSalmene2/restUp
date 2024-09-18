@@ -7,7 +7,7 @@ const FinalSubService = ({ route }) => {
   const { description, image } = route.params;
   return (
     <View style={styles.container}>
-      <Image source={image} style={{ width: "95%", height: "15%" , alignSelf:"center" }} />
+      <Image source={image} style={{ width: "95%", height: "25%" , alignSelf:"center" }} />
       <View style={{ margin: 10 }}>
         <Text style={{ textAlign: "center" }}>{description}</Text>
       </View>

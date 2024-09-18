@@ -265,14 +265,14 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require("../assets/flower.jpg")}
+          source={require("../assets/flower.png")}
           style={styles.flowerIcon}
         />
         <Text style={styles.greeting}>صباح النور سي علي</Text>
       </View>
 
       <View style={styles.logoSection}>
-        <Image source={require("../assets/logo.png")} style={styles.logo} />
+        <Image source={require("../assets/Logo.png")} style={styles.logo} />
       </View>
 
       <View>
@@ -341,8 +341,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   flowerIcon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     marginRight: 10,
   },
   greeting: {
