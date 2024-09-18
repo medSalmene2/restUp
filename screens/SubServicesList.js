@@ -9,6 +9,7 @@ import {
 import React from "react";
 import Service from "../components/Service";
 import { useNavigation } from "@react-navigation/native";
+import * as Speech from "expo-speech";
 
 const SubServicesList = ({ route }) => {
   const { subServices, image } = route.params;
@@ -17,8 +18,14 @@ const SubServicesList = ({ route }) => {
     <View style={styles.container}>
       <Image
         source={image}
-        style={{ width: "95%", height: "15%", alignSelf: "center" , marginBottom:20 }}
+        style={{
+          width: "95%",
+          height: "15%",
+          alignSelf: "center",
+          marginBottom: 20,
+        }}
       />
+
       <ScrollView>
         {subServices.map((subService, index) => (
           <TouchableOpacity
@@ -30,12 +37,14 @@ const SubServicesList = ({ route }) => {
                 description: subService.description,
                 image,
               });
+
+              Speech.speak(subService.serviceTitle , {language:"ar"});
             }}>
             <Service
               bgColor={subService.color}
               text={subService.serviceTitle}
               textColor={"black"}
-              image={require("../assets/image.png")}
+              image={subService.image}
             />
           </TouchableOpacity>
         ))}

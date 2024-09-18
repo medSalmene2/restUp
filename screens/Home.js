@@ -6,12 +6,14 @@ export default function HomeScreen({ navigation }) {
   const dailyNeeds = [
     {
       serviceTitle: "خدمات التسوق والتوصيل",
-      description: "توصيل المواد الغذائية والمستلزمات الأساسية إلى منازل كبار السن.",
+      description:
+        "توصيل المواد الغذائية والمستلزمات الأساسية إلى منازل كبار السن.",
       color: "#8E44AD", // Base color
     },
     {
       serviceTitle: "إعداد وتوصيل الوجبات",
-      description: "تقديم وجبات يومية متوازنة ومخصصة للاحتياجات الغذائية لكبار السن.",
+      description:
+        "تقديم وجبات يومية متوازنة ومخصصة للاحتياجات الغذائية لكبار السن.",
       color: "#7E3DA1", // Slightly darker shade
     },
     {
@@ -36,7 +38,8 @@ export default function HomeScreen({ navigation }) {
     },
     {
       serviceTitle: "مرافقة في الأنشطة اليومية",
-      description: "مرافقة المسنين عند أداء المهام اليومية مثل الذهاب إلى الطبيب.",
+      description:
+        "مرافقة المسنين عند أداء المهام اليومية مثل الذهاب إلى الطبيب.",
       color: "#C285D3", // Soft pastel lavender
     },
     {
@@ -55,61 +58,62 @@ export default function HomeScreen({ navigation }) {
       color: "#F3D3F2", // Softest pastel shade
     },
   ];
-  
 
   const paramedical = [
     {
       serviceTitle: "الرعاية المنزلية التمريضية",
       description: "تقديم خدمات التمريض في المنزل.",
-      color: "#48C9B0", 
+      color: "#48C9B0",
     },
     {
       serviceTitle: "العلاج الطبيعي",
       description: "جلسات علاج لتحسين الحركة والقدرة الجسدية.",
-      color: "#41B39E", 
+      color: "#41B39E",
     },
     {
       serviceTitle: "العلاج الوظيفي",
       description: "مساعدة المسنين على تحسين القدرة على أداء الأنشطة اليومية.",
-      color: "#56D3C3", 
+      color: "#56D3C3",
     },
     {
       serviceTitle: "العلاج بالكلام واللغة",
       description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
-      color: "#3DAF93", 
+      color: "#3DAF93",
     },
     {
       serviceTitle: "الرعاية التنفسية",
       description: "تقديم الدعم للأشخاص الذين يعانون من مشاكل تنفسية.",
-      color: "#63DACD", 
+      color: "#63DACD",
     },
     {
       serviceTitle: "إدارة الألم",
       description: "توفير استراتيجيات لتخفيف الألم المزمن.",
-      color: "#39A786", 
+      color: "#39A786",
     },
     {
       serviceTitle: "الخدمات الاجتماعية الصحية",
       description: "دعم نفسي واجتماعي لكبار السن وأسرهم.",
-      color: "#5EE1D4", 
+      color: "#5EE1D4",
     },
     {
       serviceTitle: "خدمات التغذية والاستشارة الغذائية",
-      description: "وضع خطط غذائية مخصصة لكبار السن بناءً على احتياجاتهم الصحية وحالاتهم الطبية.",
-      color: "#2E9F80", 
+      description:
+        "وضع خطط غذائية مخصصة لكبار السن بناءً على احتياجاتهم الصحية وحالاتهم الطبية.",
+      color: "#2E9F80",
     },
     {
       serviceTitle: "العناية بالقدم",
-      description: "خدمات العناية بالقدم للأشخاص المسنين الذين يعانون من مشاكل القدم أو السكري.",
-      color: "#6FE5D9", 
+      description:
+        "خدمات العناية بالقدم للأشخاص المسنين الذين يعانون من مشاكل القدم أو السكري.",
+      color: "#6FE5D9",
     },
     {
       serviceTitle: "العلاج بالأجهزة التعويضية",
-      description: "توفير وتركيب أجهزة دعم مثل المشدات، الأطراف الصناعية، وأدوات المساعدة على الحركة لتحسين جودة الحياة.",
-      color: "#48C9B0", 
+      description:
+        "توفير وتركيب أجهزة دعم مثل المشدات، الأطراف الصناعية، وأدوات المساعدة على الحركة لتحسين جودة الحياة.",
+      color: "#48C9B0",
     },
   ];
-  
 
   const entertainment = [
     {
@@ -156,8 +160,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       serviceTitle: "دروس الطبخ الصحية ",
-      description:
-        "تعلم تحضير وجبات صحية تلائم احتياجاتهم الغذائية.",
+      description: "تعلم تحضير وجبات صحية تلائم احتياجاتهم الغذائية.",
       color: "#FCE4EC", // Very light pastel pink
     },
     {
@@ -168,13 +171,10 @@ export default function HomeScreen({ navigation }) {
     },
     {
       serviceTitle: "الحدائق والبستنة ",
-      description:
-        "أنشطة تساعد على تعزيز الشعور بالإنجاز والارتباط بالطبيعة.",
+      description: "أنشطة تساعد على تعزيز الشعور بالإنجاز والارتباط بالطبيعة.",
       color: "#F06292", // Another slight variation of lighter pink
     },
   ];
-  
-  
 
   const transport = [
     {
@@ -191,8 +191,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       serviceTitle: "خدمة التوصيل الخاص ",
-      description:
-        "سيارات خاصة أو تاكسيات مخصصة لنقل المسنين بأمان وراحة.",
+      description: "سيارات خاصة أو تاكسيات مخصصة لنقل المسنين بأمان وراحة.",
       color: "#E64A19", // Darker orange-red
     },
     {
@@ -226,7 +225,6 @@ export default function HomeScreen({ navigation }) {
       color: "#FFAB91", // Soft light orange
     },
   ];
-  
 
   return (
     <View style={styles.container}>
@@ -251,8 +249,7 @@ export default function HomeScreen({ navigation }) {
               image: require("../assets/paraMedical.jpg"),
             })
           }
-          style={[styles.button, { backgroundColor: "#48C9B0" }]}
-        >
+          style={[styles.button, { backgroundColor: "#48C9B0" }]}>
           <Text style={styles.buttonText}>مساعدة شبه طبية</Text>
         </TouchableOpacity>
 
@@ -264,8 +261,7 @@ export default function HomeScreen({ navigation }) {
               image: require("../assets/dailyNeeds.png"),
             })
           }
-          style={[styles.button, { backgroundColor: "#8E44AD" }]}
-        >
+          style={[styles.button, { backgroundColor: "#8E44AD" }]}>
           <Text style={styles.buttonText}>حاجيات يومية</Text>
         </TouchableOpacity>
 
@@ -277,8 +273,7 @@ export default function HomeScreen({ navigation }) {
               image: require("../assets/entertainment.jpg"),
             })
           }
-          style={[styles.button, { backgroundColor: "#E91E63" }]}
-        >
+          style={[styles.button, { backgroundColor: "#E91E63" }]}>
           <Text style={styles.buttonText}>ترفيه</Text>
         </TouchableOpacity>
 
@@ -290,8 +285,7 @@ export default function HomeScreen({ navigation }) {
               image: require("../assets/transport.jpg"),
             })
           }
-          style={[styles.button, { backgroundColor: "#FF5722" }]}
-        >
+          style={[styles.button, { backgroundColor: "#FF5722" }]}>
           <Text style={styles.buttonText}>تنقل</Text>
         </TouchableOpacity>
       </View>
