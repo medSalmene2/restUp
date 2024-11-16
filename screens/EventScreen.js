@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import CategoryTabs from '../components/CategoryTabs';
-import EventCard from '../components/EventCard';
+import EventCard from '../components/EventCards';
 import { eventImages } from '../../assets/events';
 
 export default function EventsScreen() {
