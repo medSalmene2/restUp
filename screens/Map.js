@@ -1,9 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, View, Image, SafeAreaView, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  SafeAreaView,
+  Text,
+  Alert,
+} from "react-native";
 import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import { Banner, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const Map = () => {
   const mapViewRef = useRef();
@@ -22,15 +30,20 @@ const Map = () => {
   }, [currentLocation]);
   const reverseGeocode = async (latitude, longitude) => {
     try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=0`
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=0`,
+        {
+          headers: {
+            "User-Agent": "YourAppName/1.0.0", // Replace with your app's name/version
+          },
+        }
       );
-      const data = await response.json();
-      console.log(data);
+      
       navigation.navigate("Profile", {
-        adress: data.display_name,
+        adress: response.data.display_name,
       });
     } catch (error) {
+      console.log(error);
       Alert.alert("Error", "Unable to get location data");
     }
   };
@@ -53,9 +66,8 @@ const Map = () => {
             justifyContent: "space-between",
             opacity: 0.9,
             flexDirection: "row",
-            
           }}>
-          <Text  >اضغط على الموافقة لتسجيل احداثياتك </Text>
+          <Text>اضغط على الموافقة لتسجيل احداثياتك </Text>
           <IconButton
             onPress={async () => {
               const latlng = {

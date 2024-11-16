@@ -34,6 +34,10 @@ const SubServicesList = ({ route }) => {
               style={styles.optionButton}
               key={index}
               onPress={() => {
+                if (subService.serviceTitle === "الفعاليات الأجتماعية") {
+                  navigation.navigate("EventManager");
+                  return;
+                }
                 navigation.navigate("FinalSubService", {
                   subServiceTitle: subService.serviceTitle,
                   description: subService.description,

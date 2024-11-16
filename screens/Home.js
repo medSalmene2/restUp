@@ -161,15 +161,25 @@ export default function HomeScreen({ navigation }) {
 
   const entertainment = [
     {
-      serviceTitle: "النوادي الاجتماعية ",
+      serviceTitle: "الفعاليات الأجتماعية",
       description:
-        "توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية.",
+        "  توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية. المنضمة من الأفراد",
       color: "#E91E63", // Base color
       image: require("../assets/21.png"),
       promotion: [
         { image: require("../assets/image.png"), name: "", job: "", stars: "" },
       ],
     },
+    // {
+    //   serviceTitle: "النوادي الاجتماعية ",
+    //   description:
+    //     "توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية.",
+    //   color: "#E91E63", // Base color
+    //   image: require("../assets/21.png"),
+    //   promotion: [
+    //     { image: require("../assets/image.png"), name: "", job: "", stars: "" },
+    //   ],
+    // },
     {
       serviceTitle: "الأنشطة الرياضية الخفيفة ",
       description:
@@ -394,7 +404,6 @@ const styles = StyleSheet.create({
   logoSection: {
     alignItems: "center",
     marginVertical: 20,
-    marginBottom: 70,
   },
   logo: {
     width: 250,
