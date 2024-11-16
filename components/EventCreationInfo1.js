@@ -5,8 +5,18 @@ import {
   View,
   TouchableOpacity,
   I18nManager,
+  Platform,
+  Alert,
 } from "react-native";
-import { TextInput, Text, Chip, useTheme } from "react-native-paper";
+import {
+  TextInput,
+  Text,
+  Chip,
+  useTheme,
+  Icon,
+  Switch,
+} from "react-native-paper";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const EventCreationInfo1 = ({
   navigation,
@@ -22,8 +32,13 @@ const EventCreationInfo1 = ({
   setGuestCount,
 }) => {
   const theme = useTheme();
+  const [isAllDay, setIsAllDay] = useState(false);
+  const [fromTime, setFromTime] = useState(new Date());
+  const [toTime, setToTime] = useState(new Date());
+  const [showFromPicker, setShowFromPicker] = useState(false);
+  const [showToPicker, setShowToPicker] = useState(false);
 
-  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم"];
+  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه"];
 
   const toggleCategory = category => {
     if (selectedCategories.includes(category)) {
@@ -35,17 +50,41 @@ const EventCreationInfo1 = ({
 
   const incrementGuest = () => {
     setGuestCount(prev => prev + 1);
-    console.log("hey")
+    console.log("hey");
   };
 
   const decrementGuest = () => {
-    console.log("hey")
+    console.log("hey");
     if (guestCount > 1) {
       setGuestCount(prev => prev - 1);
     }
   };
 
-  I18nManager.forceRTL(true);
+  const formatTime = date => {
+    return date.toLocaleTimeString("en", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+  };
+
+  const onFromTimeChange = (event, selectedTime) => {
+    setShowFromPicker(false);
+    if (selectedTime) {
+      setFromTime(selectedTime);
+    }
+  };
+
+  const onToTimeChange = (event, selectedTime) => {
+    setShowToPicker(false);
+    if (selectedTime && selectedTime > fromTime) {
+      setToTime(selectedTime);
+    } else {
+      Alert.alert("خطأ", "يجب أن يكون وقت النهاية بعد وقت البداية", [
+        { text: "حسناً" },
+      ]);
+    }
+  };
 
   // Common TextInput props for RTL support
   const rtlTextInputProps = {
@@ -126,12 +165,66 @@ const EventCreationInfo1 = ({
           value={notes}
           activeOutlineColor='red'
           onChangeText={setNotes}
-          style={[styles.input, styles.smallInput]}
+          style={styles.input}
           multiline
           numberOfLines={2}
           right={<TextInput.Icon icon='pencil-box-multiple-outline' />}
           {...rtlTextInputProps}
         />
+
+        {/* Time Selection Section */}
+        <View style={styles.timeSection}>
+          <View style={styles.allDayContainer}>
+            <Text style={styles.sectionTitle}>طوال اليوم</Text>
+            <Switch value={isAllDay} onValueChange={setIsAllDay} color='red' />
+          </View>
+
+          {!isAllDay && (
+            <View style={styles.timePickerContainer}>
+              <View style={styles.timeInputContainer}>
+                <Text style={styles.timeLabel}>من</Text>
+                <TouchableOpacity
+                  style={styles.timeButton}
+                  onPress={() => setShowFromPicker(true)}>
+                  <Text style={styles.timeButtonText}>
+                    {formatTime(fromTime)}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.timeInputContainer}>
+                <Text style={styles.timeLabel}>إلى</Text>
+                <TouchableOpacity
+                  style={styles.timeButton}
+                  onPress={() => setShowToPicker(true)}>
+                  <Text style={styles.timeButtonText}>
+                    {formatTime(toTime)}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          {showFromPicker && (
+            <DateTimePicker
+              value={fromTime}
+              mode='time'
+              is24Hour={true}
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={onFromTimeChange}
+            />
+          )}
+
+          {showToPicker && (
+            <DateTimePicker
+              value={toTime}
+              mode='time'
+              is24Hour={true}
+              display={Platform.OS === "ios" ? "spinner" : "default"}
+              onChange={onToTimeChange}
+            />
+          )}
+        </View>
 
         {/* Guest Selector */}
         <View style={styles.section}>
@@ -152,17 +245,19 @@ const EventCreationInfo1 = ({
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
 
-      {/* Submit Button */}
-      <TouchableOpacity
-        style={styles.saveButton}
-        onPress={() => {
-          console.log("pressed");
-          navigation.navigate("EventDetails");
-        }}>
-        <Text style={styles.saveButtonText}>حفظ المعلومات</Text>
-      </TouchableOpacity>
+        {/* Submit Button */}
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={() => {
+            navigation.navigate("EventDetails");
+          }}>
+          <View style={styles.buttonContent}>
+            <Text style={styles.saveButtonText}>التالي</Text>
+          </View>
+          <Icon source={"chevron-right"} size={25} color='white' />
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -173,9 +268,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   container: {
-    paddingVertical: 60,
-    paddingHorizontal: 20,
-    paddingBottom: 100, // Add extra padding to ensure content doesn't get hidden behind the button
+    padding: 20,
   },
   inputContainer: {
     marginBottom: 16,
@@ -188,9 +281,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   descriptionInput: {
-    minHeight: 120,
-  },
-  smallInput: {
     minHeight: 80,
   },
   sectionTitle: {
@@ -210,8 +300,48 @@ const styles = StyleSheet.create({
   selectedChip: {
     backgroundColor: "green",
   },
+  timeSection: {
+    marginVertical: 10,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    // padding: 10,
+    direction: "rtl",
+  },
+  allDayContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    gap: 10,
+  },
+  timePickerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
+  },
+  timeInputContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 5,
+  },
+  timeLabel: {
+    fontSize: 18,
+    color: "#333",
+    fontWeight: "500",
+    textAlign: "right",
+  },
+  timeButton: {
+    backgroundColor: "#f0f0f0",
+    padding: 12,
+    borderRadius: 8,
+    minWidth: 120,
+    alignItems: "center",
+  },
+  timeButtonText: {
+    fontSize: 16,
+    color: "#333",
+  },
   section: {
-    marginTop: 40,
+    marginTop: 10,
   },
   counter: {
     flexDirection: "row",
@@ -245,11 +375,13 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     padding: 15,
     borderRadius: 10,
+    flexDirection: "row",
     alignItems: "center",
-    position: "absolute",
-    bottom: "5%", // Position 5% from bottom
-    left: "3%",
-    right: "3%",
+    marginTop: 40,
+  },
+  buttonContent: {
+    flex: 1,
+    alignItems: "center",
   },
   saveButtonText: {
     fontSize: 16,

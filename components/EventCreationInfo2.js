@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Icon } from "react-native-paper";
 import { Calendar, LocaleConfig } from "react-native-calendars";
+import { fetchUsers } from "../firestore/events/Publish";
 
 const EventCreationInfo2 = ({
   location,
@@ -25,7 +26,7 @@ const EventCreationInfo2 = ({
       <View style={styles.section}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("EventLocation")
+            navigation.navigate("EventLocation");
           }}>
           <View style={styles.locationButton}>
             <Icon source={"chevron-left"} size={25} />
@@ -41,6 +42,7 @@ const EventCreationInfo2 = ({
         <Text style={styles.subLabel}>اختر تاريخًا للحدث</Text>
         <Calendar
           style={styles.calendar}
+          firstDay={1}
           onDayPress={day => setSelectedDate(day.dateString)}
           markedDates={{
             [selectedDate]: {
@@ -69,9 +71,9 @@ const EventCreationInfo2 = ({
       {/* Submit Button */}
       <TouchableOpacity
         style={styles.saveButton}
-        onPress={() => {
+        onPress={async () => {
           console.log("pressed");
-          navigation.navigate("EventDetails");
+          await fetchUsers();
         }}>
         <Text style={styles.saveButtonText}>حفظ المعلومات</Text>
       </TouchableOpacity>
@@ -83,12 +85,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    padding: 20,
+    padding: 10,
   },
   section: {
     backgroundColor: "#fff",
     padding: 15,
-    marginVertical: 20,
+    marginVertical: 10,
     borderRadius: 10,
     elevation: 2,
   },
@@ -118,6 +120,21 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 10,
     padding: 5,
+  },
+  saveButton: {
+    backgroundColor: "red",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    position: "absolute",
+    bottom: "5%", // Position 5% from bottom
+    left: "3%",
+    right: "3%",
+  },
+  saveButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
   },
 });
 LocaleConfig.locales["ar"] = {
