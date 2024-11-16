@@ -52,9 +52,10 @@ const Map = () => {
             zIndex: 2,
             justifyContent: "space-between",
             opacity: 0.9,
-            flexDirection: "row-reverse",
+            flexDirection: "row",
+            
           }}>
-          <Text>اضغط على الموافقة لتسجيل احداثياتك</Text>
+          <Text  >اضغط على الموافقة لتسجيل احداثياتك </Text>
           <IconButton
             onPress={async () => {
               const latlng = {

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import Contact from "../components/Contact";
 import * as Speech from "expo-speech";
 export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
@@ -115,14 +116,7 @@ export default function HomeScreen({ navigation }) {
       description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
       color: "#3DAF93",
       image: require("../assets/14.jpg"),
-      promotion: [
-        {
-          image: require("../assets/image.png"),
-          name: "احمد",
-          job: "ممرض",
-          stars: 4,
-        },
-      ],
+      promotion: [{ image: require("../assets/ahmed.png"), name: "احمد", job: "ممرض", stars: 4 }],
     },
     {
       serviceTitle: "الرعاية التنفسية",
@@ -305,7 +299,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require("../assets/flower.jpg")}
+          source={require("../assets/flower.png")}
           style={styles.flowerIcon}
         />
         <Text style={styles.greeting}>صباح النور سي علي</Text>
@@ -388,8 +382,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   flowerIcon: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     marginRight: 10,
   },
   greeting: {
