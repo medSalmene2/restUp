@@ -9,6 +9,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import Map from "./screens/Map";
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
+import EventManager from "./screens/EventManager";
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Home'
+        initialRouteName='login'
         screenOptions={({ navigation }) => ({
           headerRight: () => (
             <IconButton
@@ -80,18 +81,16 @@ export default function App() {
             headerRight: null,
           })}
         />
+        <Stack.Screen
+          name='EventManager'
+          component={EventManager}
+          options={() => ({
+            title: "الفعاليات", // Set dynamic title
+            // headerRight: null,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-// const styles = StyleSheet.create({
-//   safeArea: {
-//     flex: 1,
-//     backgroundColor: "#EAF2F8",
-//   },
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#EAF2F8",
-//     justifyContent: "center",
-//   },
-// });
+

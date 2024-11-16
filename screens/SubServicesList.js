@@ -10,6 +10,7 @@ import React from "react";
 import Service from "../components/Service";
 import { useNavigation } from "@react-navigation/native";
 import * as Speech from "expo-speech";
+import Contact from "../components/Contact";
 
 const SubServicesList = ({ route }) => {
   const { subServices, image } = route.params;
@@ -18,30 +19,50 @@ const SubServicesList = ({ route }) => {
     <View style={styles.container}>
       <Image
         source={image}
-        style={{ width: "95%", height: "25%", alignSelf: "center" , marginBottom:20 }}
+        style={{
+          width: "95%",
+          height: "25%",
+          alignSelf: "center",
+          marginBottom: 20,
+        }}
       />
 
       <ScrollView>
         {subServices.map((subService, index) => (
-          <TouchableOpacity
-            style={styles.optionButton}
-            key={index}
-            onPress={() => {
-              navigation.navigate("FinalSubService", {
-                subServiceTitle: subService.serviceTitle,
-                description: subService.description,
-                image: subService.image ,
-              });
+          <>
+            <TouchableOpacity
+              style={styles.optionButton}
+              key={index}
+              onPress={() => {
+                if (subService.serviceTitle === "الفعاليات الأجتماعية") {
+                  navigation.navigate("EventManager");
+                  return;
+                }
+                navigation.navigate("FinalSubService", {
+                  subServiceTitle: subService.serviceTitle,
+                  description: subService.description,
+                  image: subService.image,
+                });
 
-              Speech.speak(subService.serviceTitle , {language:"ar"});
-            }}>
-            <Service
-              bgColor={subService.color}
-              text={subService.serviceTitle}
-              textColor={"black"}
-              image={subService.image}
-            />
-          </TouchableOpacity>
+                Speech.speak(subService.serviceTitle, { language: "ar" });
+              }}>
+              <Service
+                bgColor={subService.color}
+                text={subService.serviceTitle}
+                textColor={"black"}
+                image={subService.image}
+              />
+            </TouchableOpacity>
+            {subService.promotion?.map(promoted => (
+              <Contact
+                key={promoted.name}
+                name={promoted.name}
+                job={promoted.job}
+                stars={5}
+                image={promoted.image}
+              />
+            ))}
+          </>
         ))}
 
         <View style={styles.requestContainer}>
