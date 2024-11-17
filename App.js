@@ -17,9 +17,10 @@ import { IconButton, Menu, Provider as PaperProvider } from "react-native-paper"
 import { I18nManager } from "react-native"; // For RTL
 import 'intl-pluralrules';
 import EventDetailsScreen from "./screens/EventDetails";
+import BookingConfirmationScreen from "./screens/EventBooking";
 
 
-// const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 // function AppNavigator() {
 //   const { t, setLanguage } = useLanguage();
@@ -152,6 +153,19 @@ export default function App() {
     //     <AppNavigator />
     //   </PaperProvider>
     // </LanguageProvider>
-    <EventDetailsScreen/>
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetailsScreen}
+        options={{ title: "Event Details" }}
+      />
+      <Stack.Screen
+        name="BookingConfirmation"
+        component={BookingConfirmationScreen}
+        options={{ title: "Booking Confirmation" }}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
   );
 }

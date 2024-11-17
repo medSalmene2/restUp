@@ -1,19 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
-export default function EventDetailsScreen() {
+
+export default function EventDetailsScreen({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.header}>EventConnect</Text>
         <Text style={styles.title}>Annual Tech Conference 2023</Text>
         <Text style={styles.description}>
-          Join us for an immersive experience at the Annual Tech Conference 2023, where industry leaders will gather to discuss the latest trends in technology and innovation. This event will feature keynote speeches, panel discussions, and networking opportunities.
+          Join us for an immersive experience at the Annual Tech Conference
+          2023, where industry leaders will gather to discuss the latest trends
+          in technology and innovation. This event will feature keynote
+          speeches, panel discussions, and networking opportunities.
         </Text>
 
         <View style={styles.section}>
           <Text style={styles.sectionHeader}>Date & Time</Text>
-          <Text style={styles.sectionContent}>March 15, 2023, 9:00 AM - 5:00 PM</Text>
+          <Text style={styles.sectionContent}>
+            March 15, 2023, 9:00 AM - 5:00 PM
+          </Text>
         </View>
 
         <View style={styles.section}>
@@ -76,7 +88,10 @@ export default function EventDetailsScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("BookingConfirmation")}
+        >
           <Text style={styles.buttonText}>Join/Book Event</Text>
         </TouchableOpacity>
       </View>
@@ -88,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-    marginTop:20
+
   },
   card: {
     backgroundColor: "#fff",
