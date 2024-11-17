@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import CategoryTabs from '../components/CategoryTabs';
 import EventCard from '../components/EventCards';
 
-
 export default function EventsScreen() {
   const categories = ['All', 'Music', 'Workshops', 'Conference'];
   const events = [
@@ -47,17 +46,19 @@ export default function EventsScreen() {
         />
       </View>
 
-      <CategoryTabs categories={categories} />
+      <CategoryTabs categories={categories}  />
 
       <ScrollView style={styles.eventsContainer}>
-        <View style={styles.eventsGrid}>
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </View>
-      </ScrollView>
+  <View style={styles.eventsGrid}>
+    {events.map((event) => (
+      <View key={event.id} style={styles.eventCardWrapper}>
+        <EventCard event={event} />
+      </View>
+    ))}
+  </View>
+</ScrollView>
 
-      <View style={styles.bottomNav}>
+      <SafeAreaView style={styles.bottomNav}>
         <View style={styles.navItem}>
           <Ionicons name="home" size={24} color="#000" />
           <Text style={styles.navText}>My Events</Text>
@@ -74,7 +75,7 @@ export default function EventsScreen() {
           <Ionicons name="person-outline" size={24} color="#666" />
           <Text style={styles.navText}>Profile</Text>
         </View>
-      </View>
+      </SafeAreaView>
     </SafeAreaView>
   );
 }
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    marginTop:20
   },
   header: {
     flexDirection: 'row',
@@ -113,11 +115,30 @@ const styles = StyleSheet.create({
   },
   eventsContainer: {
     flex: 1,
+    paddingHorizontal: 8,
   },
   eventsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    padding: 8,
+    justifyContent: 'space-between', // Space between cards
+    paddingHorizontal: 8,
+  },
+  eventCardWrapper: {
+    width: '48%', // Two cards per row
+    marginBottom: 16, // Space between rows
+  },
+  
+  eventCard: {
+    flexBasis: '48%', // Each card takes 48% of the width
+    marginBottom: 16, // Spacing between rows
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#fff', // Ensure a clear background for each card
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3, // For Android shadow
   },
   bottomNav: {
     flexDirection: 'row',

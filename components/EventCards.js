@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 export default function EventCard({ event }) {
   return (
@@ -12,28 +12,26 @@ export default function EventCard({ event }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: '46%',
-    margin: '2%',
-    borderRadius: 12,
     backgroundColor: '#fff',
+    borderRadius: 10,
+    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 5,
+    elevation: 2,
   },
   image: {
     width: '100%',
     height: 120,
-    borderRadius: 12,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   title: {
+    padding: 10,
     fontSize: 14,
-    fontWeight: '500',
-    padding: 8,
+    fontWeight: 'bold',
     textAlign: 'center',
+    color: '#333',
   },
 });
