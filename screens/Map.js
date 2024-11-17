@@ -13,7 +13,7 @@ import { Banner, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-const Map = () => {
+const Map = ({ setLocation }) => {
   const mapViewRef = useRef();
   const [currentLocation, setCurrentLocation] = useState(null);
   const currentRegion = useRef({
@@ -38,10 +38,17 @@ const Map = () => {
           },
         }
       );
-      
-      navigation.navigate("Profile", {
-        adress: response.data.display_name,
-      });
+      //setLocation is provided during event creation  , this is arbitrary choice
+      if (setLocation) {
+        setLocation(response.data.display_name);
+        navigation.goBack();
+      }
+      //This is for profile location saving
+      else {
+        navigation.navigate("Profile", {
+          adress: response.data.display_name,
+        });
+      }
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Unable to get location data");

@@ -10,6 +10,8 @@ import Map from "./screens/Map";
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
 import EventManager from "./screens/EventManager";
+import EventInfoScreen from "./screens/testig";
+import EventCreation from "./screens/EventCreation";
 import EventsScreen from "./screens/EventScreen";
 import { IconButton, Menu, Provider as PaperProvider } from "react-native-paper";
 import { I18nManager } from "react-native"; // For RTL
