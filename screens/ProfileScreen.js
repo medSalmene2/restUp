@@ -11,7 +11,7 @@ import {
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const ProfileScreen = ({route}) => {
+const ProfileScreen = ({ route }) => {
   const navigation = useNavigation();
   console.log(route);
   return (
@@ -19,7 +19,7 @@ const ProfileScreen = ({route}) => {
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image source={require("../assets/elder.png")} size={80} />
-          <View style={{ marginLeft: 20 }}>
+          <View style={{ marginRight: 20 }}>
             <Title
               style={[
                 styles.title,
@@ -37,24 +37,30 @@ const ProfileScreen = ({route}) => {
 
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
-          <Icon name='phone' color='#777777' size={20} />
           <Text style={{ color: "#777777", marginLeft: 20, fontSize: 18 }}>
             +92066519
           </Text>
+          <Icon name='phone' color='#FF6347' size={20} />
         </View>
         <View style={styles.row}>
-          <Icon name='email' color='#777777' size={20} />
           <Text style={{ color: "#777777", marginLeft: 20, fontSize: 18 }}>
             ali123@email.com
           </Text>
+          <Icon name='email' color='#FF6347' size={20} />
         </View>
-        <TouchableRipple onPress={()=>{navigation.navigate("Map")}}>
-          <View style={[styles.row,{marginTop:30}]}>
-            <Icon name='map-marker-radius' color='#777777' size={20} />
-            <Text style={{  marginLeft: 20, fontSize: 18,fontWeight:"bold" }}>
-            {route.params?.adress || "العوينة ,تونس"}
+        <TouchableRipple
+          onPress={() => {
+            navigation.navigate("Map");
+          }}>
+          <View style={[styles.row, { marginTop: 30 }]}>
+            <Text style={{ marginLeft: 20, fontSize: 18, fontWeight: "bold" }}>
+              {route.params?.adress || "العوينة ,تونس"}
+              <Icon name='chevron-down' color='#777777' size={20} />
+
             </Text>
-            <Icon name='chevron-down' color='#777777' size={20} />
+
+            <Icon name='map-marker-radius' color='#FF6347' size={20} />
+
           </View>
         </TouchableRipple>
       </View>
@@ -80,26 +86,26 @@ const ProfileScreen = ({route}) => {
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name='heart-outline' color='#FF6347' size={25} />
             <Text style={styles.menuItemText}>خدماتك المفضلة</Text>
+            <Icon name='heart-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name='credit-card' color='#FF6347' size={25} />
             <Text style={styles.menuItemText}>خلاص</Text>
+            <Icon name='credit-card' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name='account-check-outline' color='#FF6347' size={25} />
             <Text style={styles.menuItemText}>مساعدة</Text>
+            <Icon name='account-check-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Icon name='logout' color='#FF6347' size={25} />
             <Text style={styles.menuItemText}> تسجيل الخروج </Text>
+            <Icon name='logout' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
       </View>
@@ -111,6 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    direction: "rtl",
   },
   userInfoSection: {
     paddingHorizontal: 30,
@@ -128,6 +135,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     marginBottom: 10,
+    justifyContent:"space-between"
   },
   infoBoxWrapper: {
     borderBottomColor: "#dddddd",
@@ -151,6 +159,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 15,
     paddingHorizontal: 30,
+    justifyContent:"space-between"
   },
   menuItemText: {
     color: "#777777",
