@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { LanguageProvider, useLanguage } from "./hooks/useLanguage";
 import HomeScreen from "./screens/Home";
 import FinalSubService from "./screens/FinalSubService";
 import SubServicesList from "./screens/SubServicesList";
@@ -10,87 +11,96 @@ import Map from "./screens/Map";
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
 import EventManager from "./screens/EventManager";
+import EventInfoScreen from "./screens/testig";
+import EventCreation from "./screens/EventCreation";
+import EventDetailsScreen from "./screens/EventDetails";
 
 const Stack = createStackNavigator();
 
-export default function App() {
+function AppNavigator() {
+  const { t } = useLanguage();
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='login'
+        initialRouteName="Login"
         screenOptions={({ navigation }) => ({
           headerRight: () => (
             <IconButton
               style={{ marginRight: 15 }}
               icon={"account"}
               size={20}
-              color='black'
-              mode='outlined'
+              color="black"
+              mode="outlined"
               onPress={() => {
                 navigation.navigate("Profile");
               }}
             />
           ),
-        })}>
+        })}
+      >
         <Stack.Screen
-          name='Login'
+          name="Login"
           component={Login}
-          options={({ route }) => ({
-            headerShown: false,
-          })}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='Signup'
+          name="Signup"
           component={Signup}
-          options={({ route }) => ({
-            headerShown: false,
-          })}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name='FinalSubService'
+          name="FinalSubService"
           component={FinalSubService}
           options={({ route }) => ({
-            title: route.params?.subServiceTitle || "الخدمة", // Set dynamic title
+            title: route.params?.subServiceTitle || t("home.service"), // Dynamic translation
           })}
         />
         <Stack.Screen
-          name='Home'
+          name="Home"
           component={HomeScreen}
-          options={{ title: "Home Screen" }}
+          options={{ title: t("home.greeting") }}
         />
         <Stack.Screen
-          name='List'
+          name="List"
           component={SubServicesList}
           options={({ route }) => ({
-            title: route.params?.serviceTitle || "قائمة الخدمات", // Set dynamic title
+            title: route.params?.serviceTitle || t("home.serviceList"), // Dynamic translation
           })}
         />
         <Stack.Screen
-          name='Profile'
+          name="Profile"
           component={ProfileScreen}
-          options={() => ({
-            title: "حسابك", // Set dynamic title
+          options={{
+            title: t("profile.title"), // Translated title
             headerRight: null,
-          })}
+          }}
         />
         <Stack.Screen
-          name='Map'
+          name="Map"
           component={Map}
-          options={() => ({
-            title: "الموقع", // Set dynamic title
+          options={{
+            title: t("home.location"), // Translated title
             headerRight: null,
-          })}
+          }}
         />
         <Stack.Screen
-          name='EventManager'
+          name="EventManager"
           component={EventManager}
-          options={() => ({
-            title: "الفعاليات", // Set dynamic title
-            // headerRight: null,
-          })}
+          options={{
+            title: t("home.events"), // Translated title
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
+export default function App() {
+  return (
+    // <LanguageProvider>
+    //   <AppNavigator />
+    // </LanguageProvider>
+    <EventDetailsScreen/>
+  );
+}
