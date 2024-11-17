@@ -30,15 +30,34 @@ const EventCreationInfo1 = ({
   setSelectedCategories,
   guestCount,
   setGuestCount,
+  isAllDay,
+  setIsAllDay,
+  fromTime,
+  setFromTime,
+  toTime,
+  setToTime,
 }) => {
   const theme = useTheme();
-  const [isAllDay, setIsAllDay] = useState(false);
-  const [fromTime, setFromTime] = useState(new Date());
-  const [toTime, setToTime] = useState(new Date());
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
 
   const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه"];
+  const [errors, setErrors] = useState({
+    title: false,
+    categories: false,
+    description: false,
+    time: false,
+  });
+
+  // Helper function to add minutes to a date
+  const addMinutes = (date, minutes) => {
+    return new Date(date.getTime() + minutes * 60000);
+  };
+
+  // Helper function to get minutes difference between two dates
+  const getMinutesDifference = (date1, date2) => {
+    return Math.floor((date2.getTime() - date1.getTime()) / 60000);
+  };
 
   const toggleCategory = category => {
     if (selectedCategories.includes(category)) {
@@ -72,18 +91,99 @@ const EventCreationInfo1 = ({
     setShowFromPicker(false);
     if (selectedTime) {
       setFromTime(selectedTime);
+
+      // If toTime exists, check if it's still valid with new fromTime
+      if (toTime) {
+        const minEndTime = addMinutes(selectedTime, 30);
+        if (toTime < minEndTime) {
+          // Automatically adjust toTime to be 30 minutes after new fromTime
+          setToTime(minEndTime);
+          Alert.alert(
+            "تنبيه",
+            "تم تعديل وقت النهاية تلقائياً ليكون بعد 30 دقيقة من وقت البداية",
+            [{ text: "حسناً" }]
+          );
+        }
+      }
+
+      setErrors(prev => ({ ...prev, time: false }));
     }
   };
 
   const onToTimeChange = (event, selectedTime) => {
     setShowToPicker(false);
-    if (selectedTime && selectedTime > fromTime) {
+    if (selectedTime && fromTime) {
+      const minEndTime = addMinutes(fromTime, 30);
+
+      if (selectedTime <= fromTime) {
+        Alert.alert("خطأ", "يجب أن يكون وقت النهاية بعد وقت البداية", [
+          { text: "حسناً" },
+        ]);
+        return;
+      }
+
+      if (selectedTime < minEndTime) {
+        Alert.alert(
+          "خطأ",
+          "يجب أن يكون وقت النهاية بعد وقت البداية بـ 30 دقيقة على الأقل",
+          [{ text: "حسناً" }]
+        );
+        return;
+      }
+
       setToTime(selectedTime);
-    } else {
-      Alert.alert("خطأ", "يجب أن يكون وقت النهاية بعد وقت البداية", [
-        { text: "حسناً" },
-      ]);
+      setErrors(prev => ({ ...prev, time: false }));
     }
+  };
+
+  // Validation function
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      title: false,
+      categories: false,
+      description: false,
+      time: false,
+    };
+
+    // Title validation
+    if (!title || title.trim().length === 0) {
+      newErrors.title = true;
+      isValid = false;
+    }
+
+    // Categories validation
+    if (selectedCategories.length === 0) {
+      newErrors.categories = true;
+      isValid = false;
+    }
+
+    // Description validation
+    if (!description || description.trim().length === 0) {
+      newErrors.description = true;
+      isValid = false;
+    }
+
+    // Time validation (only if not all day)
+    if (!isAllDay && (!fromTime || !toTime)) {
+      newErrors.time = true;
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (!isValid) {
+      let errorMessage = "يرجى تصحيح الأخطاء التالية:\n";
+      if (newErrors.title) errorMessage += "- يجب إدخال العنوان\n";
+      if (newErrors.categories)
+        errorMessage += "- يجب اختيار فئة واحدة على الأقل\n";
+      if (newErrors.description) errorMessage += "- يجب إدخال الوصف\n";
+      if (newErrors.time) errorMessage += "- يجب تحديد وقت البداية والنهاية\n";
+
+      Alert.alert("تنبيه", errorMessage, [{ text: "حسناً" }]);
+    }
+
+    return isValid;
   };
 
   // Common TextInput props for RTL support
@@ -103,7 +203,11 @@ const EventCreationInfo1 = ({
       writingDirection: "rtl",
     },
   };
-
+  const handleNext = () => {
+    if (validateForm()) {
+      navigation.navigate("EventDetails");
+    }
+  };
   return (
     <View style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -247,11 +351,7 @@ const EventCreationInfo1 = ({
         </View>
 
         {/* Submit Button */}
-        <TouchableOpacity
-          style={styles.saveButton}
-          onPress={() => {
-            navigation.navigate("EventDetails");
-          }}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleNext}>
           <View style={styles.buttonContent}>
             <Text style={styles.saveButtonText}>التالي</Text>
           </View>

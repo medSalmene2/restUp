@@ -20,6 +20,8 @@ import EventDetailsScreen from "./screens/EventDetails";
 import BookingConfirmationScreen from "./screens/EventBooking";
 import AppointmentScreen from "./components/schedule";
 
+import { AuthContextProvider } from "./firestore/auth/AuthContext";
+// import EventsScreen from "./screens/EventScreen";
 
 const Stack = createStackNavigator();
 
