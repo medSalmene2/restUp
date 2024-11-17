@@ -61,15 +61,12 @@ export default function EventsScreen() {
       <SafeAreaView style={styles.bottomNav}>
         <View style={styles.navItem}>
           <Ionicons name="home" size={24} color="#000" />
-          <Text style={styles.navText}>My Events</Text>
+          <Text style={styles.navText}>Explore</Text>
         </View>
-        <View style={styles.navItem}>
-          <Ionicons name="filter" size={24} color="#666" />
-          <Text style={styles.navText}>Filter</Text>
-        </View>
+
         <View style={styles.navItem}>
           <Ionicons name="ticket-outline" size={24} color="#666" />
-          <Text style={styles.navText}>Tickets</Text>
+          <Text style={styles.navText}>My Events</Text>
         </View>
         <View style={styles.navItem}>
           <Ionicons name="person-outline" size={24} color="#666" />
