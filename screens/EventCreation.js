@@ -24,6 +24,9 @@ const EventCreation = () => {
   const [guestCount, setGuestCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [location, setLocation] = useState("اختر مكانا للحدث");
+  const [isAllDay, setIsAllDay] = useState(false);
+  const [fromTime, setFromTime] = useState(new Date());
+  const [toTime, setToTime] = useState(new Date());
 
   const eventProps = {
     title,
@@ -40,6 +43,12 @@ const EventCreation = () => {
     setSelectedDate,
     location,
     setLocation,
+    isAllDay,
+    setIsAllDay,
+    fromTime,
+    setFromTime,
+    toTime,
+    setToTime,
   };
 
   return (
