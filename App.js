@@ -16,6 +16,7 @@ import EventsScreen from "./screens/EventScreen";
 import { IconButton, Menu, Provider as PaperProvider } from "react-native-paper";
 import { I18nManager } from "react-native"; // For RTL
 import 'intl-pluralrules';
+import EventDetailsScreen from "./screens/EventDetails";
 
 
 // const Stack = createStackNavigator();
@@ -151,6 +152,6 @@ export default function App() {
     //     <AppNavigator />
     //   </PaperProvider>
     // </LanguageProvider>
-    <EventsScreen/>
+    <EventDetailsScreen/>
   );
 }
