@@ -1,47 +1,32 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { translations } from "../i18n/translations";
+import i18n from "../i18n";
 
 const LanguageContext = createContext();
 
-export function LanguageProvider({ children }) {
-  const [currentLanguage, setCurrentLanguage] = useState("en");
+export const LanguageProvider = ({ children }) => {
+  const [language, setLanguage] = useState(i18n.language);
+
+  const changeLanguage = (lang) => {
+    i18n.changeLanguage(lang).then(() => {
+      setLanguage(lang); // Update language in the state
+    });
+  };
 
   useEffect(() => {
-    const loadLanguage = async () => {
-      const savedLanguage = await AsyncStorage.getItem("appLanguage");
-      if (savedLanguage) {
-        setCurrentLanguage(savedLanguage);
-      }
-    };
-    loadLanguage();
-  }, []);
-
-  const setLanguage = async (lang) => {
-    setCurrentLanguage(lang);
-    await AsyncStorage.setItem("appLanguage", lang);
-  };
-
-  const t = (key) => {
-    const keys = key.split(".");
-    let value = translations[currentLanguage];
-    for (const k of keys) {
-      value = value[k];
+    if (language === "ar") {
+      I18nManager.forceRTL(true);
+    } else {
+      I18nManager.forceRTL(false);
     }
-    return value || key;
-  };
+  }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ currentLanguage, setLanguage, t }}>
+    <LanguageContext.Provider value={{ t: i18n.t, changeLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
-}
+};
 
-export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error("useLanguage must be used within a LanguageProvider");
-  }
-  return context;
-}
+export const useLanguage = () => {
+  return useContext(LanguageContext);
+};

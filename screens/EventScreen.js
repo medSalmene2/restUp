@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import CategoryTabs from '../components/CategoryTabs';
-import EventCard from '../components/EventCard';
-import { eventImages } from '../../assets/events';
+import EventCard from '../components/EventCards';
+
 
 export default function EventsScreen() {
   const categories = ['All', 'Music', 'Workshops', 'Conference'];
@@ -12,22 +12,22 @@ export default function EventsScreen() {
     {
       id: 1,
       title: 'Food Tasting Event',
-      image: eventImages.foodTasting,
+      image: require("../assets/foodTasting.jpg"),
     },
     {
       id: 2,
       title: 'Art Show',
-      image: eventImages.artShow,
+      image: require("../assets/Art.jpg"),
     },
     {
       id: 3,
       title: 'Fitness Class',
-      image: eventImages.fitness,
+      image: require("../assets/fitness.jpg"),
     },
     {
       id: 4,
-      title: 'Tech Conference',
-      image: eventImages.techConf,
+      title: 'Music Class',
+      image: require("../assets/music.jpg"),
     },
   ];
 
