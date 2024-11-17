@@ -1,45 +1,237 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Button, Icon } from "react-native-paper";
-import { TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  I18nManager,
+} from "react-native";
+import { Divider } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const EventManager = () => {
+// Enable RTL layout
+I18nManager.forceRTL(true);
+
+const EventCard = ({ imageUrl, title, date }) => (
+  <View style={styles.eventCard}>
+    <Image source={{ uri: imageUrl }} style={styles.eventImage} />
+    <Text style={styles.eventTitle}>{title}</Text>
+    <Text style={styles.eventDate}>{date}</Text>
+  </View>
+);
+
+const EventSection = ({ title, events, iconName }) => (
+  <View style={styles.section}>
+    <View style={styles.sectionHeader}>
+      <Text style={styles.sectionTitle}>{title}</Text>
+      <Icon name={iconName} size={24} color='red' />
+    </View>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {events.map((event, index) => (
+        <EventCard
+          key={index}
+          imageUrl={event.imageUrl}
+          title={event.title}
+          date={event.date}
+        />
+      ))}
+    </ScrollView>
+  </View>
+);
+
+const EventManager = ({navigation}) => {
+  // ... rest of the component remains the same ...
+  const scheduledEvents = [
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "مهرجان موسيقي",
+      date: "24 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "مؤتمر تقني",
+      date: "30 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+  ];
+
+  const organizedEvents = [
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "ورشة برمجة",
+      date: "15 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "نادي الكتاب",
+      date: "20 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+  ];
+
+  const eventHistory = [
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "حفلة رقص",
+      date: "1 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "ليلة سينما",
+      date: "5 نوفمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+    {
+      imageUrl: "https://placeholder.com/300x200",
+      title: "معرض فني",
+      date: "5 ديسمبر 2024",
+    },
+  ];
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.touchableContainer}>
-        <View style={styles.textIconContainer}>
-          <Text style={styles.titleText}>أحداثك المجدولة</Text>
-          <Icon source={"calendar"} size={20} style={styles.icon} />
-        </View>
-        <Icon source={"chevron-left"} size={25} />
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>استكشف الفعاليات</Text>
+          <Icon name='compass-outline' size={24} color='#ffffff' />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("EventCreation")}}>
+          <Text style={styles.buttonText}>إنشاء فعالية</Text>
+          <Icon name='plus-circle-outline' size={24} color='#ffffff' />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView style={styles.scrollContainer}>
+        <EventSection
+          title='فعالياتي المجدولة'
+          events={scheduledEvents}
+          iconName='calendar-clock'
+        />
+        <EventSection
+          title='الفعاليات المنظمة'
+          events={organizedEvents}
+          iconName='calendar-star'
+        />
+        <EventSection
+          title='سجل الفعاليات'
+          events={eventHistory}
+          iconName='history'
+        />
+      </ScrollView>
     </View>
   );
 };
-export default EventManager;
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+    paddingVertical: 40,
+  },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+    justifyContent: "space-around",
     padding: 20,
-    backgroundColor: "#F5F7F8",
   },
-  touchableContainer: {
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    flexDirection: "row-reverse", // RTL alignment
-    justifyContent: "space-between",
+  button: {
+    flexDirection: "row-reverse",
     alignItems: "center",
+    backgroundColor: "red",
+    padding: 12,
+    borderRadius: 8,
+    width: "45%",
+    justifyContent: "center",
   },
-  textIconContainer: {
-    flexDirection: "row-reverse", // Align text and icon in RTL
+  buttonText: {
+    color: "#ffffff",
+    marginRight: 8,
+    fontSize: 16,
+    fontWeight: "500",
+    fontFamily: "Arial",
+  },
+  scrollContainer: {
+    flex: 1,
+  },
+  section: {
+    marginBottom: 24,
+    direction: "rtl",
+  },
+  sectionHeader: {
+    flexDirection: "row",
     alignItems: "center",
+    paddingHorizontal: 16,
+    marginBottom: 12,
   },
-  titleText: {
+  sectionTitle: {
     fontSize: 20,
-    marginLeft: 10, // Adjust space between text and icon
+    fontWeight: "600",
+    fontFamily: "Arial",
+    marginHorizontal:8
+    
   },
-  icon: {
-    marginLeft: 5, // Fine-tune spacing
+  eventCard: {
+    width: 150,
+    marginHorizontal: 8,
+    backgroundColor: "#ffffff",
+    borderRadius: 12,
+    overflow: "hidden",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  eventImage: {
+    width: "100%",
+    height: 80,
+    resizeMode: "cover",
+  },
+  eventTitle: {
+    fontSize: 16,
+    fontWeight: "500",
+    margin: 8,
+    fontFamily: "Arial",
+  },
+  eventDate: {
+    fontSize: 14,
+    color: "#666",
+    marginHorizontal: 8,
+    marginBottom: 8,
+    fontFamily: "Arial",
   },
 });
+
+export default EventManager;
