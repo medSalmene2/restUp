@@ -18,6 +18,7 @@ import { I18nManager } from "react-native"; // For RTL
 import 'intl-pluralrules';
 import EventDetailsScreen from "./screens/EventDetails";
 import BookingConfirmationScreen from "./screens/EventBooking";
+import AppointmentScreen from "./components/schedule";
 
 
 const Stack = createStackNavigator();
@@ -153,19 +154,23 @@ export default function App() {
     //     <AppNavigator />
     //   </PaperProvider>
     // </LanguageProvider>
-    <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen
-        name="EventDetails"
-        component={EventDetailsScreen}
-        options={{ title: "Event Details" }}
-      />
-      <Stack.Screen
-        name="BookingConfirmation"
-        component={BookingConfirmationScreen}
-        options={{ title: "Booking Confirmation" }}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
+
+
+  //   <NavigationContainer>
+  //   <Stack.Navigator>
+  //     <Stack.Screen
+  //       name="EventDetails"
+  //       component={EventDetailsScreen}
+  //       options={{ title: "Event Details" }}
+  //     />
+  //     <Stack.Screen
+  //       name="BookingConfirmation"
+  //       component={BookingConfirmationScreen}
+  //       options={{ title: "Booking Confirmation" }}
+  //     />
+  //   </Stack.Navigator>
+  // </NavigationContainer>
+
+  <AppointmentScreen/>
   );
 }
