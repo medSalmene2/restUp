@@ -135,7 +135,25 @@ const Signup = ({ navigation }) => {
       );
       navigation.navigate("Home");
     } catch (err) {
-      console.log("here" , err);
+      console.error("Signup error:", err);
+
+      // Handle specific Firebase errors
+      switch (err.code) {
+        case "auth/email-already-in-use":
+          setMessage("رقم الهاتف مستخدم بالفعل");
+          break;
+        case "auth/invalid-email":
+          setMessage("رقم الهاتف غير صالح");
+          break;
+        case "auth/operation-not-allowed":
+          setMessage("تسجيل المستخدم غير مفعل حالياً");
+          break;
+        case "auth/weak-password":
+          setMessage("كلمة المرور ضعيفة جداً");
+          break;
+        default:
+          setMessage("حدث خطأ أثناء التسجيل");
+      }
     }
   };
 

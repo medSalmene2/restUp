@@ -14,6 +14,7 @@ import EventManager from "./screens/EventManager";
 import EventInfoScreen from "./screens/testig";
 import EventCreation from "./screens/EventCreation";
 import EventDetailsScreen from "./screens/EventDetails";
+import { AuthContextProvider } from "./firestore/auth/AuthContext";
 // import EventsScreen from "./screens/EventScreen";
 
 const Stack = createStackNavigator();
@@ -105,9 +106,11 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppNavigator />
-    </LanguageProvider>
+    <AuthContextProvider>
+      <LanguageProvider>
+        <AppNavigator />
+      </LanguageProvider>
+    </AuthContextProvider>
     // <EventManager/>
   );
 }
