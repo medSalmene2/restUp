@@ -4,7 +4,6 @@ import { I18nManager } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNRestart from "react-native-restart";
 
-
 // Import translations
 import en from "./locales/en.json";
 import fr from "./locales/fr.json";
@@ -19,47 +18,65 @@ const i18n = new I18n({
 
 // Set the default language
 i18n.defaultLocale = "en";
-i18n.locale = "en"; // Set an initial locale
+i18n.locale = "en";
 
-// Load language from AsyncStorage or use device's locale
-(async () => {
-  const storedLang = await AsyncStorage.getItem("appLanguage");
-  const locale = storedLang || Localization.locale.split("-")[0] || "en";
+// Function to initialize language
+const initLanguage = async () => {
+  try {
+    const storedLang = await AsyncStorage.getItem("appLanguage");
+    const deviceLocale = Localization.locale.split("-")[0];
+    const locale = storedLang || deviceLocale || "en";
 
-  i18n.locale = locale;
+    // Validate the locale
+    if (["en", "fr", "ar"].includes(locale)) {
+      i18n.locale = locale;
 
-  // Handle RTL for Arabic
-  if (locale === "ar") {
-    I18nManager.forceRTL(true);
-  } else {
-    I18nManager.forceRTL(false);
+      // Handle RTL for Arabic
+      I18nManager.forceRTL(locale === "ar");
+    }
+  } catch (error) {
+    console.error("Error initializing language:", error);
   }
-})();
+};
 
 // Enable fallbacks for missing translations
 i18n.enableFallback = true;
 
 // Function to change language
 export const changeLanguage = async (lang) => {
-  i18n.locale = lang;
-  await AsyncStorage.setItem("appLanguage", lang);
-
-  // Handle RTL for Arabic
-  if (lang === "ar" && !I18nManager.isRTL) {
-    I18nManager.forceRTL(true);
-  } else if (lang !== "ar" && I18nManager.isRTL) {
-    I18nManager.forceRTL(false);
-  }
-
-  // Restart the app to apply RTL changes
-  setTimeout(() => {
-    if (RNRestart) {
-      RNRestart.Restart();
-    } else {
-      console.warn("RNRestart is not available");
+  try {
+    // Validate the language
+    if (!["en", "fr", "ar"].includes(lang)) {
+      console.warn(`Unsupported language: ${lang}`);
+      return;
     }
-  }, 0);
+
+    i18n.locale = lang;
+    await AsyncStorage.setItem("appLanguage", lang);
+
+    // Handle RTL for Arabic
+    const isRTL = lang === "ar";
+    if (I18nManager.isRTL !== isRTL) {
+      I18nManager.forceRTL(isRTL);
+      I18nManager.allowRTL(isRTL);
+      
+      // Restart the app with improved error handling
+      if (RNRestart && typeof RNRestart.Restart === 'function') {
+        setTimeout(() => {
+          RNRestart.Restart();
+        }, 0);
+      } else {
+        console.error("RNRestart is not available or not a function");
+        // Fallback restart method (less ideal)
+        // You might want to use platform-specific restart methods here
+      }
+    }
+  } catch (error) {
+    console.error("Error changing language:", error);
+  }
 };
 
+// Initialize language on module load
+initLanguage();
 
 export default i18n;

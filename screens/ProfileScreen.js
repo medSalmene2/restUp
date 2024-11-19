@@ -16,7 +16,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n, { changeLanguage } from "../i18n";
 
-const ProfileScreen = ({ route }) => {
+const ProfileScreen = ({ route, navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("العربية");
 
@@ -27,15 +27,22 @@ const ProfileScreen = ({ route }) => {
   ];
 
   const handleLanguageChange = async (lang) => {
-    // Find the language object that matches the label and update the selectedLanguage
-    const selectedLang = languages.find(language => language.label === lang);
-    setSelectedLanguage(selectedLang.label); // Update with the label (string)
-    setIsModalVisible(false);
-  
-    // Change the language using the changeLanguage function
-    await changeLanguage(lang);
+    // Find the language object that matches the label
+    const selectedLang = languages.find((language) => language.label === lang);
+    if (selectedLang) {
+      setSelectedLanguage(selectedLang.label);
+      setIsModalVisible(false);
+
+      // Change the language using the changeLanguage function
+      await changeLanguage(
+        selectedLang.label === "العربية"
+          ? "ar"
+          : selectedLang.label === "English"
+          ? "en"
+          : "fr"
+      );
+    }
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -108,7 +115,9 @@ const ProfileScreen = ({ route }) => {
       <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>{i18n.t("profile.favorites")}</Text>
+            <Text style={styles.menuItemText}>
+              {i18n.t("profile.favorites")}
+            </Text>
             <Icon name="heart-outline" color="#FF6347" size={25} />
           </View>
         </TouchableRipple>
@@ -126,13 +135,18 @@ const ProfileScreen = ({ route }) => {
         </TouchableRipple>
         <TouchableRipple onPress={() => setIsModalVisible(true)}>
           <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>{i18n.t("profile.language")} ({selectedLanguage})</Text>
+            <Text style={styles.menuItemText}>
+              {i18n.t("profile.language")} ({selectedLanguage})
+            </Text>
             <Icon name="translate" color="#FF6347" size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>  {i18n.t("profile.logout")} </Text>
+            <Text style={styles.menuItemText}>
+              {" "}
+              {i18n.t("profile.logout")}{" "}
+            </Text>
             <Icon name="logout" color="#FF6347" size={25} />
           </View>
         </TouchableRipple>
@@ -151,7 +165,7 @@ const ProfileScreen = ({ route }) => {
               <TouchableOpacity
                 key={index}
                 style={styles.languageOption}
-                onPress={() => handleLanguageChange(language.value)}
+                onPress={() => handleLanguageChange(language.label)} // Use label
               >
                 <Avatar.Image source={language.flag} size={40} />
                 <Text style={styles.languageText}>{language.label}</Text>
@@ -161,7 +175,9 @@ const ProfileScreen = ({ route }) => {
               onPress={() => setIsModalVisible(false)}
               style={styles.closeButton}
             >
-              <Text style={styles.closeButtonText}>{i18n.t("profile.close")}</Text>
+              <Text style={styles.closeButtonText}>
+                {i18n.t("profile.close")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
