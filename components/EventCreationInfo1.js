@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  I18nManager,
   Platform,
   Alert,
 } from "react-native";
@@ -41,23 +40,14 @@ const EventCreationInfo1 = ({
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
 
-  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه"];
-  const [errors, setErrors] = useState({
-    title: false,
-    categories: false,
-    description: false,
-    time: false,
-  });
+  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه" , "أكل"];
+  
 
   // Helper function to add minutes to a date
   const addMinutes = (date, minutes) => {
     return new Date(date.getTime() + minutes * 60000);
   };
 
-  // Helper function to get minutes difference between two dates
-  const getMinutesDifference = (date1, date2) => {
-    return Math.floor((date2.getTime() - date1.getTime()) / 60000);
-  };
 
   const toggleCategory = category => {
     if (selectedCategories.includes(category)) {
@@ -169,8 +159,6 @@ const EventCreationInfo1 = ({
       newErrors.time = true;
       isValid = false;
     }
-
-    setErrors(newErrors);
 
     if (!isValid) {
       let errorMessage = "يرجى تصحيح الأخطاء التالية:\n";
