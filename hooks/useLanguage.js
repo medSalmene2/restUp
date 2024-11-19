@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import i18n from "../i18n";
+import { I18nManager } from "react-native";
 
 const LanguageContext = createContext();
 
@@ -13,9 +14,9 @@ export const LanguageProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (language === "ar") {
+    if (language === "ar" && !I18nManager.isRTL) {
       I18nManager.forceRTL(true);
-    } else {
+    } else if (language !== "ar" && I18nManager.isRTL) {
       I18nManager.forceRTL(false);
     }
   }, [language]);
