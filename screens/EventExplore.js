@@ -13,39 +13,42 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import CategoryTabs from "../components/CategoryTabs";
 import EventCard from "../components/EventCards";
 import { fetchEvents } from "../firestore/events/Find";
+import NoEventsView from "../components/NoEventsView";
 
 export default function EventsScreen() {
-  const events = [
-    {
-      id: 1,
-      title: "Food Tasting Event",
-      image: require("../assets/foodTasting.jpg"),
-    },
-    {
-      id: 2,
-      title: "Art Show",
-      image: require("../assets/Art.jpg"),
-    },
-    {
-      id: 3,
-      title: "Fitness Class",
-      image: require("../assets/fitness.jpg"),
-    },
-    {
-      id: 4,
-      title: "Music Class",
-      image: require("../assets/music.jpg"),
-    },
-  ];
+  // const events = [
+  //   {
+  //     id: 1,
+  //     title: "Food Tasting Event",
+  //     image: require("../assets/foodTasting.jpg"),
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Art Show",
+  //     image: require("../assets/Art.jpg"),
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Fitness Class",
+  //     image: require("../assets/fitness.jpg"),
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Music Class",
+  //     image: require("../assets/music.jpg"),
+  //   },
+  // ];
+
   const [selectedCategs, setSelectedCategs] = useState(["الجميع"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const getEvents = async () => {
       const categs = selectedCategs.includes("الجميع") ? null : selectedCategs;
-      const events = await fetchEvents(categs);
-      console.log(events);
+      const eventsData = await fetchEvents(categs);
+      setEvents(eventsData);
       // console.log(JSON.stringify(events));
     };
     getEvents();
@@ -89,11 +92,15 @@ export default function EventsScreen() {
 
       <ScrollView style={styles.eventsContainer}>
         <View style={styles.eventsGrid}>
-          {events.map(event => (
-            <View key={event.id} style={styles.eventCardWrapper}>
-              <EventCard event={event} />
-            </View>
-          ))}
+          {events.length > 0 ? (
+            events.map(event => (
+              <View key={event.id} style={styles.eventCardWrapper}>
+                <EventCard event={event} />
+              </View>
+            ))
+          ) : (
+            <NoEventsView />
+          )}
         </View>
       </ScrollView>
 
