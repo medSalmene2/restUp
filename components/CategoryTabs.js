@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { I18nManager } from 'react-native';
+
+I18nManager.forceRTL(false); // Set to false for Left-to-Right (LTR)
 
 export default function CategoryTabs({ categories }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -9,8 +12,10 @@ export default function CategoryTabs({ categories }) {
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.container}
+      contentContainerStyle={styles.scrollContent} 
     >
       {categories.map((category) => (
+        
         <TouchableOpacity
           key={category}
           onPress={() => setSelectedCategory(category)}
@@ -36,14 +41,21 @@ export default function CategoryTabs({ categories }) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    marginBottom: 16,
+    marginBottom: 26,
+    maxHeight: 50,
+  },
+  scrollContent: {
+    justifyContent: 'flex-start', // Align tabs to the start
+    paddingHorizontal: 8, // Optional spacing on both sides
   },
   tab: {
     paddingHorizontal: 20,
-    paddingVertical: 8,
     marginRight: 8,
     borderRadius: 20,
     backgroundColor: '#f5f5f5',
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    
   },
   selectedTab: {
     backgroundColor: '#000',

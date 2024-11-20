@@ -1,10 +1,20 @@
 {
-    "greeting": "صباح النور سي علي",
-    "medical_help": "مساعدة شبه طبية",
-    "daily_needs": "حاجيات يومية",
+  "home": {
+    "greeting": "صباح النور، سي علي",
+       "service": "خدمة",
+    "serviceList": "قائمة الخدمات",
+    "paramedical": "مساعدة شبه طبية",
+    "dailyNeeds": "حاجيات يومية",
     "entertainment": "ترفيه",
-    "transport": "تنقل",
-    "just_for_you": "لك انت",
-    "request_now": "يمكنك الطلب"
+    "transport": "تنقل"
+  },
+  "profile": {
+    "title": "حسابك",
+    "favorites": "خدماتك المفضلة",
+    "payment": "خلاص",
+    "help": "مساعدة",
+    "logout": "تسجيل الخروج",
+    "language": "تغيير اللغة",
+    "close":"إغلاق"
   }
-  
+}

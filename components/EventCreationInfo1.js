@@ -40,8 +40,13 @@ const EventCreationInfo1 = ({
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
 
-  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه" , "أكل"];
-  
+  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "موسيقى", "تعليم", "طبخ","قراءة","رسم "];
+  const [errors, setErrors] = useState({
+    title: false,
+    categories: false,
+    description: false,
+    time: false,
+  });
 
   // Helper function to add minutes to a date
   const addMinutes = (date, minutes) => {

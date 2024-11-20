@@ -1,0 +1,21 @@
+{
+    "home": {
+      "greeting": "Good Morning, Si Ali",
+       "service": "Service",
+      "serviceList": "Service List",
+      "paramedical": "Paramedical Help",
+      "dailyNeeds": "Daily Needs",
+      "entertainment": "Entertainment",
+      "transport": "Transport"
+    },
+    "profile": {
+      "title": "Your Account",
+      "favorites": "Favorite Services",
+      "payment": "Payment",
+      "help": "Help",
+      "logout": "Logout",
+      "language": "Change Language",
+      "close": "Close"
+    }
+  }
+  

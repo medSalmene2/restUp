@@ -1,10 +1,20 @@
 {
-    "greeting": "Bonjour Mr. Ali",
-    "medical_help": "Aide para-médicale",
-    "daily_needs": "Besoins quotidiens",
+  "home": {
+    "greeting": "Bonjour, Si Ali",
+     "service": "Service",
+    "serviceList": "Liste des Services",
+    "paramedical": "Aide Paramédicale",
+    "dailyNeeds": "Besoins Quotidiens",
     "entertainment": "Divertissement",
-    "transport": "Transport",
-    "just_for_you": "Pour vous",
-    "request_now": "Demandez maintenant"
+    "transport": "Transport"
+  },
+  "profile": {
+    "title": "Votre Compte",
+    "favorites": "Services Favoris",
+    "payment": "Paiement",
+    "help": "Aide",
+    "logout": "Déconnexion",
+    "language": "Changer la Langue",
+    "close":"Fermer"
   }
-  
+}
