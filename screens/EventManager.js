@@ -6,13 +6,9 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  I18nManager,
 } from "react-native";
-import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-// Enable RTL layout
-I18nManager.forceRTL(true);
 
 const EventCard = ({ imageUrl, title, date }) => (
   <View style={styles.eventCard}>
@@ -41,7 +37,7 @@ const EventSection = ({ title, events, iconName }) => (
   </View>
 );
 
-const EventManager = ({navigation}) => {
+const EventManager = ({ navigation }) => {
   // ... rest of the component remains the same ...
   const scheduledEvents = [
     {
@@ -120,12 +116,18 @@ const EventManager = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+            navigation.navigate("EventExplore");
+          }}>
           <Text style={styles.buttonText}>استكشف الفعاليات</Text>
           <Icon name='compass-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("EventCreation")}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("EventCreation");
+          }}>
           <Text style={styles.buttonText}>إنشاء فعالية</Text>
           <Icon name='plus-circle-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
@@ -196,8 +198,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     fontFamily: "Arial",
-    marginHorizontal:8
-    
+    marginHorizontal: 8,
   },
   eventCard: {
     width: 150,

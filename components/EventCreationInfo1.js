@@ -16,6 +16,7 @@ import {
   Switch,
 } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import categories from "./EventCategoriesSet";
 
 const EventCreationInfo1 = ({
   navigation,
@@ -40,7 +41,6 @@ const EventCreationInfo1 = ({
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
 
-  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "موسيقى", "تعليم", "طبخ","قراءة","رسم "];
   const [errors, setErrors] = useState({
     title: false,
     categories: false,
@@ -52,7 +52,6 @@ const EventCreationInfo1 = ({
   const addMinutes = (date, minutes) => {
     return new Date(date.getTime() + minutes * 60000);
   };
-
 
   const toggleCategory = category => {
     if (selectedCategories.includes(category)) {
@@ -227,14 +226,14 @@ const EventCreationInfo1 = ({
             <Chip
               key={index}
               style={styles.categoryChip}
-              onPress={() => toggleCategory(category)}
-              selected={selectedCategories.includes(category)}
+              onPress={() => toggleCategory(category.name)}
+              selected={selectedCategories.includes(category.name)}
               selectedColor='green'
               textStyle={{
                 color: "black",
                 fontSize: 16,
               }}>
-              {category}
+              {category.name}
             </Chip>
           ))}
         </ScrollView>
