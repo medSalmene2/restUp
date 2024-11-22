@@ -2,14 +2,20 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import categories from "./EventCategoriesSet";
+import { useNavigation } from "@react-navigation/native";
 
 export default function EventCard({ event }) {
   const categImage =
     categories.find(cat => cat.name === event.categories[0])?.imageUrl ??
     require("../assets/event.png");
+  const navigation = useNavigation();
 
   return (
-    <TouchableOpacity style={styles.eventCard}>
+    <TouchableOpacity
+      style={styles.eventCard}
+      onPress={() => {
+        navigation.navigate("EventOverview", { event });
+      }}>
       <Image source={categImage} style={styles.eventImage} />
       <View style={styles.eventTitleContainer}>
         <Text style={styles.eventTitle} numberOfLines={2} ellipsizeMode='tail'>
@@ -64,7 +70,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "red", // Light gray divider
     marginHorizontal: 8,
-    
   },
   eventDateContainer: {
     flexDirection: "row",

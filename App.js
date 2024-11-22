@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import  { changeLanguage } from "./i18n";
+import { changeLanguage } from "./i18n";
 import HomeScreen from "./screens/Home";
 import FinalSubService from "./screens/FinalSubService";
 import SubServicesList from "./screens/SubServicesList";
@@ -19,7 +19,7 @@ import {
 } from "react-native-paper";
 import "intl-pluralrules";
 import EventDetailsScreen from "./screens/EventDetails";
-import BookingConfirmationScreen from "./screens/EventBooking";
+import EventBooking from "./screens/EventBooking";
 import AppointmentScreen from "./components/schedule";
 
 import { AuthContextProvider } from "./firestore/auth/AuthContext";
@@ -111,6 +111,13 @@ function AppNavigator() {
         <Stack.Screen
           name='EventExplore'
           component={EventExplore}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
+        <Stack.Screen
+          name='EventOverview'
+          component={EventBooking}
           // options={{
           //   headerShown: false,
           // }}

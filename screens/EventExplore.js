@@ -90,8 +90,8 @@ export default function EventsScreen() {
       <ScrollView style={styles.eventsContainer}>
         <View style={styles.eventsGrid}>
           {events.length > 0 ? (
-            events.map(event => (
-              <View key={event.id} style={styles.eventCardWrapper}>
+            events.map((event,i) => (
+              <View key={i} style={styles.eventCardWrapper}>
                 <EventCard event={event} />
               </View>
             ))
