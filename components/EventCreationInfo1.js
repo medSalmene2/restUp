@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  I18nManager,
   Platform,
   Alert,
 } from "react-native";
@@ -17,6 +16,7 @@ import {
   Switch,
 } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import categories from "./EventCategoriesSet";
 
 const EventCreationInfo1 = ({
   navigation,
@@ -41,7 +41,6 @@ const EventCreationInfo1 = ({
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
 
-  const categories = ["رياضة", "ثقافة", "تكنولوجيا", "فن", "تعليم", "ترفيه"];
   const [errors, setErrors] = useState({
     title: false,
     categories: false,
@@ -52,11 +51,6 @@ const EventCreationInfo1 = ({
   // Helper function to add minutes to a date
   const addMinutes = (date, minutes) => {
     return new Date(date.getTime() + minutes * 60000);
-  };
-
-  // Helper function to get minutes difference between two dates
-  const getMinutesDifference = (date1, date2) => {
-    return Math.floor((date2.getTime() - date1.getTime()) / 60000);
   };
 
   const toggleCategory = category => {
@@ -170,8 +164,6 @@ const EventCreationInfo1 = ({
       isValid = false;
     }
 
-    setErrors(newErrors);
-
     if (!isValid) {
       let errorMessage = "يرجى تصحيح الأخطاء التالية:\n";
       if (newErrors.title) errorMessage += "- يجب إدخال العنوان\n";
@@ -234,14 +226,14 @@ const EventCreationInfo1 = ({
             <Chip
               key={index}
               style={styles.categoryChip}
-              onPress={() => toggleCategory(category)}
-              selected={selectedCategories.includes(category)}
+              onPress={() => toggleCategory(category.name)}
+              selected={selectedCategories.includes(category.name)}
               selectedColor='green'
               textStyle={{
                 color: "black",
                 fontSize: 16,
               }}>
-              {category}
+              {category.name}
             </Chip>
           ))}
         </ScrollView>

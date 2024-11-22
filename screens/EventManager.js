@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,21 +6,9 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
-  I18nManager,
 } from "react-native";
-import { Divider } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-// Enable RTL layout
-I18nManager.forceRTL(true);
-
-const EventCard = ({ imageUrl, title, date }) => (
-  <View style={styles.eventCard}>
-    <Image source={{ uri: imageUrl }} style={styles.eventImage} />
-    <Text style={styles.eventTitle}>{title}</Text>
-    <Text style={styles.eventDate}>{date}</Text>
-  </View>
-);
+import EventCard from "../components/EventCards";
 
 const EventSection = ({ title, events, iconName }) => (
   <View style={styles.section}>
@@ -28,104 +16,51 @@ const EventSection = ({ title, events, iconName }) => (
       <Text style={styles.sectionTitle}>{title}</Text>
       <Icon name={iconName} size={24} color='red' />
     </View>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {events.map((event, index) => (
-        <EventCard
-          key={index}
-          imageUrl={event.imageUrl}
-          title={event.title}
-          date={event.date}
-        />
-      ))}
-    </ScrollView>
+    {events.length > 0 ? (
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {events.map((event, index) => (
+          <EventCard
+            key={index}
+            imageUrl={event.imageUrl}
+            title={event.title}
+            date={event.date}
+          />
+        ))}
+      </ScrollView>
+    ) : (
+      <EmptyState title={title} />
+    )}
+  </View>
+);
+const EmptyState = ({ title }) => (
+  <View style={styles.emptyStateContainer}>
+    <Icon name='calendar-blank' size={64} color='#CCCCCC' />
+    <Text style={styles.emptyStateText}>ليس لذيك اي فعالية في {title}</Text>
   </View>
 );
 
-const EventManager = ({navigation}) => {
-  // ... rest of the component remains the same ...
-  const scheduledEvents = [
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "مهرجان موسيقي",
-      date: "24 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "مؤتمر تقني",
-      date: "30 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-  ];
-
-  const organizedEvents = [
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "ورشة برمجة",
-      date: "15 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "نادي الكتاب",
-      date: "20 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-  ];
-
-  const eventHistory = [
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "حفلة رقص",
-      date: "1 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "ليلة سينما",
-      date: "5 نوفمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-    {
-      imageUrl: "https://placeholder.com/300x200",
-      title: "معرض فني",
-      date: "5 ديسمبر 2024",
-    },
-  ];
+const EventManager = ({ navigation }) => {
+  const [scheduledEvents, setScheduledEvents] = useState([]);
+  const [organizedEvents, setOrganiezedEvents] = useState([]);
+  const [eventHistory, setEventHistory] = useState([]);
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("EventExplore");
+          }}>
           <Text style={styles.buttonText}>استكشف الفعاليات</Text>
           <Icon name='compass-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate("EventCreation")}}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("EventCreation");
+          }}>
           <Text style={styles.buttonText}>إنشاء فعالية</Text>
           <Icon name='plus-circle-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
@@ -196,41 +131,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     fontFamily: "Arial",
-    marginHorizontal:8
-    
-  },
-  eventCard: {
-    width: 150,
     marginHorizontal: 8,
-    backgroundColor: "#ffffff",
-    borderRadius: 12,
-    overflow: "hidden",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
-  eventImage: {
-    width: "100%",
-    height: 80,
-    resizeMode: "cover",
+  emptyStateContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    marginHorizontal: 16,
   },
-  eventTitle: {
+  emptyStateText: {
+    marginTop: 16,
     fontSize: 16,
-    fontWeight: "500",
-    margin: 8,
-    fontFamily: "Arial",
-  },
-  eventDate: {
-    fontSize: 14,
-    color: "#666",
-    marginHorizontal: 8,
-    marginBottom: 8,
-    fontFamily: "Arial",
+    color: "#888",
+    textAlign: "center",
   },
 });
 

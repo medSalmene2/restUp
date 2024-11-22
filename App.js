@@ -1,27 +1,36 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { LanguageProvider, useLanguage } from "./hooks/useLanguage";
+import { changeLanguage } from "./i18n";
 import HomeScreen from "./screens/Home";
 import FinalSubService from "./screens/FinalSubService";
 import SubServicesList from "./screens/SubServicesList";
-import { IconButton } from "react-native-paper";
 import ProfileScreen from "./screens/ProfileScreen";
 import Map from "./screens/Map";
 import Login from "./screens/Login";
 import Signup from "./screens/SignUp";
 import EventManager from "./screens/EventManager";
-import EventInfoScreen from "./screens/testig";
 import EventCreation from "./screens/EventCreation";
+import EventExplore from "./screens/EventExplore";
+import {
+  IconButton,
+  Menu,
+  Provider as PaperProvider,
+} from "react-native-paper";
+import "intl-pluralrules";
 import EventDetailsScreen from "./screens/EventDetails";
+import EventBooking from "./screens/EventBooking";
+import AppointmentScreen from "./components/schedule";
+
 import { AuthContextProvider } from "./firestore/auth/AuthContext";
-// import EventsScreen from "./screens/EventScreen";
+import { I18nManager } from "react-native";
+import RNRestart from "react-native-restart";
+import i18n from "./i18n";
+
+import ExampleScreen from "./test";
 
 const Stack = createStackNavigator();
-
 function AppNavigator() {
-  const { t } = useLanguage();
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -54,26 +63,26 @@ function AppNavigator() {
           name='FinalSubService'
           component={FinalSubService}
           options={({ route }) => ({
-            title: route.params?.subServiceTitle || t("home.service"), // Dynamic translation
+            title: route.params?.subServiceTitle || i18n.t("home.service"),
           })}
         />
         <Stack.Screen
           name='Home'
           component={HomeScreen}
-          options={{ title: t("home.greeting") }}
+          options={{ title: i18n.t("home.greeting") }}
         />
         <Stack.Screen
           name='List'
           component={SubServicesList}
           options={({ route }) => ({
-            title: route.params?.serviceTitle || t("home.serviceList"), // Dynamic translation
+            title: route.params?.serviceTitle || i18n.t("home.serviceList"),
           })}
         />
         <Stack.Screen
           name='Profile'
           component={ProfileScreen}
           options={{
-            title: t("profile.title"), // Translated title
+            title: i18n.t("profile.title"),
             headerRight: null,
           }}
         />
@@ -81,7 +90,7 @@ function AppNavigator() {
           name='Map'
           component={Map}
           options={{
-            title: t("home.location"), // Translated title
+            title: i18n.t("home.location"),
             headerRight: null,
           }}
         />
@@ -89,7 +98,7 @@ function AppNavigator() {
           name='EventManager'
           component={EventManager}
           options={{
-            title: t("home.events"), // Translated title
+            title: i18n.t("home.events"),
           }}
         />
         <Stack.Screen
@@ -99,6 +108,20 @@ function AppNavigator() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name='EventExplore'
+          component={EventExplore}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
+        <Stack.Screen
+          name='EventOverview'
+          component={EventBooking}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -107,10 +130,8 @@ function AppNavigator() {
 export default function App() {
   return (
     <AuthContextProvider>
-      <LanguageProvider>
-        <AppNavigator />
-      </LanguageProvider>
+      <AppNavigator />
     </AuthContextProvider>
-    // <EventManager/>
+    // <ExampleScreen/>
   );
 }
