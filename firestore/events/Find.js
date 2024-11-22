@@ -5,12 +5,19 @@ import {
   getDocs,
   Timestamp,
   orderBy,
-  startAt,
-  endAt,
   limit,
 } from "firebase/firestore";
 import { db } from "../config/config";
 
+// Utility function to format Firestore timestamp
+const formatFirestoreDate = timestamp => {
+  if (!timestamp) return null;
+
+  const date = timestamp.toDate();
+  return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()}`;
+};
 const fetchEvents = async (
   categories,
   startDate,
@@ -35,10 +42,9 @@ const fetchEvents = async (
         where("date", "<=", Timestamp.fromDate(new Date(endDate)))
       );
     }
-    console.log(categories);
+
     // Add categories filter
     if (categories && categories.length > 0) {
-      console.log("EXECUTED");
       queryConstraints.push(
         where("categories", "array-contains-any", categories)
       );
@@ -92,17 +98,19 @@ const fetchEvents = async (
     if (queryLimit) {
       queryConstraints.push(limit(queryLimit));
     }
-    console.log(queryConstraints);
+
     // Execute query
     const q = query(queryRef, ...queryConstraints);
     const querySnapshot = await getDocs(q);
 
-    // Transform query results
+    // Transform query results with formatted dates
     const events = [];
     querySnapshot.forEach(doc => {
+      const data = doc.data();
       events.push({
         id: doc.id,
-        ...doc.data(),
+        ...data,
+        date: formatFirestoreDate(data.date), // Format the date
       });
     });
 
@@ -114,5 +122,4 @@ const fetchEvents = async (
 };
 
 export default fetchEvents;
-
 module.exports = { fetchEvents };

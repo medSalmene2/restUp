@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
@@ -14,43 +15,38 @@ import CategoryTabs from "../components/CategoryTabs";
 import EventCard from "../components/EventCards";
 import { fetchEvents } from "../firestore/events/Find";
 import NoEventsView from "../components/NoEventsView";
-
 export default function EventsScreen() {
-  // const events = [
-  //   {
-  //     id: 1,
-  //     title: "Food Tasting Event",
-  //     image: require("../assets/foodTasting.jpg"),
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Art Show",
-  //     image: require("../assets/Art.jpg"),
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Fitness Class",
-  //     image: require("../assets/fitness.jpg"),
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Music Class",
-  //     image: require("../assets/music.jpg"),
-  //   },
-  // ];
-
   const [selectedCategs, setSelectedCategs] = useState(["الجميع"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [events, setEvents] = useState([]);
 
+  // Add loading and error states
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const getEvents = async () => {
-      const categs = selectedCategs.includes("الجميع") ? null : selectedCategs;
-      const eventsData = await fetchEvents(categs);
-      setEvents(eventsData);
-      // console.log(JSON.stringify(events));
+      // Reset state before fetching
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const categs = selectedCategs.includes("الجميع")
+          ? null
+          : selectedCategs;
+        const eventsData = await fetchEvents(categs);
+        setEvents(eventsData);
+      } catch (err) {
+        // Handle any errors during fetching
+        setError(err);
+        console.error("Failed to fetch events:", err);
+      } finally {
+        // Ensure loading state is set to false
+        setIsLoading(false);
+      }
     };
+
     getEvents();
   }, [selectedCategs, searchQuery]);
 
@@ -58,6 +54,54 @@ export default function EventsScreen() {
     setIsFilterModalVisible(!isFilterModalVisible);
   };
 
+  // Render loading state
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size='large' color='red' />
+          <Text style={styles.loadingText}>جارٍ تحميل الأحداث...</Text>
+        </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <View style={styles.errorContainer}>
+          <Ionicons name='warning' size={50} color='red' />
+          <Text style={styles.errorText}>حدث خطأ أثناء تحميل الأحداث</Text>
+          <Text style={styles.errorSubtext}>
+            يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى
+          </Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => {
+              // Reset states and retry fetching
+              setSelectedCategs(["الجميع"]);
+              setSearchQuery("");
+            }}>
+            <Text style={styles.retryButtonText}>إعادة المحاولة</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <ScrollView style={styles.eventsContainer}>
+        <View style={styles.eventsGrid}>
+          {events.length > 0 ? (
+            events.map(event => (
+              <View key={event.id} style={styles.eventCardWrapper}>
+                <EventCard event={event} />
+              </View>
+            ))
+          ) : (
+            <NoEventsView />
+          )}
+        </View>
+      </ScrollView>
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -90,19 +134,7 @@ export default function EventsScreen() {
         setSelectedCategs={setSelectedCategs}
       />
 
-      <ScrollView style={styles.eventsContainer}>
-        <View style={styles.eventsGrid}>
-          {events.length > 0 ? (
-            events.map(event => (
-              <View key={event.id} style={styles.eventCardWrapper}>
-                <EventCard event={event} />
-              </View>
-            ))
-          ) : (
-            <NoEventsView />
-          )}
-        </View>
-      </ScrollView>
+      {renderContent()}
 
       {/* Filter Modal */}
       <Modal
@@ -261,5 +293,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     textAlign: "right",
+  },
+  // New loading and error styles
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: "#666",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
+    marginTop: 10,
+    textAlign: "center",
+  },
+  errorSubtext: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
+    textAlign: "center",
+  },
+  retryButton: {
+    marginTop: 20,
+    backgroundColor: "red",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+  },
+  retryButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

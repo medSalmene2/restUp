@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   addEventButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "red",
   },
   actionButtonText: {
     color: "white",
