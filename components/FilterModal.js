@@ -1,4 +1,4 @@
-import React, { useState  } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   View,
@@ -7,7 +7,7 @@ import {
   ScrollView,
   // TextInput,
   Switch,
-  StyleSheet
+  StyleSheet,
 } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
@@ -75,12 +75,11 @@ export default FilterModal = ({
 
   const formatDate = date => {
     if (!date) return "غير محدد";
-    const d = new Date(date);
-    return d.toLocaleDateString("ar-SA", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    date = new Date(date);
+    const d = date.getDate().toString().padStart(2, "0");
+    const m = (date.getMonth() + 1).toString().padStart(2, "0");
+    const y = date.getFullYear().toString();
+    return `${d}/${m}/${y}`;
   };
 
   const handleDateSelect = date => {
@@ -366,7 +365,8 @@ const styless = StyleSheet.create({
     padding: 5,
   },
   radiusInput: {
-width:"50%",    height: 40,
+    width: "50%",
+    height: 40,
     borderWidth: 1,
     borderColor: "#EEEEEE",
     borderRadius: 8,
@@ -374,7 +374,6 @@ width:"50%",    height: 40,
     marginRight: 8,
     textAlign: "center",
     backgroundColor: "#FFFFFF",
-  
   },
   radiusUnit: {
     fontSize: 14,
