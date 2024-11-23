@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import categories from "./EventCategoriesSet";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 
 export default function EventCard({ event }) {
   const categImage =
@@ -10,13 +10,19 @@ export default function EventCard({ event }) {
     require("../assets/event.png");
   const navigation = useNavigation();
 
-  console.log(event);
+  const currentRoute = useNavigationState(state => {
+    const route = state.routes[state.index]; // Get the current route
+    return route.name; // Return the name of the active screen
+  });
 
   return (
     <TouchableOpacity
       style={styles.eventCard}
       onPress={() => {
-        navigation.navigate("EventOverview", { event });
+        currentRoute === "EventExplore" &&
+          navigation.navigate("EventBooking", { event });
+        currentRoute === "EventManager" &&
+          navigation.navigate("EventOverview", { event });
       }}>
       <Image source={categImage} style={styles.eventImage} />
 

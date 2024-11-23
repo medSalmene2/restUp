@@ -11,6 +11,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../config/config";
+import { fetchUserInfo } from "../../firestore/User";
 
 const fetchEvents = async (
   userId,
@@ -133,6 +134,16 @@ const formatFirestoreDate = timestamp => {
     .padStart(2, "0")}/${date.getFullYear()}`;
 };
 
+export function formatFirestoreTimestampToTime(timestamp) {
+  if (!timestamp) {
+    return null;
+  }
+  const date = timestamp.toDate(); // Convert Firestore Timestamp to JavaScript Date
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  return `${hours}:${minutes}`;
+}
+
 const fetchUserBookedEvents = async userId => {
   try {
     // Get events where user is a participant
@@ -199,6 +210,8 @@ const fetchUserBookedEvents = async userId => {
       .map(event => ({
         ...event,
         date: formatFirestoreDate(event.date),
+        fromTime: formatFirestoreTimestampToTime(event.fromTime),
+        toTime: formatFirestoreTimestampToTime(event.toTime),
       }));
 
     // Upcoming events: Only include events where user is a participant (not organizer)
@@ -207,22 +220,26 @@ const fetchUserBookedEvents = async userId => {
         const eventDate = event.date.toDate();
         return eventDate >= today && event.isParticipant;
       })
-      .sort((a, b) => a.date.toDate() - b.date.toDate()) // Earliest first
+      .sort((a, b) => a.date.toDate() - b.date.toDate())
       .map(event => ({
         ...event,
         date: formatFirestoreDate(event.date),
-      }));
+        fromTime: formatFirestoreTimestampToTime(event.fromTime),
+        toTime: formatFirestoreTimestampToTime(event.toTime),
+      })); // Earliest first
 
     const upcomingOrganizedEvents = allEvents
       .filter(event => {
         const eventDate = event.date.toDate();
         return eventDate >= today && event.isOrganizer;
       })
-      .sort((a, b) => a.date.toDate() - b.date.toDate()) // Earliest first
+      .sort((a, b) => a.date.toDate() - b.date.toDate())
       .map(event => ({
         ...event,
         date: formatFirestoreDate(event.date),
-      }));
+        fromTime: formatFirestoreTimestampToTime(event.fromTime),
+        toTime: formatFirestoreTimestampToTime(event.toTime),
+      })); // Earliest first
 
     console.log("Past Events:", pastEvents.length);
     console.log("Upcoming Events:", upcomingEvents.length);
@@ -238,4 +255,29 @@ const fetchUserBookedEvents = async userId => {
     throw error;
   }
 };
-module.exports = { fetchEvents, fetchUserBookedEvents };
+
+async function fetchParticipantsInfo(eventId) {
+  const participantsInfo = [];
+
+  try {
+    // Reference to the participants subcollection
+    const participantsRef = collection(db, `events/${eventId}/participants`);
+    const participantsSnapshot = await getDocs(participantsRef);
+
+    // Loop through each participant document
+    for (const participantDoc of participantsSnapshot.docs) {
+      const participantId = participantDoc.id; // Assuming the doc ID is the user ID
+      // console.log(participantId);
+      const userInfo = await fetchUserInfo(participantId);
+      participantsInfo.push({ userInfo, ...participantDoc.data() });
+    }
+    console.log(participantsInfo);
+
+    return participantsInfo;
+  } catch (error) {
+    console.error("Error fetching participants:", error);
+    throw new Error("Failed to fetch participants information.");
+  }
+}
+
+module.exports = { fetchEvents, fetchUserBookedEvents, fetchParticipantsInfo };
