@@ -31,7 +31,7 @@ import ExampleScreen from "./test";
 
 const Stack = createStackNavigator();
 function AppNavigator() {
-  const { t, currentLanguage } = useTranslation();
+  // const { t, currentLanguage } = useTranslation();
 
   return (
     <NavigationContainer>
@@ -72,6 +72,13 @@ function AppNavigator() {
           name='Home'
           component={HomeScreen}
           options={{ title: i18n.t("home.greeting") }}
+        />
+        <Stack.Screen 
+          name="Schedule" 
+          component={AppointmentScreen}
+          options={{
+            title: 'حجز موعد',
+          }}
         />
         <Stack.Screen
           name='List'
@@ -132,9 +139,9 @@ function AppNavigator() {
 export default function App() {
   return (
     <AuthContextProvider>   
-     <TranslationProvider>
+     {/* <TranslationProvider> */}
         <AppNavigator />
-        </TranslationProvider>
+        {/* </TranslationProvider> */}
     </AuthContextProvider>
   );
 }

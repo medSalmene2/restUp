@@ -15,6 +15,7 @@ import Contact from "../components/Contact";
 const SubServicesList = ({ route }) => {
   const { subServices, image } = route.params;
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Image
@@ -29,10 +30,10 @@ const SubServicesList = ({ route }) => {
 
       <ScrollView>
         {subServices.map((subService, index) => (
-          <>
+          <View key={index}>
+            {/* Navigate to FinalSubService with contacts and subService data */}
             <TouchableOpacity
               style={styles.optionButton}
-              key={index}
               onPress={() => {
                 if (subService.serviceTitle === "الفعاليات الأجتماعية") {
                   navigation.navigate("EventManager");
@@ -42,10 +43,12 @@ const SubServicesList = ({ route }) => {
                   subServiceTitle: subService.serviceTitle,
                   description: subService.description,
                   image: subService.image,
+                  contacts: subService.contacts || [],
                 });
 
                 Speech.speak(subService.serviceTitle, { language: "ar" });
-              }}>
+              }}
+            >
               <Service
                 bgColor={subService.color}
                 text={subService.serviceTitle}
@@ -53,18 +56,21 @@ const SubServicesList = ({ route }) => {
                 image={subService.image}
               />
             </TouchableOpacity>
-            {subService.promotion?.map(promoted => (
+
+            {/* Render promotion section if available */}
+            {subService.promotion?.map((promoted) => (
               <Contact
                 key={promoted.name}
                 name={promoted.name}
                 job={promoted.job}
-                stars={5}
+                stars={promoted.stars}
                 image={promoted.image}
               />
             ))}
-          </>
+          </View>
         ))}
 
+        {/* Mic Button */}
         <View style={styles.requestContainer}>
           <Text style={styles.requestText}>يمكنك الطلب</Text>
           <TouchableOpacity style={styles.micButton}>
@@ -80,7 +86,6 @@ export default SubServicesList;
 
 const styles = StyleSheet.create({
   optionButton: {
-    // backgroundColor: "#64b5f6",
     borderRadius: 10,
     padding: 12,
     marginBottom: 5,
@@ -113,12 +118,5 @@ const styles = StyleSheet.create({
   micText: {
     fontSize: 24,
     color: "#fff",
-  },
-  heading: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#0288d1",
-    textAlign: "center",
-    marginBottom: 16,
   },
 });
