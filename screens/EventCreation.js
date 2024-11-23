@@ -71,7 +71,7 @@ const EventCreation = () => {
                 location,
                 locationPoint,
                 selectedDate,
-                user.uid
+                user.id
               )
             }
           />

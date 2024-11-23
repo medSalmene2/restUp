@@ -83,23 +83,6 @@ const addEventParticipant = async (eventId, userId, username, nbrOfPersons) => {
     throw error;
   }
 };
+// Updated exports
 
-const isUserParticipating = async (eventId, userId) => {
-  try {
-    const participantDocRef = doc(
-      db,
-      "events",
-      eventId,
-      "participants",
-      userId
-    );
-    const participantDoc = await getDoc(participantDocRef);
-
-    return participantDoc.exists();
-  } catch (error) {
-    console.error("Error checking participant status:", error);
-    throw error;
-  }
-};
-
-export { addEventParticipant, isUserParticipating };
+export { addEventParticipant };

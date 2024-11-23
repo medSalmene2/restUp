@@ -125,8 +125,15 @@ function AppNavigator() {
           // }}
         />
         <Stack.Screen
-          name='EventOverview'
+          name='EventBooking'
           component={EventBooking}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
+                <Stack.Screen
+          name='EventOverview'
+          component={EventDetailsScreen}
           // options={{
           //   headerShown: false,
           // }}

@@ -50,6 +50,7 @@ const SubServicesList = ({ route }) => {
               }}
             >
               <Service
+                key={index}
                 bgColor={subService.color}
                 text={subService.serviceTitle}
                 textColor={"black"}

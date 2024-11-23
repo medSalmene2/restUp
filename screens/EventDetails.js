@@ -1,99 +1,110 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import UserEventCard from "../components/UserEventCard"; // Import the shared UserCard component
+import { fetchUserInfo } from "../firestore/User";
+import { fetchParticipantsInfo } from "../firestore/events/Find";
 
+export default function EventDetailsScreen({ navigation, route }) {
+  const { event } = route.params;
+  console.log(event);
+  const [organizerInfo, setOrganizerInfo] = useState({
+    firstName: "User",
+    lastName: "User",
+    phonNumber: "*******",
+  });
+  const [participantsInfo, setParticipantsInfo] = useState([]);
 
-export default function EventDetailsScreen({ navigation }) {
+  const fetchOrganizerInfo = async () => {
+    const userInfo = await fetchUserInfo(event.organizerId);
+    setOrganizerInfo(userInfo);
+    console.log(userInfo);
+  };
+  const getParticipantsInfo = async () => {
+    const userInfo = await fetchParticipantsInfo(event.id);
+    setParticipantsInfo(userInfo);
+  };
+  useEffect(() => {
+    fetchOrganizerInfo();
+    getParticipantsInfo();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>Annual Tech Conference 2023</Text>
-        <Text style={styles.description}>
-          Join us for an immersive experience at the Annual Tech Conference
-          2023, where industry leaders will gather to discuss the latest trends
-          in technology and innovation. This event will feature keynote
-          speeches, panel discussions, and networking opportunities.
-        </Text>
+        <Text style={styles.title}>{event.title}</Text>
+
+        <View style={styles.categoriesContainer}>
+          {event.categories.map((category, index) => (
+            <View key={index} style={styles.categoryChip}>
+              <Ionicons name='information-outline' size={16} color='white' />
+              <Text style={styles.categoryText}>{category}</Text>
+            </View>
+          ))}
+        </View>
+
+        <Text style={styles.description}>{event.description}</Text>
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Date & Time</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>التاريخ والوقت</Text>
+            <Ionicons name='calendar-outline' size={20} color='red' />
+          </View>
           <Text style={styles.sectionContent}>
-            March 15, 2023, 9:00 AM - 5:00 PM
+            {event.date}{" "}
+            {event.allDay ? "طوال اليوم" : event.fromTime + "--" + event.toTime}
           </Text>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Location</Text>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>الموقع</Text>
+            <Ionicons name='location-outline' size={20} color='red' />
+          </View>
           <Image
             style={styles.mapImage}
-            source={{
-              uri: "https://via.placeholder.com/300x150",
-            }}
+            source={require("../assets/technology.png")}
           />
-          <Text style={styles.sectionContent}>
-            Moscone Center, 747 Howard St, San Francisco, CA 94103
-          </Text>
+          <Text style={styles.sectionContent}>{event.location} </Text>
         </View>
 
+        {/* Organizer Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Organizer</Text>
-          <View style={styles.organizer}>
-            <Image
-              style={styles.organizerImage}
-              source={{
-                uri: "https://via.placeholder.com/50",
-              }}
-            />
-            <View>
-              <Text style={styles.organizerName}>Sarah Johnson</Text>
-              <Text style={styles.organizerPhone}>Phone: (123) 456-7890</Text>
-            </View>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>المنظم</Text>
+            <Ionicons name='person-outline' size={20} color='red' />
           </View>
+          <UserEventCard
+            name={organizerInfo?.firstName + " " + organizerInfo?.lastName}
+            phone={organizerInfo?.phoneNumber}
+            imageSource={require("../assets/profilePlaceHolder.png")}
+            role='organizer'
+          />
         </View>
 
         {/* Participants Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionHeader}>Participants</Text>
-          {/* Participant 1 */}
-          <View style={styles.organizer}>
-            <Image
-              style={styles.organizerImage}
-              source={{
-                uri: "https://via.placeholder.com/50",
-              }}
-            />
-            <View>
-              <Text style={styles.participantName}>John Doe</Text>
-              <Text style={styles.participantPhone}>Phone: (987) 654-3210</Text>
-            </View>
+          <View style={styles.sectionHeaderContainer}>
+            <Text style={styles.sectionHeader}>المشاركون</Text>
+            <Ionicons name='people-outline' size={20} color='red' />
           </View>
-          {/* Participant 2 */}
-          <View style={styles.organizer}>
-            <Image
-              style={styles.organizerImage}
-              source={{
-                uri: "https://via.placeholder.com/50",
-              }}
-            />
-            <View>
-              <Text style={styles.participantName}>Jane Smith</Text>
-              <Text style={styles.participantPhone}>Phone: (555) 123-4567</Text>
-            </View>
+          <View style={styles.participantsContainer}>
+            {participantsInfo.length > 0 ? (
+              participantsInfo.map((participant, index) => (
+                <UserEventCard
+                  key={index} // Ensure to provide a unique key for each mapped element
+                  name={participant.username}
+                  phone={participant.phoneNumber}
+                  imageSource={require("../assets/profilePlaceHolder.png")}
+                  role={"participant"}
+                  numberOfPeople={participant.nbrOfPersons}
+                />
+              ))
+            ) : (
+              <Text>لا يوجد مشاركين حتى الان</Text> // Optional: Message if no participants
+            )}
           </View>
         </View>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("BookingConfirmation")}
-        >
-          <Text style={styles.buttonText}>Join/Book Event</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -103,98 +114,83 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-
+    direction: "rtl",
   },
   card: {
     backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 20,
+    borderRadius: 15,
+    padding: 15,
+    margin: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
   },
-  header: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "#333",
-    textAlign: "center", // Center the header
-  },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 12,
     color: "#000",
-    textAlign: "center", // Center the title
+    fontFamily: "Arial",
+  },
+  categoriesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap", // Allows wrapping to the next line if needed
+    gap: 8, // Space between chips
+    marginBottom: 16, // Adjust as necessary
+  },
+  categoryChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "red",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    alignSelf: "flex-start",
+    marginBottom: 16,
+  },
+  categoryText: {
+    marginRight: 6,
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Arial",
   },
   description: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 20,
-    lineHeight: 22,
-    textAlign: "justify", // Improve text readability
+    fontSize: 15,
+    color: "#444",
+    marginBottom: 24,
+    lineHeight: 24,
+    fontFamily: "Arial",
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 24,
+  },
+  sectionHeaderContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
   },
   sectionHeader: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 5,
     color: "#333",
-    textDecorationLine: "underline", // Add underlines for better separation
+    marginLeft: 8,
+    fontFamily: "Arial",
   },
   sectionContent: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 10,
+    fontSize: 15,
+    color: "#444",
+    marginBottom: 12,
+    fontFamily: "Arial",
   },
   mapImage: {
     width: "100%",
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 10,
+    height: 180,
+    borderRadius: 12,
+    marginBottom: 12,
   },
-  organizer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10, // Add spacing between participants
-  },
-  organizerImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  organizerName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  organizerPhone: {
-    fontSize: 12,
-    color: "#666",
-  },
-  participantName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  participantPhone: {
-    fontSize: 12,
-    color: "#666",
-  },
-  button: {
-    backgroundColor: "#FF5733",
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+  participantsContainer: {
+    gap: 12,
   },
 });

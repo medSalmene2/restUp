@@ -6,7 +6,6 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Modal,
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,16 +14,16 @@ import CategoryTabs from "../components/CategoryTabs";
 import EventCard from "../components/EventCards";
 import { fetchEvents } from "../firestore/events/Find";
 import NoEventsView from "../components/NoEventsView";
+import { useAuth } from "../firestore/auth/AuthContext";
+import FilterModal from "../components/FilterModal";
 export default function EventsScreen() {
   const [selectedCategs, setSelectedCategs] = useState(["الجميع"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [events, setEvents] = useState([]);
-
-  // Add loading and error states
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { user } = useAuth();
   useEffect(() => {
     const getEvents = async () => {
       // Reset state before fetching
@@ -35,7 +34,7 @@ export default function EventsScreen() {
         const categs = selectedCategs.includes("الجميع")
           ? null
           : selectedCategs;
-        const eventsData = await fetchEvents(categs);
+        const eventsData = await fetchEvents(user.id, categs);
         setEvents(eventsData);
       } catch (err) {
         // Handle any errors during fetching
@@ -90,7 +89,7 @@ export default function EventsScreen() {
       <ScrollView style={styles.eventsContainer}>
         <View style={styles.eventsGrid}>
           {events.length > 0 ? (
-            events.map((event,i) => (
+            events.map((event, i) => (
               <View key={i} style={styles.eventCardWrapper}>
                 <EventCard event={event} />
               </View>
@@ -137,40 +136,16 @@ export default function EventsScreen() {
       {renderContent()}
 
       {/* Filter Modal */}
-      <Modal
-        animationType='slide'
-        transparent={true}
+      <FilterModal
+        onClose={() => setIsFilterModalVisible(false)}
         visible={isFilterModalVisible}
-        onRequestClose={toggleFilterModal}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>فلترة الأحداث</Text>
-              <TouchableOpacity onPress={toggleFilterModal}>
-                <Ionicons name='close' size={24} color='black' />
-              </TouchableOpacity>
-            </View>
-
-            {/* Filter options */}
-            <View style={styles.filterOptionsContainer}>
-              <Text>خيارات التصفية</Text>
-              {/* Add more detailed filter controls here */}
-            </View>
-
-            <View style={styles.modalButtonContainer}>
-              <TouchableOpacity
-                style={styles.applyFilterButton}
-                onPress={toggleFilterModal}>
-                <Text style={styles.applyFilterButtonText}>تطبيق الفلتر</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </Modal>
+        onApply={() => setIsFilterModalVisible(false)}
+      />
     </SafeAreaView>
   );
 }
 
+// export default FilterModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
