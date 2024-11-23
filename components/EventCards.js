@@ -23,17 +23,27 @@ export default function EventCard({ event }) {
         </Text>
       </View>
 
-      {/* Added a divider */}
       <View style={styles.divider} />
 
       <View style={styles.eventDateContainer}>
         <Ionicons
-          name='time-outline'
-          size={14}
+          name='calendar-outline'
+          size={18}
           color='#666'
           style={styles.icon}
         />
         <Text style={styles.eventDate}>{event.date}</Text>
+      </View>
+
+      {/* Added participants count container */}
+      <View style={styles.participantsContainer}>
+        <Ionicons
+          name='people-outline'
+          size={18}
+          color='#666'
+          style={styles.icon}
+        />
+        <Text style={styles.participantsText}>{event.currentParticipants}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -65,10 +75,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 8,
   },
-  // New divider style
   divider: {
     height: 1,
-    backgroundColor: "red", // Light gray divider
+    backgroundColor: "red",
     marginHorizontal: 8,
   },
   eventDateContainer: {
@@ -78,7 +87,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   icon: {
-    marginRight: 6,
+    marginHorizontal: 6,
   },
   eventTitle: {
     fontSize: 16,
@@ -90,5 +99,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     fontFamily: "Arial",
+    fontWeight:"bold"
+
+  },
+  // Added new styles for participants
+  participantsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 8,
+    marginBottom: 8,
+  },
+  participantsText: {
+    fontSize: 16,
+    color: "#666",
+    fontFamily: "Arial",
+    fontWeight:"bold"
   },
 });
