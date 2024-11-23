@@ -5,8 +5,8 @@ import { Surface } from "react-native-paper";
 
 
 // Ensure RTL is enabled
-I18nManager.allowRTL(true);
-I18nManager.forceRTL(true);
+// I18nManager.allowRTL(true);
+// I18nManager.forceRTL(true);
 
 const Contact = ({ image, name, job, stars, fee,phone, onSchedulePress }) => {
 
@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     margin: 12,
     backgroundColor: '#fff',
+    direction: "ltr"
+    
   },
   scheduleButton: {
     position: 'absolute',

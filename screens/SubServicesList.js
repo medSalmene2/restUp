@@ -66,6 +66,7 @@ const SubServicesList = ({ route }) => {
                 job={promoted.job}
                 stars={promoted.stars}
                 image={promoted.image}
+                fee={promoted.fee}
               />
             ))}
           </View>

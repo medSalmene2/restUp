@@ -77,7 +77,7 @@ export default function HomeScreen({ navigation }) {
           name: "محمود",
           job: "طباخ",
           stars: 5,
-          fee:30
+          fee: 30 ,
         },
       ],
     },
@@ -310,7 +310,7 @@ export default function HomeScreen({ navigation }) {
           name: "محمود",
           job: "ممرض",
           stars: 5,
-          fee:50
+          fee: 50 ,
         },
       ],
     },
@@ -475,9 +475,6 @@ export default function HomeScreen({ navigation }) {
       contacts: [
 
       ],
-      promotion: [
-        { image: require("../assets/image.png"), name: "", job: "", stars: "" },
-      ],
     },
     {
       serviceTitle: "الأنشطة الرياضية الخفيفة ",
@@ -555,6 +552,31 @@ export default function HomeScreen({ navigation }) {
         "خدمات مخصصة لنقل كبار السن إلى الأماكن الاجتماعية والمرافق الصحية.",
       color: "#FF5722", // Base color
       image: require("../assets/31.jpg"),
+      contacts : [
+        {
+          id: "1",
+          name: "أحمد شوقي",
+          job: "سائق نقل اجتماعي",
+          image: require("../assets/driver2.jpg"),
+          stars: 5,
+          fee: "5 د.ت / كيلومتر",
+          baseFee: 10, // Initial fee
+          availability: "متاح",
+          experience: "10 سنوات",
+          languages: ["العربية", "الإنجليزية"],
+          specialFeatures: [
+            "سيارة واسعة تناسب مجموعات صغيرة",
+            "خبرة في نقل كبار السن إلى المرافق الاجتماعية"
+          ],
+          vehicleInfo: {
+            type: "تويوتا هايس",
+            year: "2020",
+            features: "مكيف هواء - أبواب منزلقة"
+          },
+          phone: "920001150",
+          pricingLogic: (distance) => `التكلفة الإجمالية: ${10 + distance * 5} د.ت`
+        }
+      ]
     },
     {
       serviceTitle: "النقل الطبي ",
@@ -575,9 +597,6 @@ export default function HomeScreen({ navigation }) {
         "توفير وسائل نقل للمشاركة في الأنشطة الاجتماعية، مثل الأندية والرحلات.",
       color: "#D84315", // Deep red-orange
       image: require("../assets/34.jpg"),
-      promotion: [
-        { image: require("../assets/image.png"), name: "", job: "", stars: "" },
-      ],
     },
 
     {
