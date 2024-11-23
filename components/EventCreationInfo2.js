@@ -5,20 +5,66 @@ import {
   TouchableOpacity,
   StyleSheet,
   I18nManager,
+  Alert,
 } from "react-native";
-import { Icon } from "react-native-paper";
+import { Icon, Snackbar } from "react-native-paper";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { fetchUsers } from "../firestore/events/Publish";
 
 const EventCreationInfo2 = ({
   location,
-  setLocation,
   selectedDate,
   setSelectedDate,
   navigation,
+  handleSumbit,
 }) => {
   // Set Arabic as the default locale
   LocaleConfig.defaultLocale = "ar";
+
+  // State for Snackbar
+  const [visible, setVisible] = useState(false);
+
+  // Function to verify location and handle submit
+  const handleSubmitWithVerification = async () => {
+    if (location === "اختر مكانا للحدث") {
+      Alert.alert(
+        "تنبيه",
+        "الرجاء إدخال الموقع قبل المتابعة",
+        [
+          {
+            text: "حسناً",
+            onPress: () => navigation.navigate("EventLocation"),
+            style: "default",
+          },
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    if (!selectedDate) {
+      Alert.alert("تنبيه", "الرجاء إدخال تاريخ قبل المتابعة", [
+        {
+          text: "حسناً",
+          style: "default",
+        },
+      ]);
+      return;
+    }
+    try {
+      // Call the original submit handler
+      await handleSumbit();
+      // Show success message
+      setVisible(true);
+      // Optional: Navigate away after a delay
+      setTimeout(() => {
+        navigation.navigate("EventManager"); // Uncomment if needed
+      }, 3000);
+    } catch (error) {
+      Alert.alert("خطأ", "حدث خطأ أثناء إنشاء الحدث. حاول مرة أخرى.", [
+        { text: "حسناً" },
+      ]);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -32,7 +78,9 @@ const EventCreationInfo2 = ({
             <Icon source={"chevron-left"} size={25} />
             <Text style={styles.label}>الموقع</Text>
           </View>
-          <Text style={styles.value}>{location}</Text>
+          <Text style={[styles.value, !location && styles.placeholderText]}>
+            {location || "الرجاء تحديد الموقع"}
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -70,13 +118,26 @@ const EventCreationInfo2 = ({
       </View>
       {/* Submit Button */}
       <TouchableOpacity
-        style={styles.saveButton}
-        onPress={async () => {
-          console.log("pressed");
-          await fetchUsers();
-        }}>
+        style={[styles.saveButton, !location && styles.saveButtonDisabled]}
+        onPress={handleSubmitWithVerification}>
         <Text style={styles.saveButtonText}>حفظ المعلومات</Text>
       </TouchableOpacity>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        duration={4000}
+        style={styles.snackbar}
+        action={{
+          label: "إغلاق",
+          onPress: () => setVisible(false),
+        }}>
+        <View style={styles.snackbarContent}>
+          <Icon source='check-circle' size={24} color='#fff' />
+          <Text style={styles.snackbarText}>تم إنشاء الحدث بنجاح</Text>
+        </View>
+      </Snackbar>
     </View>
   );
 };
@@ -102,18 +163,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#333",
-    textAlign: "right", // Aligns Arabic text to the right
+    textAlign: "right",
   },
   value: {
     fontSize: 14,
     color: "#666",
-    textAlign: "right", // Aligns Arabic text to the right
+    textAlign: "right",
+  },
+  placeholderText: {
+    color: "#999",
+    fontStyle: "italic",
   },
   subLabel: {
     fontSize: 12,
     color: "#666",
     marginBottom: 10,
-    textAlign: "right", // Aligns Arabic text to the right
+    textAlign: "right",
   },
   calendar: {
     borderWidth: 1,
@@ -127,16 +192,36 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     position: "absolute",
-    bottom: "5%", // Position 5% from bottom
+    bottom: "5%",
     left: "3%",
     right: "3%",
+  },
+  saveButtonDisabled: {
+    backgroundColor: "#ffcccc",
   },
   saveButtonText: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
   },
+  snackbar: {
+    backgroundColor: "#4CAF50", // Green color for success
+    borderRadius: 8,
+  },
+  snackbarContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  snackbarText: {
+    color: "#fff",
+    marginLeft: 8,
+    fontSize: 16,
+    textAlign: "right",
+  },
 });
+
+// Locale configuration remains the same
 LocaleConfig.locales["ar"] = {
   monthNames: [
     "يناير",
@@ -178,4 +263,5 @@ LocaleConfig.locales["ar"] = {
   dayNamesShort: ["أحد", "إثن", "ثلاث", "أربع", "خميس", "جمعه", "سبت"],
   today: "اليوم",
 };
+
 export default EventCreationInfo2;

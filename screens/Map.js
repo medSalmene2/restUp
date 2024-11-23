@@ -13,7 +13,7 @@ import { Banner, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-const Map = ({ setLocation }) => {
+const Map = ({ setLocation, setLocationPoint }) => {
   const mapViewRef = useRef();
   const [currentLocation, setCurrentLocation] = useState(null);
   const currentRegion = useRef({
@@ -40,6 +40,7 @@ const Map = ({ setLocation }) => {
       );
       //setLocation is provided during event creation  , this is arbitrary choice
       if (setLocation) {
+        setLocationPoint({latitude, longitude});
         setLocation(response.data.display_name);
         navigation.goBack();
       }

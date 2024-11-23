@@ -1,19 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  I18nManager,
-} from "react-native";
-
 import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationInfo1 from "../components/EventCreationInfo1";
 import EventCreationInfo2 from "../components/EventCreationInfo2";
 import Map from "./Map";
+import { publishEvent } from "../firestore/events/Publish";
+import { useAuth } from "../firestore/auth/AuthContext";
 
-// Enable RTL for the app (if not already enabled)
-I18nManager.forceRTL(true);
 const EventCreationStack = createStackNavigator();
 
 const EventCreation = () => {
@@ -24,9 +16,11 @@ const EventCreation = () => {
   const [guestCount, setGuestCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [location, setLocation] = useState("اختر مكانا للحدث");
+  const [locationPoint, setLocationPoint] = useState(null);
   const [isAllDay, setIsAllDay] = useState(false);
   const [fromTime, setFromTime] = useState(new Date());
   const [toTime, setToTime] = useState(new Date());
+  const { user } = useAuth();
 
   const eventProps = {
     title,
@@ -49,6 +43,8 @@ const EventCreation = () => {
     setFromTime,
     toTime,
     setToTime,
+    locationPoint,
+    setLocationPoint,
   };
 
   return (
@@ -58,7 +54,28 @@ const EventCreation = () => {
       </EventCreationStack.Screen>
 
       <EventCreationStack.Screen name='EventDetails'>
-        {props => <EventCreationInfo2 {...props} {...eventProps} />}
+        {props => (
+          <EventCreationInfo2
+            {...props}
+            {...eventProps}
+            handleSumbit={() =>
+              publishEvent(
+                title,
+                selectedCategories,
+                description,
+                notes,
+                isAllDay,
+                fromTime,
+                toTime,
+                guestCount,
+                location,
+                locationPoint,
+                selectedDate,
+                user.uid
+              )
+            }
+          />
+        )}
       </EventCreationStack.Screen>
       <EventCreationStack.Screen name='EventLocation'>
         {props => <Map {...props} {...eventProps} />}

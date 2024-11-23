@@ -1,5 +1,5 @@
 import { collection, addDoc, Timestamp, GeoPoint } from "firebase/firestore";
-
+import {db} from "../config/config"
 const publishEvent = async (
   title,
   categories,
@@ -10,7 +10,8 @@ const publishEvent = async (
   toTime,
   guests,
   location,
-  date
+  locationPoint,
+  date , organizerId
 ) => {
   try {
     // Validate inputs
@@ -32,12 +33,14 @@ const publishEvent = async (
       fromTime: fromTime ? Timestamp.fromDate(fromTime) : null,
       toTime: toTime ? Timestamp.fromDate(toTime) : null,
       guests: Number(guests) || 1,
-      location: location
-        ? new GeoPoint(location.latitude, location.longitude)
+      locationPoint: locationPoint
+        ? new GeoPoint(locationPoint.latitude, locationPoint.longitude)
         : null,
+      location: location,
       date: Timestamp.fromDate(new Date(date)),
       createdAt: Timestamp.now(),
       allDay: isAllDay,
+      organizerId
     };
 
     // Add document to Firestore

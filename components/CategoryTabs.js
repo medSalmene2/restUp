@@ -1,36 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import { I18nManager } from 'react-native';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import categories from "./EventCategoriesSet";
 
-I18nManager.forceRTL(false); // Set to false for Left-to-Right (LTR)
+export default function CategoryTabs({ selectedCategs, setSelectedCategs }) {
+  // Handler to toggle category selection
+  const toggleCategory = category => {
+    setSelectedCategs(prevCategs => {
+      // If "الجميع" (All) is selected, reset to only that category
+      if (category === "الجميع") {
+        return [category];
+      }
 
-export default function CategoryTabs({ categories }) {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+      // If "الجميع" is currently selected, start a new selection with the clicked category
+      if (prevCategs.includes("الجميع")) {
+        return [category];
+      }
+
+      // If category is already selected, remove it
+      if (prevCategs.includes(category)) {
+        const newCategs = prevCategs.filter(cat => cat !== category);
+        // If no categories left, select "الجميع"
+        return newCategs.length === 0 ? ["الجميع"] : newCategs;
+      }
+
+      // Add the category to the selection
+      return [...prevCategs, category];
+    });
+  };
+
+  // Check if a category is selected
+  const isCategorySelected = category => {
+    return selectedCategs.includes(category);
+  };
 
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.container}
-      contentContainerStyle={styles.scrollContent} 
-    >
-      {categories.map((category) => (
-        
+      contentContainerStyle={styles.scrollContent}>
+      {categories.map(category => (
         <TouchableOpacity
-          key={category}
-          onPress={() => setSelectedCategory(category)}
+          key={category.name}
+          onPress={() => toggleCategory(category.name)}
           style={[
             styles.tab,
-            selectedCategory === category && styles.selectedTab,
-          ]}
-        >
+            isCategorySelected(category.name) && styles.selectedTab,
+          ]}>
           <Text
             style={[
               styles.tabText,
-              selectedCategory === category && styles.selectedTabText,
-            ]}
-          >
-            {category}
+              isCategorySelected(category.name) && styles.selectedTabText,
+            ]}>
+            {category.name}
           </Text>
         </TouchableOpacity>
       ))}
@@ -43,28 +71,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 26,
     maxHeight: 50,
+    direction: "ltr",
   },
   scrollContent: {
-    justifyContent: 'flex-start', // Align tabs to the start
-    paddingHorizontal: 8, // Optional spacing on both sides
+    justifyContent: "flex-start",
+    paddingHorizontal: 8,
   },
   tab: {
     paddingHorizontal: 20,
     marginRight: 8,
     borderRadius: 20,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    
+    backgroundColor: "#f5f5f5",
+    justifyContent: "center",
+    alignItems: "center",
   },
   selectedTab: {
-    backgroundColor: '#000',
+    backgroundColor: "red",
   },
   tabText: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
   selectedTabText: {
-    color: '#fff',
+    color: "#fff",
   },
 });
