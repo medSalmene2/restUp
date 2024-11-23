@@ -6,22 +6,27 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  I18nManager,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
+
+// Enable RTL layout
+I18nManager.allowRTL(true);
+I18nManager.forceRTL(true);
 
 export default function AppointmentScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(null);
 
   const slots = {
-    morning: ["10:10 am", "10:30 am", "10:50 am", "11:20 am", "11:40 am"],
-    afternoon: ["02:00 pm", "02:20 pm", "02:40 pm"],
-    evening: ["07:00 pm", "07:20 pm", "07:40 pm", "08:00 pm"],
+    morning: ["10:10 ص", "10:30 ص", "10:50 ص", "11:20 ص", "11:40 ص"],
+    afternoon: ["02:00 م", "02:20 م", "02:40 م"],
+    evening: ["07:00 م", "07:20 م", "07:40 م", "08:00 م"],
   };
 
   const renderTimeSlots = (timeSlots, period) => (
     <View style={styles.slotContainer}>
-      <Text style={styles.slotHeader}>{period} Slots</Text>
+      <Text style={styles.slotHeader}>{`الفترة ${period}`}</Text>
       <FlatList
         data={timeSlots}
         horizontal
@@ -51,7 +56,7 @@ export default function AppointmentScreen() {
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
-      <Text style={styles.header}>Appointment</Text>
+      <Text style={styles.header}>موعدك</Text>
 
       {/* Calendar Strip */}
       <CalendarStrip
@@ -64,30 +69,30 @@ export default function AppointmentScreen() {
           highlightColor: "#007BFF",
         }}
         selectedDate={selectedDate}
-        onDateSelected={(date) => setSelectedDate(date)}
+        onDateSelected={(date) => setSelectedDate(new Date(date))}
         highlightDateNameStyle={{ color: "#fff" }}
         highlightDateNumberStyle={{ color: "#fff" }}
         calendarHeaderStyle={{ color: "#333" }}
         dateNameStyle={{ color: "#666" }}
         dateNumberStyle={{ color: "#666" }}
-        iconLeft={require("../assets/left-arrow.png")} 
-        iconRight={require("../assets/right-arrow.png")} 
+        iconLeft={require("../assets/left-arrow.png")} // Replace with your RTL asset if needed
+        iconRight={require("../assets/right-arrow.png")}
         iconContainer={{ flex: 0.1 }}
       />
 
       {/* Selected Date */}
       <Text style={styles.selectedDateText}>
-        Selected Date: {selectedDate.toDateString()}
+        {`التاريخ المختار: ${selectedDate.toLocaleDateString()}`}
       </Text>
 
       {/* Time Slots */}
-      {renderTimeSlots(slots.morning, "Morning")}
-      {renderTimeSlots(slots.afternoon, "Afternoon")}
-      {renderTimeSlots(slots.evening, "Evening")}
+      {renderTimeSlots(slots.morning, "الصباحية")}
+      {renderTimeSlots(slots.afternoon, "المسائية")}
+      {renderTimeSlots(slots.evening, "الليلية")}
 
       {/* Confirm Button */}
       <TouchableOpacity style={styles.confirmButton}>
-        <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
+        <Text style={styles.confirmButtonText}>تأكيد الموعد</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -104,6 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 16,
+    color: "#007BFF",
   },
   calendarStrip: {
     height: 100,
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
+    textAlign: "right",
   },
   slotButton: {
     paddingVertical: 10,
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
   slotText: {
     fontSize: 14,
     color: "#555555",
+    textAlign: "center",
   },
   selectedSlotText: {
     color: "#FFFFFF",
