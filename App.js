@@ -22,7 +22,7 @@ import "intl-pluralrules";
 import EventDetailsScreen from "./screens/EventDetails";
 import BookingConfirmationScreen from "./screens/EventBooking";
 import AppointmentScreen from "./components/schedule";
-
+import TranslationProvider ,{ useTranslation }from "./components/TranslationContext"
 import { AuthContextProvider } from "./firestore/auth/AuthContext";
 import { I18nManager } from "react-native";
 import RNRestart from "react-native-restart";
@@ -33,7 +33,7 @@ import ExampleScreen from "./test";
 
 const Stack = createStackNavigator();
 function AppNavigator() {
-  
+  const { t, currentLanguage } = useTranslation();
 
   return (
     <NavigationContainer >
@@ -120,9 +120,10 @@ function AppNavigator() {
 
 export default function App() {
   return (
-    <AuthContextProvider>    
+    <AuthContextProvider>   
+     <TranslationProvider>
         <AppNavigator />
+        </TranslationProvider>
     </AuthContextProvider>
-    // <ExampleScreen/>
   );
 }
