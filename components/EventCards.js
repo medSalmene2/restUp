@@ -10,6 +10,8 @@ export default function EventCard({ event }) {
     require("../assets/event.png");
   const navigation = useNavigation();
 
+  console.log(event);
+
   return (
     <TouchableOpacity
       style={styles.eventCard}
@@ -17,6 +19,15 @@ export default function EventCard({ event }) {
         navigation.navigate("EventOverview", { event });
       }}>
       <Image source={categImage} style={styles.eventImage} />
+
+      {/* Added organizer chip */}
+      {event.isOrganizer && (
+        <View style={styles.organizerChip}>
+          <Ionicons name='star' size={12} color='#ffffff' />
+          <Text style={styles.organizerText}>منظم</Text>
+        </View>
+      )}
+
       <View style={styles.eventTitleContainer}>
         <Text style={styles.eventTitle} numberOfLines={2} ellipsizeMode='tail'>
           {event.title}
@@ -35,7 +46,6 @@ export default function EventCard({ event }) {
         <Text style={styles.eventDate}>{event.date}</Text>
       </View>
 
-      {/* Added participants count container */}
       <View style={styles.participantsContainer}>
         <Ionicons
           name='people-outline'
@@ -43,7 +53,9 @@ export default function EventCard({ event }) {
           color='#666'
           style={styles.icon}
         />
-        <Text style={styles.participantsText}>{event.currentParticipants}</Text>
+        <Text style={styles.participantsText}>
+          {event.currentParticipants || 0}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -51,6 +63,7 @@ export default function EventCard({ event }) {
 
 const styles = StyleSheet.create({
   eventCard: {
+    direction: "rtl",
     width: 150,
     marginHorizontal: 8,
     backgroundColor: "#ffffff",
@@ -64,6 +77,26 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+  // Added organizer chip styles
+  organizerChip: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    backgroundColor: "#2196F3",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    zIndex: 1,
+  },
+  organizerText: {
+    color: "#ffffff",
+    fontSize: 12,
+    marginLeft: 4,
+    fontFamily: "Arial",
+    fontWeight: "bold",
   },
   eventImage: {
     width: "100%",
@@ -99,10 +132,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     fontFamily: "Arial",
-    fontWeight:"bold"
-
+    fontWeight: "bold",
   },
-  // Added new styles for participants
   participantsContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -113,6 +144,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
     fontFamily: "Arial",
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
 });

@@ -15,6 +15,7 @@ import CategoryTabs from "../components/CategoryTabs";
 import EventCard from "../components/EventCards";
 import { fetchEvents } from "../firestore/events/Find";
 import NoEventsView from "../components/NoEventsView";
+import { useAuth } from "../firestore/auth/AuthContext";
 export default function EventsScreen() {
   const [selectedCategs, setSelectedCategs] = useState(["الجميع"]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,7 @@ export default function EventsScreen() {
   // Add loading and error states
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { user } = useAuth();
   useEffect(() => {
     const getEvents = async () => {
       // Reset state before fetching
@@ -35,7 +36,7 @@ export default function EventsScreen() {
         const categs = selectedCategs.includes("الجميع")
           ? null
           : selectedCategs;
-        const eventsData = await fetchEvents(categs);
+        const eventsData = await fetchEvents(user.id, categs);
         setEvents(eventsData);
       } catch (err) {
         // Handle any errors during fetching
@@ -90,7 +91,7 @@ export default function EventsScreen() {
       <ScrollView style={styles.eventsContainer}>
         <View style={styles.eventsGrid}>
           {events.length > 0 ? (
-            events.map((event,i) => (
+            events.map((event, i) => (
               <View key={i} style={styles.eventCardWrapper}>
                 <EventCard event={event} />
               </View>
