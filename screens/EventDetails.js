@@ -18,6 +18,7 @@ export default function EventDetailsScreen({ navigation, route }) {
   const fetchOrganizerInfo = async () => {
     const userInfo = await fetchUserInfo(event.organizerId);
     setOrganizerInfo(userInfo);
+    console.log(userInfo);
   };
   const getParticipantsInfo = async () => {
     const userInfo = await fetchParticipantsInfo(event.id);
@@ -74,8 +75,8 @@ export default function EventDetailsScreen({ navigation, route }) {
             <Ionicons name='person-outline' size={20} color='red' />
           </View>
           <UserEventCard
-            name={organizerInfo.firstName + " " + organizerInfo.lastName}
-            phone={organizerInfo.phonNumber}
+            name={organizerInfo?.firstName + " " + organizerInfo?.lastName}
+            phone={organizerInfo?.phoneNumber}
             imageSource={require("../assets/profilePlaceHolder.png")}
             role='organizer'
           />
