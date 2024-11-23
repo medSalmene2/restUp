@@ -1,30 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
-  Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import EventCard from "../components/EventCards";
-
-const EventSection = ({ title, events, iconName }) => (
+import { fetchUserBookedEvents } from "../firestore/events/Find"; // Import your fetch function
+import { useAuth } from "../firestore/auth/AuthContext";
+const EventSection = ({ title, events, iconName, isLoading }) => (
   <View style={styles.section}>
     <View style={styles.sectionHeader}>
       <Text style={styles.sectionTitle}>{title}</Text>
       <Icon name={iconName} size={24} color='red' />
     </View>
-    {events.length > 0 ? (
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {events.map((event, index) => (
-          <EventCard
-            key={index}
-            imageUrl={event.imageUrl}
-            title={event.title}
-            date={event.date}
-          />
+    {isLoading ? (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size='large' color='red' />
+      </View>
+    ) : events.length > 0 ? (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{ direction: "ltr", alignSelf: "flex-start" }}
+        directionalLockEnabled>
+        {events.map(event => (
+          <EventCard key={event.id} event={event} />
         ))}
       </ScrollView>
     ) : (
@@ -32,6 +36,7 @@ const EventSection = ({ title, events, iconName }) => (
     )}
   </View>
 );
+
 const EmptyState = ({ title }) => (
   <View style={styles.emptyStateContainer}>
     <Icon name='calendar-blank' size={64} color='#CCCCCC' />
@@ -40,48 +45,97 @@ const EmptyState = ({ title }) => (
 );
 
 const EventManager = ({ navigation }) => {
-  const [scheduledEvents, setScheduledEvents] = useState([]);
-  const [organizedEvents, setOrganiezedEvents] = useState([]);
-  const [eventHistory, setEventHistory] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [upcomingOrganizedEvents, setUpcomingOrganizedEvents] = useState([]);
+  const [pastEvents, setPastEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    loadEvents();
+  }, []);
+
+  const loadEvents = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const userId = user?.id;
+      if (!userId) {
+        throw new Error("User not authenticated");
+      }
+
+      // Fetch booked events
+      const { pastEvents, upcomingEvents, upcomingOrganizedEvents } =
+        await fetchUserBookedEvents(userId);
+
+      // Update state with fetched data
+      setUpcomingEvents(upcomingEvents);
+      setPastEvents(pastEvents);
+      setUpcomingOrganizedEvents(upcomingOrganizedEvents);
+    } catch (err) {
+      console.error("Error loading events:", err);
+      setError("خطأ في تحميل الأحداث");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const renderError = () => (
+    <View style={styles.errorContainer}>
+      <Text style={styles.errorText}>
+        {error || "حدث خطأ في تحميل الفعاليات"}
+      </Text>
+      <TouchableOpacity style={styles.retryButton} onPress={loadEvents}>
+        <Text style={styles.retryButtonText}>حاول مرة أخرى</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            navigation.navigate("EventExplore");
-          }}>
+          onPress={() => navigation.navigate("EventExplore")}>
           <Text style={styles.buttonText}>استكشف الفعاليات</Text>
           <Icon name='compass-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-            navigation.navigate("EventCreation");
-          }}>
+          onPress={() => navigation.navigate("EventCreation")}>
           <Text style={styles.buttonText}>إنشاء فعالية</Text>
           <Icon name='plus-circle-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.scrollContainer}>
-        <EventSection
-          title='فعالياتي المجدولة'
-          events={scheduledEvents}
-          iconName='calendar-clock'
-        />
-        <EventSection
-          title='الفعاليات المنظمة'
-          events={organizedEvents}
-          iconName='calendar-star'
-        />
-        <EventSection
-          title='سجل الفعاليات'
-          events={eventHistory}
-          iconName='history'
-        />
+        {error ? (
+          renderError()
+        ) : (
+          <>
+            <EventSection
+              title='فعالياتي المجدولة'
+              events={upcomingEvents}
+              iconName='calendar-clock'
+              isLoading={isLoading}
+            />
+            <EventSection
+              title='الفعاليات المنظمة'
+              events={upcomingOrganizedEvents}
+              iconName='calendar-star'
+              isLoading={isLoading}
+            />
+            <EventSection
+              title='سجل الفعاليات'
+              events={pastEvents}
+              iconName='history'
+              isLoading={isLoading}
+            />
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -146,6 +200,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#888",
     textAlign: "center",
+  },
+  loadingContainer: {
+    padding: 20,
+    alignItems: "center",
+  },
+  errorContainer: {
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    textAlign: "center",
+    marginBottom: 10,
+    fontFamily: "Arial",
+  },
+  retryButton: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  retryButtonText: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Arial",
   },
 });
 

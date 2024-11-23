@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import categories from "./EventCategoriesSet";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 
 export default function EventCard({ event }) {
   const categImage =
@@ -10,30 +10,58 @@ export default function EventCard({ event }) {
     require("../assets/event.png");
   const navigation = useNavigation();
 
+  const currentRoute = useNavigationState(state => {
+    const route = state.routes[state.index]; // Get the current route
+    return route.name; // Return the name of the active screen
+  });
+
   return (
     <TouchableOpacity
       style={styles.eventCard}
       onPress={() => {
-        navigation.navigate("EventOverview", { event });
+        currentRoute === "EventExplore" &&
+          navigation.navigate("EventBooking", { event });
+        currentRoute === "EventManager" &&
+          navigation.navigate("EventOverview", { event });
       }}>
       <Image source={categImage} style={styles.eventImage} />
+
+      {/* Added organizer chip */}
+      {event.isOrganizer && (
+        <View style={styles.organizerChip}>
+          <Ionicons name='star' size={12} color='#ffffff' />
+          <Text style={styles.organizerText}>منظم</Text>
+        </View>
+      )}
+
       <View style={styles.eventTitleContainer}>
         <Text style={styles.eventTitle} numberOfLines={2} ellipsizeMode='tail'>
           {event.title}
         </Text>
       </View>
 
-      {/* Added a divider */}
       <View style={styles.divider} />
 
       <View style={styles.eventDateContainer}>
         <Ionicons
-          name='time-outline'
-          size={14}
+          name='calendar-outline'
+          size={18}
           color='#666'
           style={styles.icon}
         />
         <Text style={styles.eventDate}>{event.date}</Text>
+      </View>
+
+      <View style={styles.participantsContainer}>
+        <Ionicons
+          name='people-outline'
+          size={18}
+          color='#666'
+          style={styles.icon}
+        />
+        <Text style={styles.participantsText}>
+          {event.currentParticipants || 0}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -41,6 +69,7 @@ export default function EventCard({ event }) {
 
 const styles = StyleSheet.create({
   eventCard: {
+    direction: "rtl",
     width: 150,
     marginHorizontal: 8,
     backgroundColor: "#ffffff",
@@ -55,6 +84,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  // Added organizer chip styles
+  organizerChip: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    backgroundColor: "#2196F3",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    flexDirection: "row",
+    alignItems: "center",
+    zIndex: 1,
+  },
+  organizerText: {
+    color: "#ffffff",
+    fontSize: 12,
+    marginLeft: 4,
+    fontFamily: "Arial",
+    fontWeight: "bold",
+  },
   eventImage: {
     width: "100%",
     height: 80,
@@ -65,10 +114,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 8,
   },
-  // New divider style
   divider: {
     height: 1,
-    backgroundColor: "red", // Light gray divider
+    backgroundColor: "red",
     marginHorizontal: 8,
   },
   eventDateContainer: {
@@ -78,7 +126,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   icon: {
-    marginRight: 6,
+    marginHorizontal: 6,
   },
   eventTitle: {
     fontSize: 16,
@@ -90,5 +138,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     fontFamily: "Arial",
+    fontWeight: "bold",
+  },
+  participantsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal: 8,
+    marginBottom: 8,
+  },
+  participantsText: {
+    fontSize: 16,
+    color: "#666",
+    fontFamily: "Arial",
+    fontWeight: "bold",
   },
 });

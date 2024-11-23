@@ -47,6 +47,7 @@ const SubServicesList = ({ route }) => {
                 Speech.speak(subService.serviceTitle, { language: "ar" });
               }}>
               <Service
+                key={index}
                 bgColor={subService.color}
                 text={subService.serviceTitle}
                 textColor={"black"}
