@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect  } from "react";
 import {
   View,
   SafeAreaView,
@@ -15,10 +15,11 @@ import {
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n, { changeLanguage } from "../i18n";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileScreen = ({ route, navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("العربية");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
 
   const languages = [
     { label: "العربية", flag: require("../assets/tunisia.png") },
@@ -26,21 +27,29 @@ const ProfileScreen = ({ route, navigation }) => {
     { label: "English", flag: require("../assets/uk.png") },
   ];
 
-  const handleLanguageChange = async (lang) => {
-    // Find the language object that matches the label
-    const selectedLang = languages.find((language) => language.label === lang);
-    if (selectedLang) {
-      setSelectedLanguage(selectedLang.label);
-      setIsModalVisible(false);
+  const getLanguageLabel = (langCode) => {
+    const lang = languages.find(l => l.value === langCode);
+    return lang ? lang.label : "English";
+  };
 
-      // Change the language using the changeLanguage function
-      await changeLanguage(
-        selectedLang.label === "العربية"
-          ? "ar"
-          : selectedLang.label === "English"
-          ? "en"
-          : "fr"
-      );
+  useEffect(() => {
+    const loadLanguage = async () => {
+      try {
+        const storedLang = await AsyncStorage.getItem("appLanguage") || "en";
+        setSelectedLanguage(getLanguageLabel(storedLang));
+      } catch (error) {
+        console.error("Error loading language:", error);
+      }
+    };
+    loadLanguage();
+  }, []);
+
+  const handleLanguageChange = async (label) => {
+    const selectedLang = languages.find(lang => lang.label === label);
+    if (selectedLang) {
+      setSelectedLanguage(label);
+      setIsModalVisible(false);
+      await changeLanguage(selectedLang.value);
     }
   };
 

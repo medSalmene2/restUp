@@ -2,22 +2,36 @@ import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import React from "react";
 import Contact from "../components/Contact";
 
-const FinalSubService = ({ route }) => {
-  const contactImage = require("../assets/image.png");
-  const salha = require("../assets/salha.jpg");
-  const salwa = require("../assets/salwa.jpg");
-  const { description, image } = route.params;
+const FinalSubService = ({ route, navigation }) => {
+  const { description, image, contacts } = route.params;
+
   return (
     <View style={styles.container}>
-      <Image source={image} style={{ width: "95%", height: "25%" , alignSelf:"center" }} />
+      {/* Display the subservice image */}
+      <Image source={image} style={{ width: "95%", height: "25%", alignSelf: "center" }} />
+
+      {/* Display the subservice description */}
       <View style={{ margin: 10 }}>
         <Text style={{ textAlign: "center" }}>{description}</Text>
       </View>
+
+      {/* Render contacts dynamically */}
       <ScrollView>
-        <Contact name={"صالحة"} job={"منضفة"} image={salha} stars={5} />
-        <Contact name={"سلوى"} job={"منضفة"} image={salwa} stars={5} />
-        {/* <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} />
-        <Contact name={"صالحة"} job={"منضفة"} image={contactImage} stars={5} /> */}
+        {contacts.length > 0 ? (
+          contacts.map((contact) => (
+            <Contact
+              key={contact.id}
+              name={contact.name}
+              job={contact.job}
+              stars={contact.stars}
+              image={contact.image}
+              fee={contact.fee}
+              onSchedulePress={() => navigation.navigate("Schedule")}
+            />
+          ))
+        ) : (
+          <Text style={styles.noContactsText}>لا يوجد جهات اتصال لهذه الخدمة</Text>
+        )}
       </ScrollView>
     </View>
   );
@@ -31,11 +45,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0f7fa",
     padding: 16,
   },
-  heading: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#0288d1",
+  noContactsText: {
     textAlign: "center",
-    marginBottom: 16,
+    fontSize: 16,
+    color: "#666",
+    marginTop: 20,
   },
 });
