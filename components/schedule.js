@@ -54,10 +54,10 @@ export default function AppointmentScreen() {
     setTimeout(() => {
       setIsLoading(false);
       Alert.alert(
-        "Appointment Confirmed!",
-        `Your appointment has been scheduled for ${new Date(
+        "Rendez-vous confirmé !",
+        `Votre rendez-vous a été programmé pour le ${new Date(
           selectedDate
-        ).toLocaleDateString("ar", {
+        ).toLocaleDateString("fr", {
           month: "short",
           day: "numeric",
         })} at ${selectedTime}`,
@@ -112,10 +112,10 @@ export default function AppointmentScreen() {
         <View style={styles.periodHeaderLeft}>
           <Text style={styles.periodHeader}>
             {period === "morning"
-              ? "صباح"
+              ? "Matin"
               : period === "afternoon"
-              ? "بعد الظهر"
-              : "مساء"}
+              ? " Après-midi"
+              : "Soir"}
           </Text>
           <Ionicons
             name={
@@ -130,7 +130,7 @@ export default function AppointmentScreen() {
           />
         </View>
         <Text style={styles.slotsCount}>
-          {getAvailableSlots(period.toLowerCase())} حجوزات متاحة
+          {getAvailableSlots(period.toLowerCase())}  créneaux disponibles
         </Text>
       </View>
       <ScrollView
@@ -153,9 +153,9 @@ export default function AppointmentScreen() {
         {/* Header with Back Button */}
         <View style={styles.headerContainer}>
           <View>
-            <Text style={styles.headerTitle}>حجز موعد</Text>
+            <Text style={styles.headerTitle}> Prendre un rendez-vous</Text>
             <Text style={styles.headerSubtitle}>
-              حدد التاريخ والوقت المفضل لديك
+            Sélectionnez la date et l'heure qui vous conviennent
             </Text>
           </View>
         </View>
@@ -187,12 +187,12 @@ export default function AppointmentScreen() {
         {/* Selected Date with Icon */}
         <View style={styles.selectedDateContainer}>
           <View style={styles.selectedDateRow}>
-            <Text style={styles.selectedDateLabel}>التاريخ المحدد</Text>
+            <Text style={styles.selectedDateLabel}> Date sélectionnée</Text>
 
             <Ionicons name='calendar-outline' size={20} color='#007BFF' />
           </View>
           <Text style={styles.selectedDateText}>
-            {new Date(selectedDate).toLocaleDateString("ar", {
+            {new Date(selectedDate).toLocaleDateString("fr", {
               weekday: "long",
               year: "numeric",
               month: "long",
@@ -203,7 +203,7 @@ export default function AppointmentScreen() {
 
         {/* Time Slots */}
         <View style={styles.timeSlotsContainer}>
-          <Text style={styles.timeSlotsHeader}>الفترات الزمنية المتاحة</Text>
+          <Text style={styles.timeSlotsHeader}>  Créneaux horaires disponibles</Text>
           {renderTimePeriod("morning", slots.morning)}
           {renderTimePeriod("afternoon", slots.afternoon)}
           {renderTimePeriod("Evening", slots.evening)}
@@ -214,10 +214,10 @@ export default function AppointmentScreen() {
           <View style={styles.summaryContainer}>
             <View style={styles.summaryIconRow}>
               <Ionicons name='time-outline' size={20} color='#007BFF' />
-              <Text style={styles.summaryLabel}>اختيارك</Text>
+              <Text style={styles.summaryLabel}>Votre choix</Text>
             </View>
             <Text style={styles.summaryText}>
-              {`${new Date(selectedDate).toLocaleDateString("en-US", {
+              {`${new Date(selectedDate).toLocaleDateString("fr-FR", {
                 month: "short",
                 day: "numeric",
               })} at ${selectedTime} (${selectedPeriod})`}
@@ -240,8 +240,8 @@ export default function AppointmentScreen() {
           ) : (
             <Text style={styles.confirmButtonText}>
               {isAppointmentSelected
-                ? "Confirm Appointment"
-                : "Select Date & Time"}
+                ? "Confirmer le rendez-vous"
+                : "Sélectionnez la date et l'heure"}
             </Text>
           )}
         </TouchableOpacity>
