@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import UserEventCard from "../components/UserEventCard"; // Import the shared UserCard component
 import { fetchUserInfo } from "../firestore/User";
 import { fetchParticipantsInfo } from "../firestore/events/Find";
-
+import EventMap from "./EventMap";
 export default function EventDetailsScreen({ navigation, route }) {
   const { event } = route.params;
-  console.log(event);
   const [organizerInfo, setOrganizerInfo] = useState({
     firstName: "User",
     lastName: "User",
@@ -18,7 +23,6 @@ export default function EventDetailsScreen({ navigation, route }) {
   const fetchOrganizerInfo = async () => {
     const userInfo = await fetchUserInfo(event.organizerId);
     setOrganizerInfo(userInfo);
-    console.log(userInfo);
   };
   const getParticipantsInfo = async () => {
     const userInfo = await fetchParticipantsInfo(event.id);
@@ -29,6 +33,7 @@ export default function EventDetailsScreen({ navigation, route }) {
     getParticipantsInfo();
   }, []);
 
+  console.log(event)
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
@@ -61,10 +66,9 @@ export default function EventDetailsScreen({ navigation, route }) {
             <Text style={styles.sectionHeader}>الموقع</Text>
             <Ionicons name='location-outline' size={20} color='red' />
           </View>
-          <Image
-            style={styles.mapImage}
-            source={require("../assets/technology.png")}
-          />
+          <TouchableOpacity>
+            <EventMap location={event.locationPoint} />
+          </TouchableOpacity>
           <Text style={styles.sectionContent}>{event.location} </Text>
         </View>
 

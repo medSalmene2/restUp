@@ -271,7 +271,6 @@ async function fetchParticipantsInfo(eventId) {
       const userInfo = await fetchUserInfo(participantId);
       participantsInfo.push({ userInfo, ...participantDoc.data() });
     }
-    console.log(participantsInfo);
 
     return participantsInfo;
   } catch (error) {
