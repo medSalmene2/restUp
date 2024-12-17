@@ -13,7 +13,7 @@ import * as Speech from "expo-speech";
 import Contact from "../components/Contact";
 
 const SubServicesList = ({ route }) => {
-  const { subServices, image } = route.params;
+  const { subServices, image,serviceTitle } = route.params;
   const navigation = useNavigation();
 
   return (
@@ -38,6 +38,10 @@ const SubServicesList = ({ route }) => {
                 if (subService.serviceTitle === "Événements sociaux") {
                   navigation.navigate("EventManager");
                   return;
+                }
+                else if (serviceTitle==="Transport"){
+                  navigation.navigate("TransportMap")
+                  return 
                 }
                 navigation.navigate("FinalSubService", {
                   subServiceTitle: subService.serviceTitle,

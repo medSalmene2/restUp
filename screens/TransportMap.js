@@ -102,12 +102,12 @@ console.log("To marker", toLocation )
           <Marker
             coordinate={fromLocation}
             pinColor='green'
-            title='From Location'
+            title='Lieu de départ'
           />
         )}
 
         {toLocation && (
-          <Marker coordinate={toLocation} pinColor='red' title='To Location' />
+          <Marker coordinate={toLocation} pinColor='red' title="Lieu d'arrivée" />
         )}
 
         {fromLocation && toLocation && (
@@ -133,10 +133,10 @@ console.log("To marker", toLocation )
       <View style={styles.overlay}>
         <Text style={styles.instructionText}>
           {selectionStage === "from"
-            ? "Center map on pickup location"
+            ? "Centrez la carte sur le lieu de départ"
             : selectionStage === "to"
-            ? "Center map on drop-off location"
-            : "Locations selected"}
+            ? "Centrez la carte sur le lieu d'arrivée"
+            : "Lieux sélectionnés"}
         </Text>
       </View>
 
@@ -146,7 +146,7 @@ console.log("To marker", toLocation )
           style={styles.confirmButton}
           onPress={confirmLocation}>
           <Text style={styles.confirmButtonText}>
-            {selectionStage === "from" ? "Confirm Pickup" : "Confirm Drop-off"}
+            {selectionStage === "from" ? "Confirmer le départ" : "Confirmer l'arrivée"}
           </Text>
         </TouchableOpacity>
       )}
@@ -154,25 +154,25 @@ console.log("To marker", toLocation )
       {/* Pricing Container */}
       {fromLocation && toLocation && tripDetails && (
         <View style={styles.pricingContainer}>
-          <Text style={styles.pricingTitle}>Trip Details</Text>
+          <Text style={styles.pricingTitle}>Détails du trajet</Text>
           
           <View style={styles.pricingDetailsContainer}>
             <View style={styles.pricingRow}>
-              <Text style={styles.pricingLabel}>Total Distance</Text>
+              <Text style={styles.pricingLabel}>Distance totale</Text>
               <Text style={styles.pricingValue}>{tripDetails.distance} km</Text>
             </View>
             
             <View style={styles.divider} />
             
             <View style={styles.pricingRow}>
-              <Text style={styles.pricingLabel}>Base Fare</Text>
+              <Text style={styles.pricingLabel}>Prix de base</Text>
               <Text style={styles.pricingValue}>TND {tripDetails.basePrice}</Text>
             </View>
             
             <View style={styles.divider} />
             
             <View style={styles.pricingRow}>
-              <Text style={styles.pricingLabel}>Distance Price</Text>
+              <Text style={styles.pricingLabel}>Prix par distance</Text>
               <Text style={styles.pricingValue}>
                 € {tripDetails.distancePrice} (TND 1.50/km)
               </Text>
@@ -181,7 +181,7 @@ console.log("To marker", toLocation )
             <View style={styles.divider} />
             
             <View style={styles.pricingRow}>
-              <Text style={styles.totalLabel}>Total Price</Text>
+              <Text style={styles.totalLabel}>Prix total</Text>
               <Text style={styles.totalValue}>
                 TND {tripDetails.totalPrice}
               </Text>
@@ -193,7 +193,7 @@ console.log("To marker", toLocation )
       {/* Reset Button */}
       {(fromLocation || toLocation) && (
         <TouchableOpacity style={styles.resetButton} onPress={resetSelection}>
-          <Text style={styles.resetButtonText}>Reset</Text>
+          <Text style={styles.resetButtonText}>Réinitialiser</Text>
         </TouchableOpacity>
       )}
     </View>
