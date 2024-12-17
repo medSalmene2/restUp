@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Contact } from "../components/Contact";
 import * as Speech from "expo-speech";
-import { ContactList } from '../components/Contact';
+import { ContactList } from "../components/Contact";
+import { useAuth } from "../firestore/auth/AuthContext";
 
 export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
@@ -54,7 +55,10 @@ export default function HomeScreen({ navigation }) {
           availability: "متاح",
           experience: "10 سنوات",
           languages: ["العربية", "الفرنسية"],
-          specialFeatures: ["خبرة في إعداد وجبات صحية", "مهارة في الطبخ المنزلي"],
+          specialFeatures: [
+            "خبرة في إعداد وجبات صحية",
+            "مهارة في الطبخ المنزلي",
+          ],
           phone: "920001112",
         },
         // {
@@ -77,7 +81,7 @@ export default function HomeScreen({ navigation }) {
           name: "محمود",
           job: "طباخ",
           stars: 5,
-          fee: 30 ,
+          fee: 30,
         },
       ],
     },
@@ -111,20 +115,20 @@ export default function HomeScreen({ navigation }) {
       color: "#7A399D", // Darker purple shade
       image: require("../assets/4.jpg"),
       contacts: [
-      {
-        id: "105",
-        name: "محمد رشيد",
-        job: "عامل تنظيف",
-        image: require("../assets/cleaner1.jpg"),
-        stars: 4,
-        fee: 80,
-        availability: "متاح",
-        experience: "3 سنوات",
-        languages: ["العربية"],
-        specialFeatures: ["استخدام منتجات صديقة للبيئة"],
-        phone: "920001115",
-      },
-    ],
+        {
+          id: "105",
+          name: "محمد رشيد",
+          job: "عامل تنظيف",
+          image: require("../assets/cleaner1.jpg"),
+          stars: 4,
+          fee: 80,
+          availability: "متاح",
+          experience: "3 سنوات",
+          languages: ["العربية"],
+          specialFeatures: ["استخدام منتجات صديقة للبيئة"],
+          phone: "920001115",
+        },
+      ],
     },
     {
       serviceTitle: "خدمات غسل الملابس",
@@ -166,33 +170,33 @@ export default function HomeScreen({ navigation }) {
       color: "#D49ADC", // Lighter pastel shade
       image: require("../assets/8.jpg"),
       contacts: [
-      {
-        id: "108",
-        name: "سالم بن علي",
-        job: "متخصص في صيانة الحدائق",
-        image: require("../assets/gardener1.jpg"),
-        stars: 5,
-        fee: 100,
-        availability: "متاح",
-        experience: "10 سنوات",
-        languages: ["العربية", "الإنجليزية"],
-        specialFeatures: ["تصميم حدائق", "تركيب أنظمة الري"],
-        phone: "920001121",
-      },
-      // {
-      //   id: "109",
-      //   name: "حسن عبد الرحمن",
-      //   job: "عامل حدائق",
-      //   image: require("../assets/gardener2.jpg"),
-      //   stars: 4.5,
-      //   fee: 90,
-      //   availability: "غير متاح حاليًا",
-      //   experience: "8 سنوات",
-      //   languages: ["العربية"],
-      //   specialFeatures: ["زراعة النباتات", "إزالة الأعشاب الضارة"],
-      //   phone: "920001122",
-      // },
-    ],
+        {
+          id: "108",
+          name: "سالم بن علي",
+          job: "متخصص في صيانة الحدائق",
+          image: require("../assets/gardener1.jpg"),
+          stars: 5,
+          fee: 100,
+          availability: "متاح",
+          experience: "10 سنوات",
+          languages: ["العربية", "الإنجليزية"],
+          specialFeatures: ["تصميم حدائق", "تركيب أنظمة الري"],
+          phone: "920001121",
+        },
+        // {
+        //   id: "109",
+        //   name: "حسن عبد الرحمن",
+        //   job: "عامل حدائق",
+        //   image: require("../assets/gardener2.jpg"),
+        //   stars: 4.5,
+        //   fee: 90,
+        //   availability: "غير متاح حاليًا",
+        //   experience: "8 سنوات",
+        //   languages: ["العربية"],
+        //   specialFeatures: ["زراعة النباتات", "إزالة الأعشاب الضارة"],
+        //   phone: "920001122",
+        // },
+      ],
     },
     {
       serviceTitle: "إدارة الشؤون المالية",
@@ -200,33 +204,33 @@ export default function HomeScreen({ navigation }) {
       color: "#E6B0E0", // Very light pastel tone
       image: require("../assets/9.jpg"),
       contacts: [
-      {
-        id: "110",
-        name: "مروان الشامسي",
-        job: "مستشار مالي",
-        image: require("../assets/finance1.png"),
-        stars: 5,
-        fee: 200,
-        availability: "متاح",
-        experience: "12 سنة",
-        languages: ["العربية", "الفرنسية"],
-        specialFeatures: ["إعداد تقارير مالية", "مساعدة في تسديد الفواتير"],
-        phone: "920001123",
-      },
-      // {
-      //   id: "114",
-      //   name: "هالة يوسف",
-      //   job: "محاسبة",
-      //   image: require("../assets/finance2.jpg"),
-      //   stars: 4.8,
-      //   fee: 180,
-      //   availability: "متاح",
-      //   experience: "9 سنوات",
-      //   languages: ["العربية", "الإنجليزية"],
-      //   specialFeatures: ["إدارة الحسابات", "تحليل مالي"],
-      //   phone: "920001124",
-      // },
-    ],
+        {
+          id: "110",
+          name: "مروان الشامسي",
+          job: "مستشار مالي",
+          image: require("../assets/finance1.png"),
+          stars: 5,
+          fee: 200,
+          availability: "متاح",
+          experience: "12 سنة",
+          languages: ["العربية", "الفرنسية"],
+          specialFeatures: ["إعداد تقارير مالية", "مساعدة في تسديد الفواتير"],
+          phone: "920001123",
+        },
+        // {
+        //   id: "114",
+        //   name: "هالة يوسف",
+        //   job: "محاسبة",
+        //   image: require("../assets/finance2.jpg"),
+        //   stars: 4.8,
+        //   fee: 180,
+        //   availability: "متاح",
+        //   experience: "9 سنوات",
+        //   languages: ["العربية", "الإنجليزية"],
+        //   specialFeatures: ["إدارة الحسابات", "تحليل مالي"],
+        //   phone: "920001124",
+        // },
+      ],
     },
     {
       serviceTitle: "خدمات إصلاحات وصيانة المنزل",
@@ -310,7 +314,7 @@ export default function HomeScreen({ navigation }) {
           name: "محمود",
           job: "ممرض",
           stars: 5,
-          fee: 50 ,
+          fee: 50,
         },
       ],
     },
@@ -385,7 +389,14 @@ export default function HomeScreen({ navigation }) {
       description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
       color: "#3DAF93",
       image: require("../assets/14.jpg"),
-      promotion: [{ image: require("../assets/ahmed.png"), name: "احمد", job: "ممرض", stars: 4 }],
+      promotion: [
+        {
+          image: require("../assets/ahmed.png"),
+          name: "احمد",
+          job: "ممرض",
+          stars: 4,
+        },
+      ],
       contacts: [
         // {
         //   id: "207",
@@ -411,27 +422,21 @@ export default function HomeScreen({ navigation }) {
       description: "تقديم الدعم للأشخاص الذين يعانون من مشاكل تنفسية.",
       color: "#63DACD",
       image: require("../assets/15.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "إدارة الألم",
       description: "توفير استراتيجيات لتخفيف الألم المزمن.",
       color: "#39A786",
       image: require("../assets/16.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "الخدمات الاجتماعية الصحية",
       description: "دعم نفسي واجتماعي لكبار السن وأسرهم.",
       color: "#5EE1D4",
       image: require("../assets/17.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "خدمات التغذية والاستشارة الغذائية",
@@ -439,9 +444,7 @@ export default function HomeScreen({ navigation }) {
         "وضع خطط غذائية مخصصة لكبار السن بناءً على احتياجاتهم الصحية وحالاتهم الطبية.",
       color: "#2E9F80",
       image: require("../assets/18.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "العناية بالقدم",
@@ -449,9 +452,7 @@ export default function HomeScreen({ navigation }) {
         "خدمات العناية بالقدم للأشخاص المسنين الذين يعانون من مشاكل القدم أو السكري.",
       color: "#6FE5D9",
       image: require("../assets/19.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "العلاج بالأجهزة التعويضية",
@@ -459,9 +460,7 @@ export default function HomeScreen({ navigation }) {
         "توفير وتركيب أجهزة دعم مثل المشدات، الأطراف الصناعية، وأدوات المساعدة على الحركة لتحسين جودة الحياة.",
       color: "#48C9B0",
       image: require("../assets/20.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
   ];
 
@@ -472,9 +471,7 @@ export default function HomeScreen({ navigation }) {
         "  توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية. المنضمة من الأفراد",
       color: "#E91E63", // Base color
       image: require("../assets/21.png"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "الأنشطة الرياضية الخفيفة ",
@@ -482,9 +479,7 @@ export default function HomeScreen({ navigation }) {
         "مثل المشي، اليوغا، وتمارين التمدد التي تساعد على تحسين اللياقة البدنية.",
       color: "#D81B60", // Slightly darker shade
       image: require("../assets/22.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "ورشات الفنون والحرف اليدوية ",
@@ -492,9 +487,7 @@ export default function HomeScreen({ navigation }) {
         "أنشطة مثل الرسم، الحياكة، والتطريز التي تساعد على تعزيز الإبداع والحفاظ على المهارات اليدوية.",
       color: "#C2185B", // Darker pink shade
       image: require("../assets/23.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
       serviceTitle: "برامج القراءة والكتب ",
@@ -552,7 +545,7 @@ export default function HomeScreen({ navigation }) {
         "خدمات مخصصة لنقل كبار السن إلى الأماكن الاجتماعية والمرافق الصحية.",
       color: "#FF5722", // Base color
       image: require("../assets/31.jpg"),
-      contacts : [
+      contacts: [
         {
           id: "1",
           name: "أحمد شوقي",
@@ -566,17 +559,18 @@ export default function HomeScreen({ navigation }) {
           languages: ["العربية", "الإنجليزية"],
           specialFeatures: [
             "سيارة واسعة تناسب مجموعات صغيرة",
-            "خبرة في نقل كبار السن إلى المرافق الاجتماعية"
+            "خبرة في نقل كبار السن إلى المرافق الاجتماعية",
           ],
           vehicleInfo: {
             type: "تويوتا هايس",
             year: "2020",
-            features: "مكيف هواء - أبواب منزلقة"
+            features: "مكيف هواء - أبواب منزلقة",
           },
           phone: "920001150",
-          pricingLogic: (distance) => `التكلفة الإجمالية: ${10 + distance * 5} د.ت`
-        }
-      ]
+          pricingLogic: distance =>
+            `التكلفة الإجمالية: ${10 + distance * 5} د.ت`,
+        },
+      ],
     },
     {
       serviceTitle: "النقل الطبي ",
@@ -628,7 +622,7 @@ export default function HomeScreen({ navigation }) {
       image: require("../assets/38.jpg"),
     },
   ];
-
+  const { user } = useAuth();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -636,7 +630,7 @@ export default function HomeScreen({ navigation }) {
           source={require("../assets/flower.png")}
           style={styles.flowerIcon}
         />
-        <Text style={styles.greeting}>صباح النور سي علي</Text>
+        <Text style={styles.greeting}>صباح النور {user?.firstName}</Text>
       </View>
 
       <View style={styles.logoSection}>

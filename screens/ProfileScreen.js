@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Modal,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import {
   Avatar,
@@ -16,6 +17,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n, { changeLanguage } from "../i18n";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../firestore/auth/AuthContext";
 
 const ProfileScreen = ({ route, navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,9 +54,9 @@ const ProfileScreen = ({ route, navigation }) => {
       await changeLanguage(selectedLang.value);
     }
   };
-
+const {user} = useAuth();
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
           <Avatar.Image source={require("../assets/elder.png")} size={80} />
@@ -66,11 +68,9 @@ const ProfileScreen = ({ route, navigation }) => {
                   marginTop: 15,
                   marginBottom: 5,
                 },
-              ]}
-            >
-              علي بن محمود
+              ]}>
+              {user?.firstName} {user?.lastName}
             </Title>
-            <Caption style={styles.caption}>سي علي</Caption>
           </View>
         </View>
       </View>
@@ -78,28 +78,25 @@ const ProfileScreen = ({ route, navigation }) => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Text style={{ color: "#777777", marginLeft: 20, fontSize: 18 }}>
-            +92066519
-          </Text>
-          <Icon name="phone" color="#FF6347" size={20} />
+            {user?.phoneNumber}          </Text>
+          <Icon name='phone' color='#FF6347' size={20} />
         </View>
         <View style={styles.row}>
           <Text style={{ color: "#777777", marginLeft: 20, fontSize: 18 }}>
-            ali123@email.com
-          </Text>
-          <Icon name="email" color="#FF6347" size={20} />
+--          </Text>
+          <Icon name='email' color='#FF6347' size={20} />
         </View>
         <TouchableRipple
           onPress={() => {
             navigation.navigate("Map");
-          }}
-        >
+          }}>
           <View style={[styles.row, { marginTop: 30 }]}>
             <Text style={{ marginLeft: 20, fontSize: 18, fontWeight: "bold" }}>
               {route.params?.adress || "العوينة ,تونس"}
-              <Icon name="chevron-down" color="#777777" size={20} />
+              <Icon name='chevron-down' color='#777777' size={20} />
             </Text>
 
-            <Icon name="map-marker-radius" color="#FF6347" size={20} />
+            <Icon name='map-marker-radius' color='#FF6347' size={20} />
           </View>
         </TouchableRipple>
       </View>
@@ -112,8 +109,7 @@ const ProfileScreen = ({ route, navigation }) => {
               borderRightColor: "#dddddd",
               borderRightWidth: 1,
             },
-          ]}
-        >
+          ]}>
           <Title>--</Title>
         </View>
         <View style={styles.infoBox}>
@@ -127,19 +123,19 @@ const ProfileScreen = ({ route, navigation }) => {
             <Text style={styles.menuItemText}>
               {i18n.t("profile.favorites")}
             </Text>
-            <Icon name="heart-outline" color="#FF6347" size={25} />
+            <Icon name='heart-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>{i18n.t("profile.payment")}</Text>
-            <Icon name="credit-card" color="#FF6347" size={25} />
+            <Icon name='credit-card' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>{i18n.t("profile.help")}</Text>
-            <Icon name="account-check-outline" color="#FF6347" size={25} />
+            <Icon name='account-check-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => setIsModalVisible(true)}>
@@ -147,7 +143,7 @@ const ProfileScreen = ({ route, navigation }) => {
             <Text style={styles.menuItemText}>
               {i18n.t("profile.language")} ({selectedLanguage})
             </Text>
-            <Icon name="translate" color="#FF6347" size={25} />
+            <Icon name='translate' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
@@ -156,18 +152,17 @@ const ProfileScreen = ({ route, navigation }) => {
               {" "}
               {i18n.t("profile.logout")}{" "}
             </Text>
-            <Icon name="logout" color="#FF6347" size={25} />
+            <Icon name='logout' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
       </View>
 
       {/* Language Selection Modal */}
       <Modal
-        animationType="slide"
+        animationType='slide'
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
-      >
+        onRequestClose={() => setIsModalVisible(false)}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {languages.map((language, index) => (
@@ -182,8 +177,7 @@ const ProfileScreen = ({ route, navigation }) => {
             ))}
             <TouchableOpacity
               onPress={() => setIsModalVisible(false)}
-              style={styles.closeButton}
-            >
+              style={styles.closeButton}>
               <Text style={styles.closeButtonText}>
                 {i18n.t("profile.close")}
               </Text>
@@ -191,7 +185,7 @@ const ProfileScreen = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -200,6 +194,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     direction: "rtl",
+    paddingVertical:40
   },
   userInfoSection: {
     paddingHorizontal: 30,
