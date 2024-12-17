@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import UserEventCard from "../components/UserEventCard"; // Import the shared UserCard component
+import UserEventCard from "../components/UserEventCard"; 
 import { fetchUserInfo } from "../firestore/User";
 import { fetchParticipantsInfo } from "../firestore/events/Find";
 import EventMap from "./EventMap";
@@ -33,7 +33,7 @@ export default function EventDetailsScreen({ navigation, route }) {
     getParticipantsInfo();
   }, []);
 
-  console.log(event)
+  console.log(event);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.card}>
@@ -42,7 +42,7 @@ export default function EventDetailsScreen({ navigation, route }) {
         <View style={styles.categoriesContainer}>
           {event.categories.map((category, index) => (
             <View key={index} style={styles.categoryChip}>
-              <Ionicons name='information-outline' size={16} color='white' />
+              <Ionicons name="information-outline" size={16} color="white" />
               <Text style={styles.categoryText}>{category}</Text>
             </View>
           ))}
@@ -52,19 +52,21 @@ export default function EventDetailsScreen({ navigation, route }) {
 
         <View style={styles.section}>
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeader}>التاريخ والوقت</Text>
-            <Ionicons name='calendar-outline' size={20} color='red' />
+            <Text style={styles.sectionHeader}>Date et Heure</Text>
+            <Ionicons name="calendar-outline" size={20} color="red" />
           </View>
           <Text style={styles.sectionContent}>
             {event.date}{" "}
-            {event.allDay ? "طوال اليوم" : event.fromTime + "--" + event.toTime}
+            {event.allDay
+              ? "Toute la journée"
+              : event.fromTime + "--" + event.toTime}
           </Text>
         </View>
 
         <View style={styles.section}>
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeader}>الموقع</Text>
-            <Ionicons name='location-outline' size={20} color='red' />
+            <Text style={styles.sectionHeader}>Lieu</Text>
+            <Ionicons name="location-outline" size={20} color="red" />
           </View>
           <TouchableOpacity>
             <EventMap location={event.locationPoint} />
@@ -72,31 +74,31 @@ export default function EventDetailsScreen({ navigation, route }) {
           <Text style={styles.sectionContent}>{event.location} </Text>
         </View>
 
-        {/* Organizer Section */}
+        {/* Section Organisateur */}
         <View style={styles.section}>
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeader}>المنظم</Text>
-            <Ionicons name='person-outline' size={20} color='red' />
+            <Text style={styles.sectionHeader}>Organisateur</Text>
+            <Ionicons name="person-outline" size={20} color="red" />
           </View>
           <UserEventCard
             name={organizerInfo?.firstName + " " + organizerInfo?.lastName}
             phone={organizerInfo?.phoneNumber}
             imageSource={require("../assets/profilePlaceHolder.png")}
-            role='organizer'
+            role="organisateur"
           />
         </View>
 
-        {/* Participants Section */}
+        {/* Section Participants */}
         <View style={styles.section}>
           <View style={styles.sectionHeaderContainer}>
-            <Text style={styles.sectionHeader}>المشاركون</Text>
-            <Ionicons name='people-outline' size={20} color='red' />
+            <Text style={styles.sectionHeader}>Participants</Text>
+            <Ionicons name="people-outline" size={20} color="red" />
           </View>
           <View style={styles.participantsContainer}>
             {participantsInfo.length > 0 ? (
               participantsInfo.map((participant, index) => (
                 <UserEventCard
-                  key={index} // Ensure to provide a unique key for each mapped element
+                  key={index} // Assurez-vous de fournir une clé unique pour chaque élément mappé
                   name={participant.username}
                   phone={participant.phoneNumber}
                   imageSource={require("../assets/profilePlaceHolder.png")}
@@ -105,7 +107,7 @@ export default function EventDetailsScreen({ navigation, route }) {
                 />
               ))
             ) : (
-              <Text>لا يوجد مشاركين حتى الان</Text> // Optional: Message if no participants
+              <Text>Il n'y a pas encore de participants</Text> // Optionnel : Message si aucun participant
             )}
           </View>
         </View>

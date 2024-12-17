@@ -35,7 +35,7 @@ const SubServicesList = ({ route }) => {
             <TouchableOpacity
               style={styles.optionButton}
               onPress={() => {
-                if (subService.serviceTitle === "الفعاليات الأجتماعية") {
+                if (subService.serviceTitle === "Événements sociaux") {
                   navigation.navigate("EventManager");
                   return;
                 }
@@ -46,7 +46,7 @@ const SubServicesList = ({ route }) => {
                   contacts: subService.contacts || [],
                 });
 
-                Speech.speak(subService.serviceTitle, { language: "ar" });
+                Speech.speak(subService.serviceTitle, { language: "fr" });
               }}
             >
               <Service
@@ -74,7 +74,7 @@ const SubServicesList = ({ route }) => {
 
         {/* Mic Button */}
         <View style={styles.requestContainer}>
-          <Text style={styles.requestText}>يمكنك الطلب</Text>
+          <Text style={styles.requestText}> Informations supplémentaires</Text>
           <TouchableOpacity style={styles.micButton}>
             <Text style={styles.micText}>🎤</Text>
           </TouchableOpacity>

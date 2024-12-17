@@ -36,34 +36,31 @@ const Signup = ({ navigation }) => {
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
 
-  const validatePassword = password => {
+  const validatePassword = (password) => {
     let re = /^(?=.*[A-Z])(?=.*[0-9])/;
     return re.test(password);
   };
 
-  const handlePasswordChange = text => {
+  const handlePasswordChange = (text) => {
     setPassword(text);
     const isValid = validatePassword(text);
     setPasswordError(
-      isValid ? "" : " يجب أن تحتوي كلمة المرور على حرف كبير ورقم"
-    );
+      isValid ? "" : "Le mot de passe doit contenir une majuscule et un chiffre"    );
   };
 
-  const handleRePasswordChange = text => {
+  const handleRePasswordChange = (text) => {
     setRePassword(text);
-    setRePasswordError(text === password ? "" : "كلمات المرور غير متطابقة!");
-  };
+    setRePasswordError(text === password ? "" : "Les mots de passe ne correspondent pas !");  };
 
-  const validatePhone = phone => {
+  const validatePhone = (phone) => {
     let re = /^[\d]{8}$/;
     return re.test(phone);
   };
 
-  const handlePhoneChange = text => {
+  const handlePhoneChange = (text) => {
     setPhone(text);
     const isValid = validatePhone(text);
-    setPhoneError(isValid ? "" : " رقم هاتف غير صالح");
-  };
+    setPhoneError(isValid ? "" : "Numéro de téléphone invalide");  };
 
   const handleSubmit = async () => {
     setMessage("");
@@ -79,32 +76,32 @@ const Signup = ({ navigation }) => {
         !gender ||
         !isDateSelected
       ) {
-        setMessage("يرجى ملء جميع الحقول!");
+        setMessage("Veuillez remplir tous les champs !");
         return;
       }
 
       if (!validatePhone(phoneNumber)) {
-        setMessage("رقم الهاتف غير صالح");
+        setMessage("Numéro de téléphone invalide");
         return;
       }
 
       if (password.length <= 7) {
-        setMessage("يجب أن تتكون كلمة المرور من أكثر من 7 أحرف");
+        setMessage("Le mot de passe doit contenir plus de 7 caractères");
         return;
       }
 
       if (!validatePassword(password)) {
-        setMessage("يجب أن تحتوي كلمة المرور على حرف كبير ورقم");
+        setMessage("Le mot de passe doit contenir une majuscule et un chiffre");
         return;
       }
 
       if (password !== rePassword) {
-        setMessage("كلمات المرور غير متطابقة!");
+        setMessage("Les mots de passe ne correspondent pas !");
         return;
       }
 
       if (!termsChecked) {
-        setMessage("يرجى الموافقة على الشروط والأحكام");
+        setMessage("Veuillez accepter les termes et conditions");
         return;
       }
 
@@ -140,19 +137,19 @@ const Signup = ({ navigation }) => {
       // Handle specific Firebase errors
       switch (err.code) {
         case "auth/email-already-in-use":
-          setMessage("رقم الهاتف مستخدم بالفعل");
+          setMessage("Le numéro de téléphone est déjà utilisé");
           break;
         case "auth/invalid-email":
-          setMessage("رقم الهاتف غير صالح");
+          setMessage("Numéro de téléphone invalide");
           break;
         case "auth/operation-not-allowed":
-          setMessage("تسجيل المستخدم غير مفعل حالياً");
+          setMessage("L'inscription est actuellement désactivée");
           break;
         case "auth/weak-password":
-          setMessage("كلمة المرور ضعيفة جداً");
+          setMessage("Mot de passe trop faible");
           break;
         default:
-          setMessage("حدث خطأ أثناء التسجيل");
+          setMessage("Une erreur s'est produite lors de l'inscription");
       }
     }
   };
@@ -168,12 +165,12 @@ const Signup = ({ navigation }) => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = date => {
+  const handleConfirm = (date) => {
     setDateSelected(date);
     hideDatePicker();
   };
 
-  const handleDateTimeChange = selectedDateOrTime => {
+  const handleDateTimeChange = (selectedDateOrTime) => {
     setFromTimePickerVisible(false);
 
     if (isDatePickerVisible) {
@@ -186,7 +183,7 @@ const Signup = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-      <ScrollView keyboardDismissMode='on-drag'>
+      <ScrollView keyboardDismissMode="on-drag">
         <View style={{ flex: 1, marginHorizontal: 22 }}>
           <View style={{ marginVertical: 22 }}>
             <Text
@@ -196,8 +193,9 @@ const Signup = ({ navigation }) => {
                 marginVertical: 12,
                 color: COLORS.blue,
                 textAlign: "right",
-              }}>
-              إنشاء حساب
+              }}
+            >
+              Créer un compte{" "}
             </Text>
           </View>
 
@@ -211,8 +209,9 @@ const Signup = ({ navigation }) => {
                 fontWeight: "bold",
                 textAlign: "right",
                 password: 8,
-              }}>
-              الاسم
+              }}
+            >
+              Prénom
             </Text>
 
             <View
@@ -226,15 +225,15 @@ const Signup = ({ navigation }) => {
                 justifyContent: "center",
                 paddingLeft: 22,
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <TextInput
-                placeholder='أدخل اسمك '
+                placeholder="Entrez votre prénom"
                 placeholderTextColor={COLORS.black}
-                keyboardType='name-phone-pad'
+                keyboardType="name-phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={firstName}
                 onChangeText={setFirstname}
@@ -251,8 +250,9 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              اسم العائلة
+              }}
+            >
+              Nom de famille
             </Text>
 
             <View
@@ -266,15 +266,15 @@ const Signup = ({ navigation }) => {
                 justifyContent: "center",
                 paddingLeft: 22,
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <TextInput
-                placeholder='أدخل اسم عائلتك'
+                placeholder=" Entrez votre nom de famille "
                 placeholderTextColor={COLORS.black}
-                keyboardType='name-phone-pad'
+                keyboardType="name-phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={lastName}
                 onChangeText={setLastname}
@@ -291,8 +291,9 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              كلمة المرور {""}
+              }}
+            >
+              Mot de passe {""}
               {passwordError && (
                 <Text style={{ color: "red" }}>{passwordError}</Text>
               )}
@@ -309,15 +310,15 @@ const Signup = ({ navigation }) => {
                 justifyContent: "center",
                 paddingLeft: 22,
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <TextInput
-                placeholder='أدخل كلمة المرور'
+                placeholder="Entrez votre mot de passe "
                 placeholderTextColor={COLORS.black}
                 secureTextEntry={isPasswordShown}
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={password}
                 onChangeText={handlePasswordChange}
@@ -328,11 +329,12 @@ const Signup = ({ navigation }) => {
                 style={{
                   position: "absolute",
                   left: 12,
-                }}>
+                }}
+              >
                 {isPasswordShown == true ? (
-                  <Ionicons name='eye-off' size={24} color={COLORS.black} />
+                  <Ionicons name="eye-off" size={24} color={COLORS.black} />
                 ) : (
-                  <Ionicons name='eye' size={24} color={COLORS.black} />
+                  <Ionicons name="eye" size={24} color={COLORS.black} />
                 )}
               </TouchableOpacity>
             </View>
@@ -347,8 +349,9 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              تأكيد كلمة المرور {""}
+              }}
+            >
+              Confirmez le mot de passe {""}
               {rePasswordError && (
                 <Text style={{ color: "red" }}>{rePasswordError}</Text>
               )}
@@ -365,15 +368,15 @@ const Signup = ({ navigation }) => {
                 justifyContent: "center",
                 paddingLeft: 22,
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <TextInput
-                placeholder='أدخل كلمة المرور'
+                placeholder=" Entrez votre mot de passe "
                 placeholderTextColor={COLORS.black}
                 secureTextEntry={isPasswordShown}
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={rePassword}
                 onChangeText={handleRePasswordChange}
@@ -384,11 +387,12 @@ const Signup = ({ navigation }) => {
                 style={{
                   position: "absolute",
                   left: 12,
-                }}>
+                }}
+              >
                 {isPasswordShown == true ? (
-                  <Ionicons name='eye-off' size={24} color={COLORS.black} />
+                  <Ionicons name="eye-off" size={24} color={COLORS.black} />
                 ) : (
-                  <Ionicons name='eye' size={24} color={COLORS.black} />
+                  <Ionicons name="eye" size={24} color={COLORS.black} />
                 )}
               </TouchableOpacity>
             </View>
@@ -403,8 +407,9 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              رقم الهاتف {""}
+              }}
+            >
+              Numéro de téléphone {""}
               {phoneError && <Text style={{ color: "red" }}>{phoneError}</Text>}
             </Text>
 
@@ -419,15 +424,15 @@ const Signup = ({ navigation }) => {
                 justifyContent: "center",
                 paddingLeft: 22,
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <TextInput
-                placeholder='أدخل رقم هاتفك'
+                placeholder="Entrez votre numéro de téléphone "
                 placeholderTextColor={COLORS.black}
-                keyboardType='phone-pad'
+                keyboardType="phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={phoneNumber}
                 onChangeText={handlePhoneChange}
@@ -444,8 +449,9 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              الجنس
+              }}
+            >
+              Genre
             </Text>
 
             <View
@@ -455,14 +461,16 @@ const Signup = ({ navigation }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "white",
-              }}>
+              }}
+            >
               <RadioButton.Group
-                onValueChange={newValue => setGender(newValue)}
-                value={gender}>
+                onValueChange={(newValue) => setGender(newValue)}
+                value={gender}
+              >
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <RadioButton.Android value='male' />
-                    <Text>ذكر</Text>
+                    <RadioButton.Android value="male" />
+                    <Text>Male</Text>
                   </View>
 
                   <View
@@ -470,16 +478,17 @@ const Signup = ({ navigation }) => {
                       flexDirection: "row",
                       alignItems: "center",
                       marginLeft: 22,
-                    }}>
-                    <RadioButton.Android value='female' />
-                    <Text>أنثى</Text>
+                    }}
+                  >
+                    <RadioButton.Android value="female" />
+                    <Text>Female</Text>
                   </View>
                 </View>
               </RadioButton.Group>
             </View>
           </View>
 
-          <View style={{ marginBottom: 12 }}>
+          {/* <View style={{ marginBottom: 12 }}>
             <Text
               style={{
                 fontSize: 16,
@@ -488,15 +497,16 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              صورة الملف الشخصي
+              }}
+            >
+              Photo de profil
             </Text>
 
             <ImageUpload
               image={profileImage}
-              onImageChange={image => setProfileImage(image)}
+              onImageChange={(image) => setProfileImage(image)}
             />
-          </View>
+          </View> */}
 
           <View style={{ marginBottom: 12 }}>
             <Text
@@ -507,27 +517,29 @@ const Signup = ({ navigation }) => {
                 color: COLORS.blue,
                 fontWeight: "bold",
                 textAlign: "right",
-              }}>
-              تاريخ الميلاد
+              }}
+            >
+              Date de naissance
             </Text>
 
             <Button
-              title='Show Date Picker'
+              title="Show Date Picker"
               onPress={showDatePicker}
-              mode='outlined'
-              textColor='grey'
-              width='100%'>
+              mode="outlined"
+              textColor="grey"
+              width="100%"
+            >
               {isDateSelected
                 ? isDateSelected.toLocaleDateString("en-GB", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "2-digit",
                   })
-                : " اختر تاريخ الميلاد"}
+                : " Entrez date de naissance "}
             </Button>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
-              mode='date'
+              mode="date"
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
               // onValueChange={handleDateTimeChange}
@@ -539,22 +551,24 @@ const Signup = ({ navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               marginBottom: 12,
-            }}>
+            }}
+          >
             <Checkbox
               value={termsChecked}
               onValueChange={setTermsChecked}
               color={COLORS.blue}
             />
-            <Text>أوافق على الشروط والأحكام</Text>
+            <Text>J'accepte les termes et conditions</Text>
           </View>
 
           <Text style={{ color: "red", marginBottom: 12 }}>{message}</Text>
 
           <Button
-            mode='contained'
+            mode="contained"
             onPress={handleSubmit}
-            style={{ backgroundColor: COLORS.blue, padding: 8 }}>
-            إنشاء حساب
+            style={{ backgroundColor: COLORS.blue, padding: 8 }}
+          >
+            Créer un compte{" "}
           </Button>
         </View>
         <View
@@ -562,8 +576,12 @@ const Signup = ({ navigation }) => {
             flexDirection: "row-reverse",
             justifyContent: "center",
             marginVertical: 22,
-          }}>
-          <Text style={{ fontSize: 16, color: COLORS.black }}>لديك حساب؟</Text>
+          }}
+        >
+          <Text style={{ fontSize: 16, color: COLORS.black }}>
+            {" "}
+            Vous avez déjà un compte ?
+          </Text>
           <Pressable onPress={() => navigation.navigate("Login")}>
             <Text
               style={{
@@ -571,9 +589,10 @@ const Signup = ({ navigation }) => {
                 color: COLORS.b100,
                 fontWeight: "bold",
                 marginLeft: 6,
-              }}>
+              }}
+            >
               {" "}
-              تسجيل الدخول{" "}
+              Se connecter{" "}
             </Text>
           </Pressable>
           {/* </View> */}

@@ -62,7 +62,7 @@ const Map = ({ setLocation, setLocationPoint }) => {
       }
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", "Unable to get location data");
+      Alert.alert("Erreur", "Impossible d'obtenir les données de localisation");
     }
   };
 
@@ -84,8 +84,9 @@ const Map = ({ setLocation, setLocationPoint }) => {
             justifyContent: "space-between",
             opacity: 0.9,
             flexDirection: "row",
-          }}>
-          <Text>اضغط على الموافقة لتسجيل احداثياتك </Text>
+          }}
+        >
+          <Text>Appuyez sur approuver pour enregistrer vos coordonnées</Text>
           <IconButton
             onPress={async () => {
               const latlng = {
@@ -96,23 +97,24 @@ const Map = ({ setLocation, setLocationPoint }) => {
               await reverseGeocode(latlng.latitude, latlng.longitude);
             }}
             icon={"check"}
-            mode='contained'
+            mode="contained"
             size={20}
           />
         </View>
         <MapView
           style={styles.map}
           ref={mapViewRef}
-          onRegionChangeComplete={region => (currentRegion.current = region)}
+          onRegionChangeComplete={(region) => (currentRegion.current = region)}
           initialRegion={{
             latitude: 36.7277622657912, // Latitude of Tunisia
             longitude: 10.203072895008471, // Longitude of Tunisia
             latitudeDelta: 1, // Zoom level
             longitudeDelta: 1, // Zoom level
-          }}></MapView>
+          }}
+        ></MapView>
         <IconButton
           icon={"target"}
-          mode='contained'
+          mode="contained"
           size={37}
           style={{
             alignSelf: "flex-end",
@@ -136,7 +138,7 @@ const Map = ({ setLocation, setLocationPoint }) => {
               ]);
             } catch (error) {
               console.log(error);
-              Alert.alert("Please enable location permission");
+              Alert.alert("Veuillez activer la permission de localisation");
             }
           }}
         />

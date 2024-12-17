@@ -36,51 +36,51 @@ export default function EventBooking() {
 
   const handleBooking = async () => {
     if (isLoading) return;
-
+  
     setIsLoading(true);
     try {
       if (!user) {
-        Alert.alert("خطأ", "يجب تسجيل الدخول أولاً");
+        Alert.alert("Erreur", "Vous devez vous connecter d'abord");
         navigation.navigate("Login");
         return;
       }
-
+  
       await addEventParticipant(
         event.id,
         user.id,
         user.firstName + " " + user.lastName,
         participants
       );
-
-      setSnackbarMessage("تم الحجز بنجاح!");
+  
+      setSnackbarMessage("Réservation effectuée avec succès !");
       setSnackbarVisible(true);
       setTimeout(() => {
         navigation.navigate("EventManager");
       }, 3000);
     } catch (error) {
       console.error(error);
-      let errorMessage = "حدث خطأ أثناء الحجز. ";
+      let errorMessage = "Une erreur s'est produite lors de la réservation. ";
       switch (error.message) {
         case "Organizer cannot book their own event":
-          errorMessage += "لا يمكنك حجز فعالية أنت منظمها";
+          errorMessage += "Vous ne pouvez pas réserver un événement que vous organisez.";
           break;
         case "Event is full":
-          errorMessage += "عذراً، الفعالية ممتلئة";
+          errorMessage += "Désolé, l'événement est complet.";
           break;
         case "Event not found":
-          errorMessage += "الفعالية غير موجودة";
+          errorMessage += "Événement introuvable.";
           break;
         default:
           errorMessage += error.message;
       }
-      Alert.alert("خطأ", errorMessage);
+      Alert.alert("Erreur", errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   const isBookingDisabled = isLoading || parseInt(participants) < 1;
-
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -90,7 +90,7 @@ export default function EventBooking() {
           <Text style={styles.dateChipText}>{event.date}</Text>
         </View>
       </View>
-
+  
       <View style={styles.contentContainer}>
         <Text style={styles.title}>{event.title}</Text>
         <View style={styles.locationContainer}>
@@ -98,9 +98,9 @@ export default function EventBooking() {
           <Text style={styles.locationText}>{event.location}</Text>
         </View>
         <Text style={styles.description}>{event.description}</Text>
-
+  
         <View style={styles.formGroup}>
-          <Text style={styles.label}>عدد المشاركين:</Text>
+          <Text style={styles.label}>Nombre de participants :</Text>
           <View style={styles.participantsContainer}>
             <TouchableOpacity
               style={[
@@ -123,22 +123,22 @@ export default function EventBooking() {
             </TouchableOpacity>
           </View>
         </View>
-
+  
         <View style={styles.formGroup}>
-          <Text style={styles.label}>معلومات إضافية:</Text>
+          <Text style={styles.label}>Informations supplémentaires :</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
-            placeholder='هل لديك أي طلبات خاصة أو تعليقات؟'
+            placeholder="Avez-vous des demandes spéciales ou des commentaires ?"
             placeholderTextColor='#999'
             value={additionalInfo}
             onChangeText={text => setAdditionalInfo(text)}
             multiline
             numberOfLines={4}
-            textAlign='right'
+            textAlign='left'
             textAlignVertical='top'
           />
         </View>
-
+  
         <TouchableOpacity
           style={[styles.button, isBookingDisabled && styles.disabledButton]}
           onPress={handleBooking}
@@ -146,25 +146,25 @@ export default function EventBooking() {
           {isLoading ? (
             <ActivityIndicator color='#fff' />
           ) : (
-            <Text style={styles.buttonText}>تأكيد الحجز</Text>
+            <Text style={styles.buttonText}>Confirmer la réservation</Text>
           )}
         </TouchableOpacity>
       </View>
-
+  
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: "#4CAF50" }} // Green color for success
+        style={{ backgroundColor: "#4CAF50" }} // Couleur verte pour succès
         action={{
-          label: "إغلاق",
+          label: "Fermer",
           onPress: () => setSnackbarVisible(false),
         }}>
         {snackbarMessage}
       </Snackbar>
     </ScrollView>
   );
-}
+}  
 
 const styles = StyleSheet.create({
   container: {
