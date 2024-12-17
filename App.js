@@ -28,6 +28,8 @@ import RNRestart from "react-native-restart";
 import i18n from "./i18n";
 
 import ExampleScreen from "./test";
+import RidePriceMap from "./screens/TransportMap";
+import TransportMap from "./screens/TransportMap";
 
 const Stack = createStackNavigator();
 function AppNavigator() {
@@ -134,6 +136,13 @@ function AppNavigator() {
                 <Stack.Screen
           name='EventOverview'
           component={EventDetailsScreen}
+          // options={{
+          //   headerShown: false,
+          // }}
+        />
+        <Stack.Screen
+          name='TransportMap'
+          component={TransportMap}
           // options={{
           //   headerShown: false,
           // }}
