@@ -43,19 +43,19 @@ const Login = ({ navigation }) => {
             resizeMode='contain'
           />
 
-          {/* Phone Number Input */}
+          {/* Champ Numéro de Téléphone */}
           <View style={styles.inputContainer}>
             <TextInput
               value={phone}
               onChangeText={val => setPhone(val)}
               style={styles.input}
-              placeholder=' رقم الهاتف'
+              placeholder='Numéro de téléphone'
               placeholderTextColor='#CCCCCC'
-              keyboardType='phone-pad' // Use phone pad for phone number input
+              keyboardType='phone-pad' // Utilise le pavé numérique pour le numéro de téléphone
             />
           </View>
 
-          {/* Password Input */}
+          {/* Champ Mot de Passe */}
           <View
             style={{
               width: "100%",
@@ -69,12 +69,12 @@ const Login = ({ navigation }) => {
               marginBottom: 12,
             }}>
             <TextInput
-              placeholder='أدخل كلمة المرور'
+              placeholder='Entrez le mot de passe'
               placeholderTextColor='#CCCCCC'
               secureTextEntry={isPasswordShown}
               style={{
                 width: "100%",
-                textAlign: "right",
+                textAlign: "left",
                 paddingHorizontal: 20,
               }}
               value={password}
@@ -85,7 +85,7 @@ const Login = ({ navigation }) => {
               onPress={() => setIsPasswordShown(!isPasswordShown)}
               style={{
                 position: "absolute",
-                left: 12,
+                right: 12,
               }}>
               {isPasswordShown == true ? (
                 <Ionicons name='eye-off' size={24} color={COLORS.black} />
@@ -95,7 +95,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Remember Me and Forgot Password */}
+          {/* Souviens-toi de moi et mot de passe oublié */}
           <View style={styles.rememberView}>
             <View style={styles.checkboxContainer}>
               <Checkbox.Android
@@ -103,18 +103,18 @@ const Login = ({ navigation }) => {
                 onPress={() => setIsChecked(!isChecked)}
                 color='#008BCE'
               />
-              <Text style={styles.rememberMeText}>أبقيني مسجلا</Text>
+              <Text style={styles.rememberMeText}>Se souvenir de moi</Text>
             </View>
           </View>
 
-          {/* Login Button */}
+          {/* Bouton Connexion */}
           <Button
             style={styles.loginButton}
             onPress={async () => {
               try {
                 const userCredential = await signInWithEmailAndPassword(
                   auth,
-                  `${phone}@domain.com`, // Firebase requires email, so we convert phone to email format
+                  `${phone}@domain.com`, // Firebase nécessite un email, donc nous convertissons le téléphone en format email
                   password
                 );
                 if (userCredential.user) {
@@ -122,35 +122,35 @@ const Login = ({ navigation }) => {
                 }
               } catch (error) {
                 console.log(error);
-                let errorMessage = "حدث خطأ في تسجيل الدخول";
+                let errorMessage = "Une erreur s'est produite lors de la connexion";
 
                 switch (error.code) {
                   case "auth/invalid-email":
-                    errorMessage = "رقم الهاتف غير صحيح";
+                    errorMessage = "Numéro de téléphone incorrect";
                     break;
                   case "auth/user-disabled":
-                    errorMessage = "تم تعطيل هذا الحساب";
+                    errorMessage = "Ce compte a été désactivé";
                     break;
                   case "auth/user-not-found":
-                    errorMessage = "لم يتم العثور على حساب بهذا الرقم";
+                    errorMessage = "Aucun compte trouvé avec ce numéro";
                     break;
                   case "auth/wrong-password":
-                    errorMessage = "كلمة المرور غير صحيحة";
+                    errorMessage = "Mot de passe incorrect";
                     break;
                 }
 
-                Alert.alert("خطأ", errorMessage);
+                Alert.alert("Erreur", errorMessage);
               }
             }}
             mode='contained-tonal'
             buttonColor='#007DC0'
             textColor='white'>
-            تسجيل الدخول
+            Connexion
           </Button>
           <View style={styles.registerContainer}>
             <Pressable onPress={() => navigation.navigate("Signup")}>
               <Text style={styles.registerText}>
-                ليس لديك حساب؟ <Text style={styles.boldText}>سجل</Text>
+                Pas de compte ? <Text style={styles.boldText}>Inscrivez-vous</Text>
               </Text>
             </Pressable>
           </View>
@@ -180,14 +180,13 @@ const styles = StyleSheet.create({
   rememberView: {
     width: "100%",
     justifyContent: "space-between",
-    // alignItems: "center",
     flexDirection: "row",
     marginBottom: 8,
-    textAlign: "right",
+    textAlign: "left",
   },
   logo: {
-    width: 500,
-    height: 500,
+    width: 400,
+    height: 400,
     resizeMode: "contain",
     alignSelf: "center",
     marginBottom: 20,
@@ -196,7 +195,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 20,
     marginBottom: 12,
-    textAlign: "right",
+    textAlign: "left",
   },
   input: {
     width: "100%",
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingLeft: 22,
     fontSize: 16,
-    textAlign: "right",
+    textAlign: "left",
   },
   passwordContainer: {
     paddingLeft: 22,
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     marginTop: 5,
-    textAlign: "right",
+    textAlign: "left",
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -230,7 +229,7 @@ const styles = StyleSheet.create({
   rememberMeText: {
     fontSize: 16,
     color: "#808080",
-    textAlign: "right",
+    textAlign: "left",
   },
   loginButton: {
     marginTop: 18,
