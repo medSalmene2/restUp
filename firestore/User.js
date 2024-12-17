@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc , GeoPoint} from "firebase/firestore";
 import { db } from "./config/config";
 
 const fetchUserInfo = async uid => {
@@ -33,5 +33,20 @@ const fetchUserInfo = async uid => {
     throw new Error("Failed to fetch user information");
   }
 };
+async function updateUserLocation(uid, location, locationName) {
+  try {
+    const userRef = doc(db, "users", uid); // Reference to the user's document
 
-module.exports = { fetchUserInfo };
+    // Update the Firestore document
+    await updateDoc(userRef, {
+      location: new GeoPoint(location.latitude, location.longitude),
+      locationName: locationName,
+    });
+
+    console.log(`Successfully updated location for user with UID: ${uid}`);
+  } catch (error) {
+    console.error("Error updating user location: ", error);
+  }
+}
+
+module.exports = { fetchUserInfo , updateUserLocation };

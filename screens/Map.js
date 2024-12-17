@@ -12,6 +12,8 @@ import * as Location from "expo-location";
 import { Banner, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { useAuth } from "../firestore/auth/AuthContext";
+import { updateUserLocation } from "../firestore/User";
 
 const Map = ({ setLocation, setLocationPoint }) => {
   const mapViewRef = useRef();
@@ -23,6 +25,7 @@ const Map = ({ setLocation, setLocationPoint }) => {
     longitudeDelta: 1, // Zoom level
   });
   const navigation = useNavigation();
+  const { user , refreshUser} = useAuth();
   useEffect(() => {
     if (mapViewRef.current && currentLocation !== null) {
       mapViewRef.current.fitToCoordinates(currentLocation, { animated: true });
@@ -34,13 +37,13 @@ const Map = ({ setLocation, setLocationPoint }) => {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=0`,
         {
           headers: {
-            "User-Agent": "YourAppName/1.0.0", // Replace with your app's name/version
+            "User-Agent": "YourAppName/2.0.0", // Replace with your app's name/version
           },
         }
       );
       //setLocation is provided during event creation  , this is arbitrary choice
       if (setLocation) {
-        setLocationPoint({latitude, longitude});
+        setLocationPoint({ latitude, longitude });
         setLocation(response.data.display_name);
         navigation.goBack();
       }
@@ -48,7 +51,14 @@ const Map = ({ setLocation, setLocationPoint }) => {
       else {
         navigation.navigate("Profile", {
           adress: response.data.display_name,
+          location: { latitude, longitude },
         });
+        await updateUserLocation(
+          user?.id,
+          { longitude, latitude },
+          response.data.display_name
+        );
+        await refreshUser();
       }
     } catch (error) {
       console.log(error);

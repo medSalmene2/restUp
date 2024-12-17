@@ -18,6 +18,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n, { changeLanguage } from "../i18n";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../firestore/auth/AuthContext";
+import {updateUserLocation}  from "../firestore/User"
 
 const ProfileScreen = ({ route, navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -54,12 +55,19 @@ const ProfileScreen = ({ route, navigation }) => {
       await changeLanguage(selectedLang.value);
     }
   };
+  
 const {user} = useAuth();
+const userLocation =(route.params?.adress  || user?.locationName  ||"Enter Location");
+
+// if(route.params?.adress){
+// setUserLocation(route.params.adress)
+// }
+console.log(route.params)
   return (
     <ScrollView style={styles.container}>
       <View style={styles.userInfoSection}>
         <View style={{ flexDirection: "row", marginTop: 15 }}>
-          <Avatar.Image source={require("../assets/elder.png")} size={80} />
+          <Avatar.Image source={require("../assets/profilePlaceHolder.png")} size={80} />
           <View style={{ marginRight: 20 }}>
             <Title
               style={[
@@ -92,7 +100,7 @@ const {user} = useAuth();
           }}>
           <View style={[styles.row, { marginTop: 30 }]}>
             <Text style={{ marginLeft: 20, fontSize: 18, fontWeight: "bold" }}>
-              {route.params?.adress || "العوينة ,تونس"}
+              {userLocation}
               <Icon name='chevron-down' color='#777777' size={20} />
             </Text>
 
@@ -117,19 +125,13 @@ const {user} = useAuth();
         </View>
       </View>
 
-      <View style={styles.menuWrapper}>
+      <ScrollView style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>
               {i18n.t("profile.favorites")}
             </Text>
             <Icon name='heart-outline' color='#FF6347' size={25} />
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>{i18n.t("profile.payment")}</Text>
-            <Icon name='credit-card' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
@@ -149,13 +151,12 @@ const {user} = useAuth();
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>
-              {" "}
               {i18n.t("profile.logout")}{" "}
             </Text>
             <Icon name='logout' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
-      </View>
+      </ScrollView>
 
       {/* Language Selection Modal */}
       <Modal
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     paddingHorizontal: 30,
-    marginBottom: 25,
+    // marginBottom: 25,
   },
   title: {
     fontSize: 26,
