@@ -107,7 +107,7 @@ export default function EventsScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>
-          Découvrez des événements passionnants{"\n"}près de chez vous
+          Découvrez des événements passionnants près de chez vous
         </Text>
       </View>
 
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    padding: 16,
+    padding: 12,
   },
   title: {
     fontSize: 24,

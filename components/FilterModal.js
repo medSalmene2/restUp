@@ -16,47 +16,48 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { TextInput } from "react-native-paper";
 
 // Configure calendar for Arabic locale
-LocaleConfig.locales["ar"] = {
+LocaleConfig.locales["fr"] = {
   monthNames: [
-    "يناير",
-    "فبراير",
-    "مارس",
-    "أبريل",
-    "مايو",
-    "يونيو",
-    "يوليو",
-    "أغسطس",
-    "سبتمبر",
-    "أكتوبر",
-    "نوفمبر",
-    "ديسمبر",
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
   ],
   monthNamesShort: [
-    "يناير",
-    "فبراير",
-    "مارس",
-    "أبريل",
-    "مايو",
-    "يونيو",
-    "يوليو",
-    "أغسطس",
-    "سبتمبر",
-    "أكتوبر",
-    "نوفمبر",
-    "ديسمبر",
+    "Jan",
+    "Fév",
+    "Mar",
+    "Avr",
+    "Mai",
+    "Juin",
+    "Juil",
+    "Août",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Déc",
   ],
   dayNames: [
-    "الأحد",
-    "الإثنين",
-    "الثلاثاء",
-    "الأربعاء",
-    "الخميس",
-    "الجمعة",
-    "السبت",
+    "Dimanche",
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi",
   ],
-  dayNamesShort: ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
+  dayNamesShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
 };
-LocaleConfig.defaultLocale = "ar";
+LocaleConfig.defaultLocale = "fr";
+
 
 export default FilterModal = ({
   visible,
@@ -73,8 +74,8 @@ export default FilterModal = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectingDateFor, setSelectingDateFor] = useState(null); // 'start' or 'end'
 
-  const formatDate = date => {
-    if (!date) return "غير محدد";
+  const formatDate = (date) => {
+    if (!date) return "Non défini";
     date = new Date(date);
     const d = date.getDate().toString().padStart(2, "0");
     const m = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -82,8 +83,8 @@ export default FilterModal = ({
     return `${d}/${m}/${y}`;
   };
 
-  const handleDateSelect = date => {
-    setFilters(prev => ({
+  const handleDateSelect = (date) => {
+    setFilters((prev) => ({
       ...prev,
       dateRange: {
         ...prev.dateRange,
@@ -97,18 +98,19 @@ export default FilterModal = ({
     <Modal
       visible={showCalendar}
       transparent
-      animationType='slide'
-      onRequestClose={() => setShowCalendar(false)}>
+      animationType="slide"
+      onRequestClose={() => setShowCalendar(false)}
+    >
       <View style={styless.calendarModalContainer}>
         <View style={styless.calendarModalContent}>
           <View style={styless.calendarHeader}>
             <Text style={styless.calendarTitle}>
               {selectingDateFor === "start"
-                ? "اختر تاريخ البداية"
-                : "اختر تاريخ النهاية"}
+                ? "Choisissez la date de début"
+                : "Choisissez la date de fin"}
             </Text>
             <TouchableOpacity onPress={() => setShowCalendar(false)}>
-              <Ionicons name='close' size={24} color='#333' />
+              <Ionicons name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <Calendar
@@ -143,35 +145,37 @@ export default FilterModal = ({
 
   return (
     <Modal
-      animationType='slide'
+      animationType="slide"
       transparent
       visible={visible}
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <View style={styless.modalContainer}>
         <View style={styless.modalContent}>
           <View style={styless.modalHeader}>
-            <Text style={styless.modalTitle}>فلترة الأحداث</Text>
+            <Text style={styless.modalTitle}>Trier les événements </Text>
             <TouchableOpacity onPress={onClose}>
-              <Ionicons name='close' size={24} color='#333' />
+              <Ionicons name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
 
           <ScrollView style={styless.filterOptionsContainer}>
-            {/* Date Range Section */}
+            {/* Section de plage de dates */}
             <View style={styless.filterSection}>
-              <Text style={styless.filterSectionTitle}>نطاق التاريخ</Text>
+              <Text style={styless.filterSectionTitle}>Plage de dates</Text>
               <View style={styless.datePickerContainer}>
                 <TouchableOpacity
                   style={styless.dateButton}
                   onPress={() => {
                     setSelectingDateFor("start");
                     setShowCalendar(true);
-                  }}>
-                  <Text style={styless.dateLabel}>تاريخ البداية</Text>
+                  }}
+                >
+                  <Text style={styless.dateLabel}>Date de début</Text>
                   <Text style={styless.dateValue}>
                     {formatDate(filters.dateRange.start)}
                   </Text>
-                  <MaterialIcons name='calendar-today' size={20} color='#666' />
+                  <MaterialIcons name="calendar-today" size={20} color="#666" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -179,21 +183,22 @@ export default FilterModal = ({
                   onPress={() => {
                     setSelectingDateFor("end");
                     setShowCalendar(true);
-                  }}>
-                  <Text style={styless.dateLabel}>تاريخ النهاية</Text>
+                  }}
+                >
+                  <Text style={styless.dateLabel}>Date de fin</Text>
                   <Text style={styless.dateValue}>
                     {formatDate(filters.dateRange.end)}
                   </Text>
-                  <MaterialIcons name='calendar-today' size={20} color='#666' />
+                  <MaterialIcons name="calendar-today" size={20} color="#666" />
                 </TouchableOpacity>
               </View>
             </View>
 
-            {/* Guests Range Section */}
+            {/* Section de plage d'invités */}
             <View style={styless.filterSection}>
-              <Text style={styless.filterSectionTitle}>عدد الضيوف</Text>
+              <Text style={styless.filterSectionTitle}>Nombre d'invités</Text>
               <Text style={styless.rangeText}>
-                من {filters.guestRange[0]} إلى {filters.guestRange[1]} ضيف
+                De {filters.guestRange[0]} à {filters.guestRange[1]} invités
               </Text>
               <View style={styless.sliderContainer}>
                 <MultiSlider
@@ -212,22 +217,24 @@ export default FilterModal = ({
                     borderWidth: 2,
                     borderColor: "white",
                   }}
-                  onValuesChange={values =>
-                    setFilters(prev => ({ ...prev, guestRange: values }))
+                  onValuesChange={(values) =>
+                    setFilters((prev) => ({ ...prev, guestRange: values }))
                   }
                 />
               </View>
             </View>
 
-            {/* Nearby Events Section */}
+            {/* Section des événements proches */}
             <View style={styless.filterSection}>
               <View style={styless.nearbyToggleContainer}>
-                <Text style={styless.filterSectionTitle}>الأحداث القريبة</Text>
+                <Text style={styless.filterSectionTitle}>
+                  Événements proches
+                </Text>
                 <Switch
                   trackColor={{ false: "#DEDEDE", true: "#ffb3b3" }}
                   thumbColor={filters.nearbyEvents ? "red" : "#f4f3f4"}
                   onValueChange={() =>
-                    setFilters(prev => ({
+                    setFilters((prev) => ({
                       ...prev,
                       nearbyEvents: !prev.nearbyEvents,
                     }))
@@ -240,15 +247,15 @@ export default FilterModal = ({
                 <View style={styless.radiusInputContainer}>
                   <TextInput
                     style={styless.radiusInput}
-                    keyboardType='numeric'
+                    keyboardType="numeric"
                     value={filters.radius}
-                    onChangeText={value =>
-                      setFilters(prev => ({ ...prev, radius: value }))
+                    onChangeText={(value) =>
+                      setFilters((prev) => ({ ...prev, radius: value }))
                     }
-                    placeholder='1'
+                    placeholder="1"
                     maxLength={2}
                   />
-                  <Text style={styless.radiusUnit}>كيلومتر</Text>
+                  <Text style={styless.radiusUnit}>Kilomètre</Text>
                 </View>
               )}
             </View>
@@ -257,13 +264,15 @@ export default FilterModal = ({
           <View style={styless.modalButtonContainer}>
             <TouchableOpacity
               style={styless.resetButton}
-              onPress={resetFilters}>
-              <Text style={styless.resetButtonText}>إعادة تعيين</Text>
+              onPress={resetFilters}
+            >
+              <Text style={styless.resetButtonText}>Réinitialiser</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styless.applyFilterButton}
-              onPress={() => onApply(filters)}>
-              <Text style={styless.applyFilterButtonText}>تطبيق</Text>
+              onPress={() => onApply(filters)}
+            >
+              <Text style={styless.applyFilterButtonText}>Appliquer</Text>
             </TouchableOpacity>
           </View>
         </View>

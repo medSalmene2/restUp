@@ -1,38 +1,38 @@
 const categories = [
   {
-    name: "الجميع",
-    imageUrl: "", // Replace with actual icon URL
+    name: "Tous",
+    imageUrl: "", // Remplacez par l'URL réelle de l'icône
   },
   {
-    name: "رياضة",
+    name: "Sport",
     imageUrl: require("../assets/sports.png"),
   },
   {
-    name: "ثقافة",
+    name: "Culture",
     imageUrl: require("../assets/culture.png"),
   },
   {
-    name: "تكنولوجيا",
+    name: "Technologie",
     imageUrl: require("../assets/technology.png"),
   },
   {
-    name: "موسيقى",
+    name: "Musique",
     imageUrl: require("../assets/music.png"),
   },
   {
-    name: "تعليم",
+    name: "Éducation",
     imageUrl: require("../assets/education.png"),
   },
   {
-    name: "طبخ",
+    name: "Cuisine",
     imageUrl: require("../assets/cooking.png"),
   },
   {
-    name: "قراءة",
+    name: "Lecture",
     imageUrl: require("../assets/reading.png"),
   },
   {
-    name: "رسم",
+    name: "Peinture",
     imageUrl: require("../assets/painting.png"),
   },
 ];

@@ -93,9 +93,10 @@ const EventCreationInfo1 = ({
           // Automatically adjust toTime to be 30 minutes after new fromTime
           setToTime(minEndTime);
           Alert.alert(
-            "تنبيه",
-            "تم تعديل وقت النهاية تلقائياً ليكون بعد 30 دقيقة من وقت البداية",
-            [{ text: "حسناً" }]
+            "Alerte",
+            "L'heure de fin a été automatiquement modifiée pour être 30 minutes après l'heure de début",
+            [{ text: "D'accord" }]
+
           );
         }
       }
@@ -110,17 +111,17 @@ const EventCreationInfo1 = ({
       const minEndTime = addMinutes(fromTime, 30);
 
       if (selectedTime <= fromTime) {
-        Alert.alert("خطأ", "يجب أن يكون وقت النهاية بعد وقت البداية", [
-          { text: "حسناً" },
+        Alert.alert("Erreur", "L'heure de fin doit être après l'heure de début", [
+          { text: "D'accord" },
         ]);
         return;
       }
 
       if (selectedTime < minEndTime) {
         Alert.alert(
-          "خطأ",
-          "يجب أن يكون وقت النهاية بعد وقت البداية بـ 30 دقيقة على الأقل",
-          [{ text: "حسناً" }]
+          "Erreur",
+          "L'heure de fin doit être au moins 30 minutes après l'heure de début",
+          [{ text: "D'accord" }]
         );
         return;
       }
@@ -165,14 +166,14 @@ const EventCreationInfo1 = ({
     }
 
     if (!isValid) {
-      let errorMessage = "يرجى تصحيح الأخطاء التالية:\n";
-      if (newErrors.title) errorMessage += "- يجب إدخال العنوان\n";
+      let errorMessage = "Veuillez corriger les erreurs suivantes :\n";
+      if (newErrors.title) errorMessage += "- Le titre doit être renseigné\n";
       if (newErrors.categories)
-        errorMessage += "- يجب اختيار فئة واحدة على الأقل\n";
-      if (newErrors.description) errorMessage += "- يجب إدخال الوصف\n";
-      if (newErrors.time) errorMessage += "- يجب تحديد وقت البداية والنهاية\n";
+        errorMessage += "- Vous devez sélectionner au moins une catégorie\n";
+      if (newErrors.description) errorMessage += "- La description doit être renseignée\n";
+      if (newErrors.time) errorMessage += "- L'heure de début et de fin doit être définie\n";
 
-      Alert.alert("تنبيه", errorMessage, [{ text: "حسناً" }]);
+      Alert.alert("Alerte", errorMessage, [{ text: "D'accord" }]);
     }
 
     return isValid;
@@ -182,7 +183,7 @@ const EventCreationInfo1 = ({
   const rtlTextInputProps = {
     textAlign: "right",
     textAlignVertical: "center",
-    writingDirection: "rtl",
+    // writingDirection: "rtl",
     theme: {
       ...theme,
       colors: {
@@ -192,7 +193,7 @@ const EventCreationInfo1 = ({
     },
     contentStyle: {
       textAlign: "right",
-      writingDirection: "rtl",
+      // writingDirection: "rtl",
     },
   };
   const handleNext = () => {
@@ -207,7 +208,7 @@ const EventCreationInfo1 = ({
         <View style={styles.inputContainer}>
           <TextInput
             mode='outlined'
-            label='العنوان'
+            label='Titre'
             activeOutlineColor='red'
             value={title}
             onChangeText={setTitle}
@@ -218,7 +219,7 @@ const EventCreationInfo1 = ({
         </View>
 
         {/* Categories */}
-        <Text style={styles.sectionTitle}>اختر الفئة:</Text>
+        <Text style={styles.sectionTitle}>Choisissez la catégorie :</Text>
         <ScrollView
           horizontal
           contentContainerStyle={styles.categoriesContainer}>
@@ -242,7 +243,7 @@ const EventCreationInfo1 = ({
         <View style={styles.inputContainer}>
           <TextInput
             mode='outlined'
-            label='الوصف'
+            label='Description'
             value={description}
             activeOutlineColor='red'
             onChangeText={setDescription}
@@ -257,7 +258,7 @@ const EventCreationInfo1 = ({
         {/* Notes */}
         <TextInput
           mode='outlined'
-          label='ملاحظات'
+          label='Remarques'
           value={notes}
           activeOutlineColor='red'
           onChangeText={setNotes}
@@ -271,15 +272,15 @@ const EventCreationInfo1 = ({
         {/* Time Selection Section */}
         <View style={styles.timeSection}>
           <View style={styles.allDayContainer}>
-            <Text style={styles.sectionTitle}>طوال اليوم</Text>
-            <Switch value={isAllDay} onValueChange={setIsAllDay} color='red' />
+          <Text style={styles.sectionTitle}>Toute la journée</Text>
+          <Switch value={isAllDay} onValueChange={setIsAllDay} color='red' />
           </View>
 
           {!isAllDay && (
             <View style={styles.timePickerContainer}>
               <View style={styles.timeInputContainer}>
-                <Text style={styles.timeLabel}>من</Text>
-                <TouchableOpacity
+              <Text style={styles.timeLabel}>De</Text>
+              <TouchableOpacity
                   style={styles.timeButton}
                   onPress={() => setShowFromPicker(true)}>
                   <Text style={styles.timeButtonText}>
@@ -289,8 +290,8 @@ const EventCreationInfo1 = ({
               </View>
 
               <View style={styles.timeInputContainer}>
-                <Text style={styles.timeLabel}>إلى</Text>
-                <TouchableOpacity
+              <Text style={styles.timeLabel}>À</Text>
+              <TouchableOpacity
                   style={styles.timeButton}
                   onPress={() => setShowToPicker(true)}>
                   <Text style={styles.timeButtonText}>
@@ -324,8 +325,8 @@ const EventCreationInfo1 = ({
 
         {/* Guest Selector */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>الضيوف</Text>
-          <View style={styles.counter}>
+        <Text style={styles.sectionTitle}>Invités</Text>
+        <View style={styles.counter}>
             <TouchableOpacity
               onPress={incrementGuest}
               style={styles.counterButton}>
@@ -345,7 +346,7 @@ const EventCreationInfo1 = ({
         {/* Submit Button */}
         <TouchableOpacity style={styles.saveButton} onPress={handleNext}>
           <View style={styles.buttonContent}>
-            <Text style={styles.saveButtonText}>التالي</Text>
+          <Text style={styles.saveButtonText}>Suivant</Text>
           </View>
           <Icon source={"chevron-right"} size={25} color='white' />
         </TouchableOpacity>
@@ -366,8 +367,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    textAlign: "right",
-    writingDirection: "rtl",
+    textAlign: "left",
+    // writingDirection: "rtl",
   },
   largeInput: {
     fontSize: 18,
@@ -379,10 +380,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     marginVertical: 8,
-    textAlign: "right",
+    // textAlign: "right",
   },
   categoriesContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     marginBottom: 16,
   },
   categoryChip: {
@@ -397,13 +398,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 8,
     // padding: 10,
-    direction: "rtl",
+    // direction: "rtl",
   },
   allDayContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
-    gap: 10,
+    gap: 20,
   },
   timePickerContainer: {
     flexDirection: "row",
@@ -436,9 +437,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   counter: {
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     marginTop: 8,
   },
   counterButton: {

@@ -122,20 +122,20 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
-    marginRight: 6,
+    marginLeft: 16,
     fontWeight: "bold",
     color: "#2D2D2D",
     marginBottom: 4,
     fontFamily: "System",
-    textAlign: "right",
+   
   },
   job: {
     fontSize: 16,
-    marginRight: 8,
+    marginLeft: 16,
     color: "#666",
     marginBottom: 12,
     fontFamily: "System",
-    textAlign: "right",
+ 
   },
   feeContainer: {
     backgroundColor: "#F7F7F7",
@@ -146,12 +146,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#EAEAEA",
     flex: 1,
-    flexDirection: "row-reverse",
+    flexDirection: "row",
   },
   feeLabel: {
     fontSize: 14,
     color: "#666",
-    textAlign: "right",
     marginLeft: 12,
     fontFamily: "System",
   },
@@ -160,6 +159,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1A936F",
     textAlign: "right",
+    marginLeft: 8,
     fontFamily: "System",
   },
   callButton: {

@@ -30,8 +30,8 @@ export default function EventCard({ event }) {
       {event.isOrganizer && (
         <View style={styles.organizerChip}>
           <Ionicons name='star' size={12} color='#ffffff' />
-          <Text style={styles.organizerText}>منظم</Text>
-        </View>
+          <Text style={styles.organizerText}>Organisateur</Text>
+          </View>
       )}
 
       <View style={styles.eventTitleContainer}>

@@ -13,12 +13,12 @@ export default function CategoryTabs({ selectedCategs, setSelectedCategs }) {
   const toggleCategory = category => {
     setSelectedCategs(prevCategs => {
       // If "الجميع" (All) is selected, reset to only that category
-      if (category === "الجميع") {
+      if (category === "Tous") {
         return [category];
       }
 
       // If "الجميع" is currently selected, start a new selection with the clicked category
-      if (prevCategs.includes("الجميع")) {
+      if (prevCategs.includes("Tous")) {
         return [category];
       }
 
@@ -26,7 +26,7 @@ export default function CategoryTabs({ selectedCategs, setSelectedCategs }) {
       if (prevCategs.includes(category)) {
         const newCategs = prevCategs.filter(cat => cat !== category);
         // If no categories left, select "الجميع"
-        return newCategs.length === 0 ? ["الجميع"] : newCategs;
+        return newCategs.length === 0 ? ["Tous"] : newCategs;
       }
 
       // Add the category to the selection

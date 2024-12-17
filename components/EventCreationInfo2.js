@@ -18,21 +18,21 @@ const EventCreationInfo2 = ({
   navigation,
   handleSumbit,
 }) => {
-  // Set Arabic as the default locale
-  LocaleConfig.defaultLocale = "ar";
+
+  LocaleConfig.defaultLocale = "fr";
 
   // State for Snackbar
   const [visible, setVisible] = useState(false);
-
+  
   // Function to verify location and handle submit
   const handleSubmitWithVerification = async () => {
-    if (location === "اختر مكانا للحدث") {
+    if (location === "Choisissez un lieu pour l'événement") {
       Alert.alert(
-        "تنبيه",
-        "الرجاء إدخال الموقع قبل المتابعة",
+        "Alerte",
+        "Veuillez saisir un lieu avant de continuer",
         [
           {
-            text: "حسناً",
+            text: "D'accord",
             onPress: () => navigation.navigate("EventLocation"),
             style: "default",
           },
@@ -42,9 +42,9 @@ const EventCreationInfo2 = ({
       return;
     }
     if (!selectedDate) {
-      Alert.alert("تنبيه", "الرجاء إدخال تاريخ قبل المتابعة", [
+      Alert.alert("Alerte", "Veuillez saisir une date avant de continuer", [
         {
-          text: "حسناً",
+          text: "D'accord",
           style: "default",
         },
       ]);
@@ -60,12 +60,12 @@ const EventCreationInfo2 = ({
         navigation.navigate("EventManager"); // Uncomment if needed
       }, 3000);
     } catch (error) {
-      Alert.alert("خطأ", "حدث خطأ أثناء إنشاء الحدث. حاول مرة أخرى.", [
-        { text: "حسناً" },
+      Alert.alert("Erreur", "Une erreur est survenue lors de la création de l'événement. Essayez à nouveau.", [
+        { text: "D'accord" },
       ]);
     }
   };
-
+  
   return (
     <View style={styles.container}>
       {/* Location Selector */}
@@ -76,18 +76,18 @@ const EventCreationInfo2 = ({
           }}>
           <View style={styles.locationButton}>
             <Icon source={"chevron-left"} size={25} />
-            <Text style={styles.label}>الموقع</Text>
+            <Text style={styles.label}>Lieu</Text>
           </View>
           <Text style={[styles.value, !location && styles.placeholderText]}>
-            {location || "الرجاء تحديد الموقع"}
+            {location || "Veuillez spécifier le lieu"}
           </Text>
         </TouchableOpacity>
       </View>
-
+  
       {/* Date Picker */}
       <View style={styles.section}>
-        <Text style={styles.label}>التاريخ</Text>
-        <Text style={styles.subLabel}>اختر تاريخًا للحدث</Text>
+        <Text style={styles.label}>Date</Text>
+        <Text style={styles.subLabel}>Choisissez une date pour l'événement</Text>
         <Calendar
           style={styles.calendar}
           firstDay={1}
@@ -120,9 +120,9 @@ const EventCreationInfo2 = ({
       <TouchableOpacity
         style={[styles.saveButton, !location && styles.saveButtonDisabled]}
         onPress={handleSubmitWithVerification}>
-        <Text style={styles.saveButtonText}>حفظ المعلومات</Text>
+        <Text style={styles.saveButtonText}>Sauvegarder les informations</Text>
       </TouchableOpacity>
-
+  
       {/* Success Snackbar */}
       <Snackbar
         visible={visible}
@@ -130,17 +130,17 @@ const EventCreationInfo2 = ({
         duration={4000}
         style={styles.snackbar}
         action={{
-          label: "إغلاق",
+          label: "Fermer",
           onPress: () => setVisible(false),
         }}>
         <View style={styles.snackbarContent}>
           <Icon source='check-circle' size={24} color='#fff' />
-          <Text style={styles.snackbarText}>تم إنشاء الحدث بنجاح</Text>
+          <Text style={styles.snackbarText}>L'événement a été créé avec succès</Text>
         </View>
       </Snackbar>
     </View>
   );
-};
+};  
 
 const styles = StyleSheet.create({
   container: {
@@ -156,19 +156,17 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   locationButton: {
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
   label: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#333",
-    textAlign: "right",
   },
   value: {
     fontSize: 14,
     color: "#666",
-    textAlign: "right",
   },
   placeholderText: {
     color: "#999",
@@ -178,7 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#666",
     marginBottom: 10,
-    textAlign: "right",
   },
   calendar: {
     borderWidth: 1,
@@ -217,7 +214,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginLeft: 8,
     fontSize: 16,
-    textAlign: "right",
+    // textAlign: "right",
   },
 });
 

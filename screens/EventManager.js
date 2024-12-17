@@ -40,7 +40,7 @@ const EventSection = ({ title, events, iconName, isLoading }) => (
 const EmptyState = ({ title }) => (
   <View style={styles.emptyStateContainer}>
     <Icon name='calendar-blank' size={64} color='#CCCCCC' />
-    <Text style={styles.emptyStateText}>ليس لذيك اي فعالية في {title}</Text>
+    <Text style={styles.emptyStateText}>Vous n'avez aucun événement dans {title}</Text>
   </View>
 );
 
@@ -149,12 +149,12 @@ const styles = StyleSheet.create({
     paddingVertical: 40,
   },
   buttonContainer: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     justifyContent: "space-around",
     padding: 20,
   },
   button: {
-    flexDirection: "row-reverse",
+    flexDirection: "row",
     alignItems: "center",
     backgroundColor: "red",
     padding: 12,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 24,
-    direction: "rtl",
+    // direction: "rtl",
   },
   sectionHeader: {
     flexDirection: "row",

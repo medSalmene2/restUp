@@ -8,10 +8,12 @@ const UserEventCard = ({ name, phone, imageSource, numberOfPeople, role }) => {
       <View style={styles.info}>
         <Text style={styles.name}>{name}</Text>
         {role === "organizer" && (
-          <Text style={styles.details}>الهاتف: {phone}</Text>
+          <Text style={styles.details}>Téléphone : {phone}</Text>
         )}
         {role === "participant" && (
-          <Text style={styles.details}>عدد الأشخاص المرافقين : {numberOfPeople}</Text>
+          <Text style={styles.details}>
+            Nombre de personnes accompagnantes : {numberOfPeople}
+          </Text>
         )}
       </View>
     </View>

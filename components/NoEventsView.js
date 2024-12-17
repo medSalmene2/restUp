@@ -12,13 +12,13 @@ const NoEventsView = () => {
         style={styles.noEventsImage}
         resizeMode='contain'
       />
-
-      <Text style={styles.noEventsTitle}>لا توجد أحداث حالياً</Text>
-
+  
+      <Text style={styles.noEventsTitle}>Aucun événement actuellement</Text>
+  
       <Text style={styles.noEventsSubtitle}>
-        يبدو أنه لا توجد أحداث متاحة في الوقت الحالي
+        Il semble qu'aucun événement ne soit disponible pour le moment
       </Text>
-
+  
       <View style={styles.actionButtonsContainer}>
         <TouchableOpacity
           style={[styles.actionButton, styles.addEventButton]}
@@ -26,12 +26,12 @@ const NoEventsView = () => {
             navigation.navigate("EventCreation");
           }}>
           <Ionicons name='add' size={24} color='white' />
-          <Text style={styles.actionButtonText}>إضافة حدث</Text>
+          <Text style={styles.actionButtonText}>Ajouter un événement</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+};  
 
 const styles = StyleSheet.create({
   noEventsContainer: {
