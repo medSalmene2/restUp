@@ -8,698 +8,580 @@ export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
   const dailyNeeds = [
     {
-      serviceTitle: "خدمات التسوق والتوصيل",
+      serviceTitle: "Services d'achat et de livraison",
       description:
-        "توصيل المواد الغذائية والمستلزمات الأساسية إلى منازل كبار السن.",
-      color: "#8E44AD", // Base color
+        "Livraison des produits alimentaires et des articles essentiels aux domiciles des personnes âgées.",
+      color: "#8E44AD", // Couleur principale
       image: require("../assets/1.jpg"),
       contacts: [
         {
           id: "101",
-          name: "أحمد محمد",
-          job: "سائق متخصص لكبار السن",
+          name: "Ahmed Mohamed",
+          job: "Chauffeur spécialisé pour les personnes âgées",
           image: require("../assets/driver1.jpg"),
           stars: 5,
           fee: 120,
-          // availability: "متاح",
-          // experience: "7 سنوات",
-          // languages: ["العربية", "الإنجليزية"],
-          // specialFeatures: [
-          //   "مركبة مجهزة للكراسي المتحركة",
-          //   "خبرة في نقل ذوي الاحتياجات الخاصة",
-          // ],
-          // vehicleInfo: {
-          //   type: "تويوتا هايس",
-          //   year: "2022",
-          //   features: "مكيف - رافعة كرسي متحرك",
-          // },
           phone: "920001111",
         },
       ],
     },
     {
-      serviceTitle: "إعداد وتوصيل الوجبات",
+      serviceTitle: "Préparation et livraison de repas",
       description:
-        "تقديم وجبات يومية متوازنة ومخصصة للاحتياجات الغذائية لكبار السن.",
-      color: "#7E3DA1", // Slightly darker shade
+        "Fournir des repas équilibrés et adaptés aux besoins nutritionnels des personnes âgées.",
+      color: "#7E3DA1", // Teinte légèrement plus foncée
       image: require("../assets/2.jpg"),
       contacts: [
         {
           id: "102",
-          name: "محمود علي",
-          job: "طباخ متخصص",
+          name: "Mahmoud Ali",
+          job: "Cuisinier spécialisé",
           image: require("../assets/chef1.jpg"),
           stars: 5,
           fee: 150,
-          availability: "متاح",
-          experience: "10 سنوات",
-          languages: ["العربية", "الفرنسية"],
-          specialFeatures: ["خبرة في إعداد وجبات صحية", "مهارة في الطبخ المنزلي"],
+          availability: "Disponible",
+          experience: "10 ans",
+          languages: ["Arabe", "Français"],
+          specialFeatures: ["Expérience dans la préparation de repas sains", "Compétence en cuisine maison"],
           phone: "920001112",
         },
-        // {
-        //   id: "103",
-        //   name: "منى سالم",
-        //   job: "طباخة منزلية",
-        //   image: require("../assets/chef2.png"),
-        //   stars: 4.5,
-        //   fee: 130,
-        //   availability: "غير متاحة حالياً",
-        //   experience: "8 سنوات",
-        //   languages: ["العربية"],
-        //   specialFeatures: ["تخصص في وجبات الحمية", "متابعة التغذية السليمة"],
-        //   phone: "920001113",
-        // },
       ],
       promotion: [
         {
           image: require("../assets/man2.png"),
-          name: "محمود",
-          job: "طباخ",
+          name: "Mahmoud",
+          job: "Cuisinier",
           stars: 5,
-          fee: 30 ,
+          fee: 30,
         },
       ],
     },
     {
-      serviceTitle: "المساعدة في النظافة الشخصية",
-      description: "مساعدة كبار السن في الاستحمام والعناية الشخصية.",
-      color: "#9E4DB9", // Slightly lighter shade
+      serviceTitle: "Aide à l'hygiène personnelle",
+      description: "Aider les personnes âgées à se doucher et à prendre soin d'elles-mêmes.",
+      color: "#9E4DB9", // Teinte légèrement plus claire
       image: require("../assets/3.jpg"),
       contacts: [
         {
           id: "104",
-          name: "ليلى خالد",
-          job: "مختصة في النظافة الشخصية",
+          name: "Leila Khaled",
+          job: "Spécialiste de l'hygiène personnelle",
           image: require("../assets/caretaker1.jpg"),
           stars: 5,
           fee: 100,
-          availability: "متاح",
-          experience: "6 سنوات",
-          languages: ["العربية", "الإنجليزية"],
+          availability: "Disponible",
+          experience: "6 ans",
+          languages: ["Arabe", "Anglais"],
           specialFeatures: [
-            "مهارة في التعامل مع كبار السن",
-            "خبرة في العناية الشخصية",
+            "Compétence dans l'accompagnement des personnes âgées",
+            "Expérience en soins personnels",
           ],
           phone: "920001114",
         },
       ],
     },
     {
-      serviceTitle: "خدمات التنظيف المنزلي",
-      description: "توفير خدمات التنظيف للحفاظ على بيئة صحية.",
-      color: "#7A399D", // Darker purple shade
+      serviceTitle: "Services de nettoyage domestique",
+      description: "Fournir des services de nettoyage pour maintenir un environnement sain.",
+      color: "#7A399D", // Teinte violette plus foncée
       image: require("../assets/4.jpg"),
       contacts: [
-      {
-        id: "105",
-        name: "محمد رشيد",
-        job: "عامل تنظيف",
-        image: require("../assets/cleaner1.jpg"),
-        stars: 4,
-        fee: 80,
-        availability: "متاح",
-        experience: "3 سنوات",
-        languages: ["العربية"],
-        specialFeatures: ["استخدام منتجات صديقة للبيئة"],
-        phone: "920001115",
-      },
-    ],
+        {
+          id: "105",
+          name: "Mohamed Rachid",
+          job: "Agent de nettoyage",
+          image: require("../assets/cleaner1.jpg"),
+          stars: 4,
+          fee: 80,
+          availability: "Disponible",
+          experience: "3 ans",
+          languages: ["Arabe"],
+          specialFeatures: ["Utilisation de produits écologiques"],
+          phone: "920001115",
+        },
+      ],
     },
     {
-      serviceTitle: "خدمات غسل الملابس",
-      description: "جمع وتنظيف الملابس وإعادتها.",
-      color: "#A25CC0", // Lighter purple tone
+      serviceTitle: "Services de lavage de vêtement",
+      description: "Collecter, laver et retourner les vêtements.",
+      color: "#A25CC0", // Teinte violette plus claire
       image: require("../assets/5.jpeg"),
     },
     {
-      serviceTitle: "إدارة الأدوية",
-      description: "تنظيم الأدوية والتأكد من تناولها في الوقت المحدد.",
-      color: "#B06BCA", // Lighter and brighter shade
+      serviceTitle: "Gestion des médicaments",
+      description: "Organiser les médicaments et s'assurer qu'ils sont pris à l'heure prévue.",
+      color: "#B06BCA", // Teinte plus claire et lumineuse
       image: require("../assets/6.jpg"),
       contacts: [
         {
           id: "107",
-          name: "هدى صالح",
-          job: "متخصصة في متابعة الأدوية",
+          name: "Houda Saleh",
+          job: "Spécialiste en suivi des médicaments",
           image: require("../assets/salwa.jpg"),
           stars: 5,
           fee: 110,
-          availability: "متاح",
-          experience: "4 سنوات",
-          languages: ["العربية"],
-          specialFeatures: ["تنظيم الجداول الدوائية", "تذكير بالمواعيد"],
+          availability: "Disponible",
+          experience: "4 ans",
+          languages: ["Arabe"],
+          specialFeatures: ["Organisation des calendriers médicamenteux", "Rappel des rendez-vous"],
           phone: "920001117",
         },
       ],
     },
     {
-      serviceTitle: "مرافقة في الأنشطة اليومية",
+      serviceTitle: "Accompagnement dans les activités quotidiennes",
       description:
-        "مرافقة المسنين عند أداء المهام اليومية مثل الذهاب إلى الطبيب.",
-      color: "#C285D3", // Soft pastel lavender
+        "Accompagner les personnes âgées dans leurs tâches quotidiennes comme aller chez le médecin.",
+      color: "#C285D3", // Lavande pastel douce
       image: require("../assets/7.jpg"),
     },
     {
-      serviceTitle: "العناية بالحديقة",
-      description: "تقديم خدمات العناية بالحديقة.",
-      color: "#D49ADC", // Lighter pastel shade
+      serviceTitle: "Entretien du jardin",
+      description: "Fournir des services d'entretien du jardin.",
+      color: "#D49ADC", // Teinte pastel plus claire
       image: require("../assets/8.jpg"),
       contacts: [
-      {
-        id: "108",
-        name: "سالم بن علي",
-        job: "متخصص في صيانة الحدائق",
-        image: require("../assets/gardener1.jpg"),
-        stars: 5,
-        fee: 100,
-        availability: "متاح",
-        experience: "10 سنوات",
-        languages: ["العربية", "الإنجليزية"],
-        specialFeatures: ["تصميم حدائق", "تركيب أنظمة الري"],
-        phone: "920001121",
-      },
-      // {
-      //   id: "109",
-      //   name: "حسن عبد الرحمن",
-      //   job: "عامل حدائق",
-      //   image: require("../assets/gardener2.jpg"),
-      //   stars: 4.5,
-      //   fee: 90,
-      //   availability: "غير متاح حاليًا",
-      //   experience: "8 سنوات",
-      //   languages: ["العربية"],
-      //   specialFeatures: ["زراعة النباتات", "إزالة الأعشاب الضارة"],
-      //   phone: "920001122",
-      // },
-    ],
+        {
+          id: "108",
+          name: "Salem Ben Ali",
+          job: "Spécialiste en entretien de jardin",
+          image: require("../assets/gardener1.jpg"),
+          stars: 5,
+          fee: 100,
+          availability: "Disponible",
+          experience: "10 ans",
+          languages: ["Arabe", "Anglais"],
+          specialFeatures: ["Conception de jardins", "Installation de systèmes d'irrigation"],
+          phone: "920001121",
+        },
+      ],
     },
     {
-      serviceTitle: "إدارة الشؤون المالية",
-      description: "المساعدة في إدارة الفواتير والشؤون المالية.",
-      color: "#E6B0E0", // Very light pastel tone
+      serviceTitle: "Gestion des finances",
+      description: "Aider à gérer les factures et les finances personnelles.",
+      color: "#E6B0E0", // Ton pastel très clair
       image: require("../assets/9.jpg"),
       contacts: [
-      {
-        id: "110",
-        name: "مروان الشامسي",
-        job: "مستشار مالي",
-        image: require("../assets/finance1.png"),
-        stars: 5,
-        fee: 200,
-        availability: "متاح",
-        experience: "12 سنة",
-        languages: ["العربية", "الفرنسية"],
-        specialFeatures: ["إعداد تقارير مالية", "مساعدة في تسديد الفواتير"],
-        phone: "920001123",
-      },
-      // {
-      //   id: "114",
-      //   name: "هالة يوسف",
-      //   job: "محاسبة",
-      //   image: require("../assets/finance2.jpg"),
-      //   stars: 4.8,
-      //   fee: 180,
-      //   availability: "متاح",
-      //   experience: "9 سنوات",
-      //   languages: ["العربية", "الإنجليزية"],
-      //   specialFeatures: ["إدارة الحسابات", "تحليل مالي"],
-      //   phone: "920001124",
-      // },
-    ],
+        {
+          id: "110",
+          name: "Marouane Chamssi",
+          job: "Conseiller financier",
+          image: require("../assets/finance1.png"),
+          stars: 5,
+          fee: 200,
+          availability: "Disponible",
+          experience: "12 ans",
+          languages: ["Arabe", "Français"],
+          specialFeatures: ["Rédaction de rapports financiers", "Aide au paiement des factures"],
+          phone: "920001123",
+        },
+      ],
     },
     {
-      serviceTitle: "خدمات إصلاحات وصيانة المنزل",
-      description: "دعم إصلاحات وصيانة المنزل مثل السباكة.",
-      color: "#F3D3F2", // Softest pastel shade
+      serviceTitle: "Services de réparation et d'entretien de maison",
+      description: "Soutenir les réparations et l'entretien de maison comme la plomberie.",
+      color: "#F3D3F2", 
       image: require("../assets/10.jpg"),
       contacts: [
         {
           id: "5",
-          name: "عماد الكيلاني",
-          job: "فني سباكة",
+          name: "Imad Al-Kilani",
+          job: "Technicien en plomberie",
           image: require("../assets/Plumber1.jpg"),
           stars: 5,
           fee: 150,
-          availability: "متاح",
-          experience: "15 سنة",
-          languages: ["العربية"],
-          specialFeatures: ["إصلاح أنابيب المياه", "تركيب الأدوات الصحية"],
+          availability: "Disponible",
+          experience: "15 ans",
+          languages: ["Arabe"],
+          specialFeatures: ["Réparation des canalisations d'eau", "Installation des sanitaires"],
           phone: "920001125",
         },
-        // {
-        //   id: "6",
-        //   name: "أكرم سعيد",
-        //   job: "فني كهرباء",
-        //   image: require("../assets/electrician1.jpg"),
-        //   stars: 4.7,
-        //   fee: 160,
-        //   availability: "متاح",
-        //   experience: "11 سنة",
-        //   languages: ["العربية", "الإنجليزية"],
-        //   specialFeatures: ["إصلاح أعطال الكهرباء", "تركيب أنظمة الإضاءة"],
-        //   phone: "920001126",
-        // },
       ],
     },
   ];
 
   const paramedical = [
     {
-      serviceTitle: "الرعاية المنزلية التمريضية",
-      description: "تقديم خدمات التمريض في المنزل.",
+      serviceTitle: "Soins infirmiers à domicile",
+      description: "Fournir des services infirmiers à domicile.",
       color: "#48C9B0",
       image: require("../assets/11.jpeg"),
       contacts: [
         {
           id: "201",
-          name: "ليلى يوسف",
-          job: "ممرضة منزلية",
+          name: "Leïla Youssef",
+          job: "Infirmière à domicile",
           image: require("../assets/nurse1.png"),
           stars: 5,
           fee: 150,
-          // availability: "متاح",
-          // experience: "8 سنوات",
-          // languages: ["العربية", "الإنجليزية"],
-          // specialFeatures: [
-          //   "رعاية طبية شاملة",
-          //   "متابعة علاج الحالات المزمنة",
-          // ],
           phone: "920001131",
         },
-        // {
-        //   id: "202",
-        //   name: "سامي خالد",
-        //   job: "ممرض متخصص",
-        //   image: require("../assets/nurse2.jpg"),
-        //   stars: 4.8,
-        //   fee: 140,
-        //   // availability: "متاح",
-        //   // experience: "6 سنوات",
-        //   // languages: ["العربية"],
-        //   // specialFeatures: [
-        //   //   "خبرة في العناية بالجرح",
-        //   //   "مساعدة في العلاج الطبيعي",
-        //   // ],
-        //   phone: "920001132",
-        // },
       ],
       promotion: [
         {
           image: require("../assets/doctor.png"),
-          name: "محمود",
-          job: "ممرض",
+          name: "Mahmoud",
+          job: "Infirmier",
           stars: 5,
-          fee: 50 ,
+          fee: 50,
         },
       ],
     },
     {
-      serviceTitle: "العلاج الطبيعي",
-      description: "جلسات علاج لتحسين الحركة والقدرة الجسدية.",
+      serviceTitle: "Kinésithérapie",
+      description: "Séances de thérapie pour améliorer la mobilité et les capacités physiques.",
       color: "#41B39E",
       image: require("../assets/12.jpeg"),
       contacts: [
         {
           id: "203",
-          name: "مازن أحمد",
-          job: "أخصائي علاج طبيعي",
+          name: "Mazen Ahmed",
+          job: "Spécialiste en kinésithérapie",
           image: require("../assets/physio1.jpeg"),
           stars: 5,
           fee: 180,
-          availability: "متاح",
-          experience: "10 سنوات",
-          languages: ["العربية", "الفرنسية"],
+          availability: "Disponible",
+          experience: "10 ans",
+          languages: ["Arabe", "Français"],
           specialFeatures: [
-            "جلسات تقوية العضلات",
-            "تأهيل ما بعد الجراحة",
-            "علاج آلام الظهر",
-            "إعادة تأهيل الإصابات الرياضية",
+            "Séances de renforcement musculaire",
+            "Rééducation post-opératoire",
+            "Traitement des douleurs dorsales",
+            "Rééducation des blessures sportives",
           ],
           phone: "920001133",
         },
       ],
     },
     {
-      serviceTitle: "العلاج الوظيفي",
-      description: "مساعدة المسنين على تحسين القدرة على أداء الأنشطة اليومية.",
+      serviceTitle: "Ergothérapie",
+      description: "Aider les personnes âgées à améliorer leur capacité à effectuer les activités quotidiennes.",
       color: "#56D3C3",
       image: require("../assets/13.jpg"),
       contacts: [
         {
           id: "205",
-          name: "هند فاضل",
-          job: "أخصائية علاج وظيفي",
+          name: "Hind Fadel",
+          job: "Spécialiste en ergothérapie",
           image: require("../assets/occupational1.jpg"),
           stars: 5,
           fee: 160,
-          availability: "متاح",
-          experience: "9 سنوات",
-          languages: ["العربية", "الإنجليزية"],
+          availability: "Disponible",
+          experience: "9 ans",
+          languages: ["Arabe", "Anglais"],
           specialFeatures: [
-            "تحسين القدرة على الأنشطة اليومية",
-            "برامج تدريب الحركة الدقيقة",
+            "Amélioration des capacités dans les activités quotidiennes",
+            "Programmes d'entraînement de la motricité fine",
           ],
           phone: "920001135",
         },
-        // {
-        //   id: "206",
-        //   name: "جمال سعيد",
-        //   job: "أخصائي علاج وظيفي",
-        //   image: require("../assets/occupational2.jpg"),
-        //   stars: 4.6,
-        //   fee: 155,
-        //   availability: "متاح",
-        //   experience: "8 سنوات",
-        //   languages: ["العربية"],
-        //   specialFeatures: [
-        //     "مساعدة في علاج الحوادث",
-        //     "تحسين التوازن والتنسيق",
-        //   ],
-        //   phone: "920001136",
-        // },
       ],
     },
     {
-      serviceTitle: "العلاج بالكلام واللغة",
-      description: "دعم المسنين الذين يعانون من صعوبات في الكلام.",
+      serviceTitle: "Orthophonie et langage",
+      description: "Soutenir les personnes âgées souffrant de troubles de la parole.",
       color: "#3DAF93",
       image: require("../assets/14.jpg"),
-      promotion: [{ image: require("../assets/ahmed.png"), name: "احمد", job: "ممرض", stars: 4 }],
+      promotion: [
+        { image: require("../assets/ahmed.png"), name: "Ahmed", job: "Infirmier", stars: 4 },
+      ],
       contacts: [
-        // {
-        //   id: "207",
-        //   name: "أحمد شريف",
-        //   job: "أخصائي نطق ولغة",
-        //   image: require("../assets/contacts/speech1.jpg"),
-        //   stars: 5,
-        //   fee: 200,
-        //   availability: "متاح",
-        //   experience: "12 سنة",
-        //   languages: ["العربية", "الإنجليزية"],
-        //   specialFeatures: [
-        //     "تدريب على تحسين النطق",
-        //     "علاج صعوبات التواصل",
-        //     "جلسات لتحسين مهارات اللغة",
-        //   ],
-        //   phone: "920001137",
-        // },
+        {
+          id: "207",
+          name: "Ahmed Cherif",
+          job: "Spécialiste en orthophonie",
+          image: require("../assets/speech1.jpg"),
+          stars: 5,
+          fee: 200,
+          availability: "Disponible",
+          experience: "12 ans",
+          languages: ["Arabe", "Anglais"],
+          specialFeatures: [
+            "Entraînement à l'amélioration de la prononciation",
+            "Traitement des troubles de la communication",
+            "Séances pour améliorer les compétences linguistiques",
+          ],
+          phone: "920001137",
+        },
       ],
     },
     {
-      serviceTitle: "الرعاية التنفسية",
-      description: "تقديم الدعم للأشخاص الذين يعانون من مشاكل تنفسية.",
+      serviceTitle: "Soins respiratoires",
+      description: "Fournir un soutien aux personnes souffrant de problèmes respiratoires.",
       color: "#63DACD",
       image: require("../assets/15.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "إدارة الألم",
-      description: "توفير استراتيجيات لتخفيف الألم المزمن.",
+      serviceTitle: "Gestion de la douleur",
+      description: "Proposer des stratégies pour soulager la douleur chronique.",
       color: "#39A786",
       image: require("../assets/16.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "الخدمات الاجتماعية الصحية",
-      description: "دعم نفسي واجتماعي لكبار السن وأسرهم.",
+      serviceTitle: "Services sociaux de santé",
+      description: "Offrir un soutien psychologique et social aux personnes âgées et à leurs familles.",
       color: "#5EE1D4",
       image: require("../assets/17.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "خدمات التغذية والاستشارة الغذائية",
+      serviceTitle: "Services de nutrition et consultation diététique",
       description:
-        "وضع خطط غذائية مخصصة لكبار السن بناءً على احتياجاتهم الصحية وحالاتهم الطبية.",
+        "Concevoir des plans alimentaires personnalisés pour les personnes âgées selon leurs besoins de santé et conditions médicales.",
       color: "#2E9F80",
       image: require("../assets/18.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "العناية بالقدم",
+      serviceTitle: "Soins des pieds",
       description:
-        "خدمات العناية بالقدم للأشخاص المسنين الذين يعانون من مشاكل القدم أو السكري.",
+        "Fournir des services de soins des pieds pour les personnes âgées souffrant de problèmes podologiques ou de diabète.",
       color: "#6FE5D9",
       image: require("../assets/19.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "العلاج بالأجهزة التعويضية",
+      serviceTitle: "Thérapies par dispositifs prothétiques",
       description:
-        "توفير وتركيب أجهزة دعم مثل المشدات، الأطراف الصناعية، وأدوات المساعدة على الحركة لتحسين جودة الحياة.",
+        "Fournir et installer des dispositifs de soutien tels que les attelles, les prothèses et les outils d'aide à la mobilité pour améliorer la qualité de vie.",
       color: "#48C9B0",
       image: require("../assets/20.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
-  ];
+  ];  
 
   const entertainment = [
     {
-      serviceTitle: "الفعاليات الأجتماعية",
+      serviceTitle: "Événements sociaux",
       description:
-        "  توفّر للأشخاص المسنين فرصة التواصل الاجتماعي والمشاركة في الأنشطة الجماعية. المنضمة من الأفراد",
-      color: "#E91E63", // Base color
+        "Offrir aux personnes âgées l'opportunité de socialiser et de participer à des activités de groupe organisées par des individus.",
+      color: "#E91E63", // Couleur de base
       image: require("../assets/21.png"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "الأنشطة الرياضية الخفيفة ",
+      serviceTitle: "Activités sportives légères",
       description:
-        "مثل المشي، اليوغا، وتمارين التمدد التي تساعد على تحسين اللياقة البدنية.",
-      color: "#D81B60", // Slightly darker shade
+        "Comme la marche, le yoga et les exercices d'étirement qui aident à améliorer la condition physique.",
+      color: "#D81B60", // Teinte légèrement plus foncée
       image: require("../assets/22.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "ورشات الفنون والحرف اليدوية ",
+      serviceTitle: "Ateliers d'arts et d'artisanat",
       description:
-        "أنشطة مثل الرسم، الحياكة، والتطريز التي تساعد على تعزيز الإبداع والحفاظ على المهارات اليدوية.",
-      color: "#C2185B", // Darker pink shade
+        "Des activités telles que la peinture, le tricot et la broderie qui stimulent la créativité et préservent les compétences manuelles.",
+      color: "#C2185B", // Teinte rose foncée
       image: require("../assets/23.jpg"),
-      contacts: [
-
-      ],
+      contacts: [],
     },
     {
-      serviceTitle: "برامج القراءة والكتب ",
+      serviceTitle: "Programmes de lecture et de livres",
       description:
-        "مجموعات القراءة ونوادي الكتاب التي تساعد في تحفيز العقل وتبادل الآراء.",
-      color: "#AD1457", // Deep pink shade
+        "Des groupes de lecture et des clubs de livres pour stimuler l'esprit et échanger des idées.",
+      color: "#AD1457", // Teinte rose profond
       image: require("../assets/24.png"),
     },
     {
-      serviceTitle: "الرحلات الجماعية ",
+      serviceTitle: "Excursions collectives",
       description:
-        "تنظيم رحلات محلية أو سياحية لزيارة الأماكن الثقافية أو الطبيعية.",
-      color: "#F06292", // Slightly lighter shade
+        "Organisation de voyages locaux ou touristiques pour visiter des lieux culturels ou naturels.",
+      color: "#F06292", // Teinte légèrement plus claire
       image: require("../assets/25.jpg"),
     },
     {
-      serviceTitle: "برامج العلاج بالموسيقى ",
+      serviceTitle: "Programmes de musicothérapie",
       description:
-        "جلسات الاستماع إلى الموسيقى أو المشاركة في الغناء لتحسين الحالة النفسية.",
-      color: "#F48FB1", // Light pink
+        "Des séances d'écoute de musique ou de chant pour améliorer l'état psychologique.",
+      color: "#F48FB1", // Rose clair
       image: require("../assets/26.jpg"),
     },
     {
-      serviceTitle: "التدليك والاسترخاء ",
+      serviceTitle: "Massages et relaxation",
       description:
-        "خدمات الاسترخاء والعلاج بالتدليك للمساعدة على تقليل التوتر الجسدي والنفسي.",
-      color: "#F8BBD0", // Soft pastel pink
+        "Services de relaxation et de massage pour aider à réduire le stress physique et mental.",
+      color: "#F8BBD0", // Rose pastel doux
       image: require("../assets/27.jpg"),
     },
     {
-      serviceTitle: "دروس الطبخ الصحية ",
-      description: "تعلم تحضير وجبات صحية تلائم احتياجاتهم الغذائية.",
-      color: "#FCE4EC", // Very light pastel pink
+      serviceTitle: "Cours de cuisine saine",
+      description: "Apprendre à préparer des repas sains adaptés à leurs besoins nutritionnels.",
+      color: "#FCE4EC", // Rose pastel très clair
       image: require("../assets/28.jpg"),
     },
     {
-      serviceTitle: "ألعاب الطاولة والأنشطة الذهنية ",
+      serviceTitle: "Jeux de société et activités mentales",
       description:
-        "مثل الشطرنج، الكلمات المتقاطعة، والألغاز التي تساعد في تنشيط العقل.",
-      color: "#E91E63", // Base color again to balance the palette
+        "Comme les échecs, les mots croisés et les puzzles qui aident à stimuler l'esprit.",
+      color: "#E91E63", // Couleur de base pour équilibrer la palette
       image: require("../assets/29.jpg"),
     },
     {
-      serviceTitle: "الحدائق والبستنة ",
-      description: "أنشطة تساعد على تعزيز الشعور بالإنجاز والارتباط بالطبيعة.",
-      color: "#F06292", // Another slight variation of lighter pink
+      serviceTitle: "Jardinage et horticulture",
+      description:
+        "Des activités qui renforcent le sentiment d'accomplissement et le lien avec la nature.",
+      color: "#F06292", // Variation de rose plus clair
       image: require("../assets/30.jpg"),
     },
   ];
 
   const transport = [
     {
-      serviceTitle: "خدمات النقل المجتمعي ",
+      serviceTitle: "Services de transport communautaire",
       description:
-        "خدمات مخصصة لنقل كبار السن إلى الأماكن الاجتماعية والمرافق الصحية.",
-      color: "#FF5722", // Base color
+        "Des services dédiés pour transporter les personnes âgées vers les lieux sociaux et les établissements de santé.",
+      color: "#FF5722", // Couleur de base
       image: require("../assets/31.jpg"),
-      contacts : [
+      contacts: [
         {
           id: "1",
-          name: "أحمد شوقي",
-          job: "سائق نقل اجتماعي",
+          name: "Ahmed Chaouki",
+          job: "Chauffeur de transport communautaire",
           image: require("../assets/driver2.jpg"),
           stars: 5,
-          fee: "5 د.ت / كيلومتر",
-          baseFee: 10, // Initial fee
-          availability: "متاح",
-          experience: "10 سنوات",
-          languages: ["العربية", "الإنجليزية"],
+          fee: "5 DT / kilomètre",
+          baseFee: 10, // Frais initiaux
+          availability: "Disponible",
+          experience: "10 ans",
+          languages: ["Arabe", "Anglais"],
           specialFeatures: [
-            "سيارة واسعة تناسب مجموعات صغيرة",
-            "خبرة في نقل كبار السن إلى المرافق الاجتماعية"
+            "Voiture spacieuse adaptée aux petits groupes",
+            "Expérience dans le transport des personnes âgées vers les installations sociales"
           ],
           vehicleInfo: {
-            type: "تويوتا هايس",
+            type: "Toyota Hiace",
             year: "2020",
-            features: "مكيف هواء - أبواب منزلقة"
+            features: "Climatisation - Portes coulissantes"
           },
           phone: "920001150",
-          pricingLogic: (distance) => `التكلفة الإجمالية: ${10 + distance * 5} د.ت`
+         
         }
       ]
     },
     {
-      serviceTitle: "النقل الطبي ",
+      serviceTitle: "Transport médical",
       description:
-        "توفير سيارات لنقل الأشخاص المسنين إلى المواعيد الطبية والمستشفيات.",
-      color: "#F4511E", // Slightly darker shade
+        "Fournir des véhicules pour transporter les personnes âgées vers leurs rendez-vous médicaux et les hôpitaux.",
+      color: "#F4511E", // Teinte légèrement plus foncée
       image: require("../assets/32.png"),
     },
     {
-      serviceTitle: "خدمة التوصيل الخاص ",
-      description: "سيارات خاصة أو تاكسيات مخصصة لنقل المسنين بأمان وراحة.",
-      color: "#E64A19", // Darker orange-red
+      serviceTitle: "Service de transport privé",
+      description: "Voitures privées ou taxis dédiés pour transporter les personnes âgées en toute sécurité et confort.",
+      color: "#E64A19", // Rouge orangé foncé
       image: require("../assets/33.jpeg"),
     },
     {
-      serviceTitle: "النقل للأنشطة الاجتماعية ",
+      serviceTitle: "Transport pour les activités sociales",
       description:
-        "توفير وسائل نقل للمشاركة في الأنشطة الاجتماعية، مثل الأندية والرحلات.",
-      color: "#D84315", // Deep red-orange
+        "Fournir des moyens de transport pour participer à des activités sociales, comme les clubs et les sorties.",
+      color: "#D84315", // Rouge orangé profond
       image: require("../assets/34.jpg"),
     },
-
     {
-      serviceTitle: "نقل الأشخاص ذوي الإعاقة ",
+      serviceTitle: "Transport pour les personnes handicapées",
       description:
-        "سيارات مجهزة بمقاعد مخصصة ووسائل لدعم الأشخاص الذين يعانون من مشاكل الحركة.",
-      color: "#BF360C", // Very dark reddish-orange
+        "Véhicules équipés de sièges adaptés et de moyens de soutien pour les personnes ayant des problèmes de mobilité.",
+      color: "#BF360C", // Rouge orangé très foncé
       image: require("../assets/35.jpeg"),
     },
     {
-      serviceTitle: "النقل بالطلب ",
+      serviceTitle: "Transport à la demande",
       description:
-        "خدمات حجز مسبق للنقل المخصص للأشخاص المسنين بناءً على احتياجاتهم الفردية.",
-      color: "#FF8A65", // Lighter shade
+        "Services de réservation préalable pour le transport des personnes âgées selon leurs besoins individuels.",
+      color: "#FF8A65", // Teinte plus claire
       image: require("../assets/36.jpg"),
     },
     {
-      serviceTitle: "خدمات التوصيل اليومية ",
+      serviceTitle: "Services de livraison quotidienne",
       description:
-        "توصيل البقالة والأدوية والاحتياجات اليومية إلى منازل كبار السن.",
-      color: "#FF7043", // Light orange-red
+        "Livraison d'épicerie, de médicaments et des besoins quotidiens au domicile des personnes âgées.",
+      color: "#FF7043", // Rouge orangé clair
       image: require("../assets/37.jpg"),
     },
     {
-      serviceTitle: "الرحلات الجماعية للترفيه ",
+      serviceTitle: "Excursions collectives pour le divertissement",
       description:
-        "تنظيم وسائل نقل جماعية لزيارة الأماكن السياحية أو المشاركة في الأنشطة الترفيهية.",
-      color: "#FFAB91", // Soft light orange
+        "Organisation de transports collectifs pour visiter des sites touristiques ou participer à des activités récréatives.",
+      color: "#FFAB91", // Orange clair doux
       image: require("../assets/38.jpg"),
     },
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={require("../assets/flower.png")}
-          style={styles.flowerIcon}
-        />
-        <Text style={styles.greeting}>صباح النور سي علي</Text>
-      </View>
+<View style={styles.container}>
+  <View style={styles.header}>
+    <Image
+      source={require("../assets/flower.png")}
+      style={styles.flowerIcon}
+    />
+    <Text style={styles.greeting}>Bonjour, Monsieur Ali</Text>
+  </View>
 
-      <View style={styles.logoSection}>
-        <Image source={require("../assets/Logo.png")} style={styles.logo} />
-      </View>
+  <View style={styles.logoSection}>
+    <Image source={require("../assets/Logo.png")} style={styles.logo} />
+  </View>
 
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            Speech.speak("مساعدة شبه طبية", { language: "ar" });
+  <View>
+    <TouchableOpacity
+      onPress={() => {
+        Speech.speak("Aide paramédicale", { language: "fr" });
 
-            navigation.navigate("List", {
-              serviceTitle: "مساعدة شبه طبية",
-              subServices: paramedical,
-              image: require("../assets/paraMedical.jpg"),
-            });
-          }}
-          style={[styles.button, { backgroundColor: "#48C9B0" }]}>
-          <Text style={styles.buttonText}>مساعدة شبه طبية</Text>
-        </TouchableOpacity>
+        navigation.navigate("List", {
+          serviceTitle: "Aide paramédicale",
+          subServices: paramedical,
+          image: require("../assets/paraMedical.jpg"),
+        });
+      }}
+      style={[styles.button, { backgroundColor: "#48C9B0" }]}>
+      <Text style={styles.buttonText}>Aide paramédicale</Text>
+    </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Speech.speak("حاجيات يومية", { language: "ar" });
+    <TouchableOpacity
+      onPress={() => {
+        Speech.speak("Besoins quotidiens", { language: "fr" });
 
-            navigation.navigate("List", {
-              serviceTitle: "حاجيات يومية",
-              subServices: dailyNeeds,
-              image: require("../assets/dailyNeeds.png"),
-            });
-          }}
-          style={[styles.button, { backgroundColor: "#8E44AD" }]}>
-          <Text style={styles.buttonText}>حاجيات يومية</Text>
-        </TouchableOpacity>
+        navigation.navigate("List", {
+          serviceTitle: "Besoins quotidiens",
+          subServices: dailyNeeds,
+          image: require("../assets/dailyNeeds.png"),
+        });
+      }}
+      style={[styles.button, { backgroundColor: "#8E44AD" }]}>
+      <Text style={styles.buttonText}>Besoins quotidiens</Text>
+    </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Speech.speak("ترفيه", { language: "ar" });
-            navigation.navigate("List", {
-              serviceTitle: "ترفيه",
-              subServices: entertainment,
-              image: require("../assets/entertainment.jpg"),
-            });
-          }}
-          style={[styles.button, { backgroundColor: "#E91E63" }]}>
-          <Text style={styles.buttonText}>ترفيه</Text>
-        </TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        Speech.speak("Divertissement", { language: "fr" });
+        navigation.navigate("List", {
+          serviceTitle: "Divertissement",
+          subServices: entertainment,
+          image: require("../assets/entertainment.jpg"),
+        });
+      }}
+      style={[styles.button, { backgroundColor: "#E91E63" }]}>
+      <Text style={styles.buttonText}>Divertissement</Text>
+    </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => {
-            Speech.speak("تنقل", { language: "ar" });
+    <TouchableOpacity
+      onPress={() => {
+        Speech.speak("Transport", { language: "fr" });
 
-            navigation.navigate("List", {
-              serviceTitle: "تنقل",
-              subServices: transport,
-              image: require("../assets/transport.jpg"),
-            });
-          }}
-          style={[styles.button, { backgroundColor: "#FF5722" }]}>
-          <Text style={styles.buttonText}>تنقل</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        navigation.navigate("List", {
+          serviceTitle: "Transport",
+          subServices: transport,
+          image: require("../assets/transport.jpg"),
+        });
+      }}
+      style={[styles.button, { backgroundColor: "#FF5722" }]}>
+      <Text style={styles.buttonText}>Transport</Text>
+    </TouchableOpacity>
+  </View>
+</View>
+
   );
 }
 
