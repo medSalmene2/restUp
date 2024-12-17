@@ -20,10 +20,10 @@ const Contact = ({ image, name, job, stars, fee, phone, onSchedulePress }) => {
       if (supported) {
         await Linking.openURL(phoneNumber);
       } else {
-        Alert.alert("لا يدعم هذا الجهاز إجراء المكالمات");
+        Alert.alert("Cet appareil ne prend pas en charge les appels");
       }
     } catch (err) {
-      console.error("Error making call: ", err);
+      console.error("Erreur lors de l'appel : ", err);
     }
   };
   console.log(styles.scheduleText);
@@ -35,7 +35,7 @@ const Contact = ({ image, name, job, stars, fee, phone, onSchedulePress }) => {
         onPress={onSchedulePress}
         activeOpacity={0.7}>
         <Ionicons name='calendar-outline' size={18} color='#114B96' />
-        <Text style={styles.scheduleText}>المواعيد</Text>
+        <Text style={styles.scheduleText}>Rendez-vous</Text>
       </TouchableOpacity>
 
       <View style={styles.card}>
@@ -55,19 +55,20 @@ const Contact = ({ image, name, job, stars, fee, phone, onSchedulePress }) => {
           <Text style={styles.job}>{job}</Text>
 
           <View style={styles.feeContainer}>
-            <Text style={styles.feeLabel}>رسوم الاستشارة</Text>
+            <Text style={styles.feeLabel}>Frais de consultation</Text>
             <Text style={styles.feeAmount}>{fee} </Text>
           </View>
 
           <TouchableOpacity style={styles.callButton} onPress={makeCall}>
             <Ionicons name='call-outline' size={20} color='#fff' />
-            <Text style={styles.callButtonText}>اتصل الآن</Text>
+            <Text style={styles.callButtonText}>Appeler maintenant</Text>
           </TouchableOpacity>
         </View>
       </View>
     </Surface>
   );
 };
+
 
 const styles = StyleSheet.create({
   surface: {

@@ -85,7 +85,7 @@ const Login = ({ navigation }) => {
               onPress={() => setIsPasswordShown(!isPasswordShown)}
               style={{
                 position: "absolute",
-                right: 12,
+                left: 12,
               }}>
               {isPasswordShown == true ? (
                 <Ionicons name='eye-off' size={24} color={COLORS.black} />

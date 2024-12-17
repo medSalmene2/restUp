@@ -17,13 +17,14 @@ import NoEventsView from "../components/NoEventsView";
 import { useAuth } from "../firestore/auth/AuthContext";
 import FilterModal from "../components/FilterModal";
 export default function EventsScreen() {
-  const [selectedCategs, setSelectedCategs] = useState(["الجميع"]);
+  const [selectedCategs, setSelectedCategs] = useState(["Tous"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
+
   useEffect(() => {
     const getEvents = async () => {
       // Reset state before fetching
@@ -31,15 +32,13 @@ export default function EventsScreen() {
       setError(null);
 
       try {
-        const categs = selectedCategs.includes("الجميع")
-          ? null
-          : selectedCategs;
+        const categs = selectedCategs.includes("Tous") ? null : selectedCategs;
         const eventsData = await fetchEvents(user.id, categs);
         setEvents(eventsData);
       } catch (err) {
         // Handle any errors during fetching
         setError(err);
-        console.error("Failed to fetch events:", err);
+        console.error("Échec de la récupération des événements :", err);
       } finally {
         // Ensure loading state is set to false
         setIsLoading(false);
@@ -58,8 +57,8 @@ export default function EventsScreen() {
     if (isLoading) {
       return (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size='large' color='red' />
-          <Text style={styles.loadingText}>جارٍ تحميل الأحداث...</Text>
+          <ActivityIndicator size="large" color="red" />
+          <Text style={styles.loadingText}>Chargement des événements...</Text>
         </View>
       );
     }
@@ -67,19 +66,22 @@ export default function EventsScreen() {
     if (error) {
       return (
         <View style={styles.errorContainer}>
-          <Ionicons name='warning' size={50} color='red' />
-          <Text style={styles.errorText}>حدث خطأ أثناء تحميل الأحداث</Text>
+          <Ionicons name="warning" size={50} color="red" />
+          <Text style={styles.errorText}>
+            Une erreur est survenue lors du chargement des événements
+          </Text>
           <Text style={styles.errorSubtext}>
-            يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى
+            Veuillez vérifier votre connexion Internet et réessayer
           </Text>
           <TouchableOpacity
             style={styles.retryButton}
             onPress={() => {
-              // Reset states and retry fetching
-              setSelectedCategs(["الجميع"]);
+              // Réinitialiser les états et réessayer la récupération
+              setSelectedCategs(["Tous"]);
               setSearchQuery("");
-            }}>
-            <Text style={styles.retryButtonText}>إعادة المحاولة</Text>
+            }}
+          >
+            <Text style={styles.retryButtonText}>Réessayer</Text>
           </TouchableOpacity>
         </View>
       );
@@ -104,27 +106,30 @@ export default function EventsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>اكتشف الأحداث المثيرة{"\n"}بالقرب منك</Text>
+        <Text style={styles.title}>
+          Découvrez des événements passionnants{"\n"}près de chez vous
+        </Text>
       </View>
 
       <View style={styles.searchContainer}>
         <Ionicons
-          name='search-outline'
+          name="search-outline"
           size={20}
-          color='red'
+          color="red"
           style={styles.searchIcon}
         />
         <TextInput
           style={styles.searchInput}
-          placeholder='البحث عن الأحداث حسب الاسم أو الموقع'
-          placeholderTextColor='#999'
+          placeholder="Rechercher des événements par nom ou emplacement"
+          placeholderTextColor="#999"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
         <TouchableOpacity
           onPress={toggleFilterModal}
-          style={styles.filterIconContainer}>
-          <MaterialIcons name='tune' size={24} color='red' />
+          style={styles.filterIconContainer}
+        >
+          <MaterialIcons name="tune" size={24} color="red" />
         </TouchableOpacity>
       </View>
 

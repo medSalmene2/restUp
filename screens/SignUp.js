@@ -45,14 +45,12 @@ const Signup = ({ navigation }) => {
     setPassword(text);
     const isValid = validatePassword(text);
     setPasswordError(
-      isValid ? "" : " يجب أن تحتوي كلمة المرور على حرف كبير ورقم"
-    );
+      isValid ? "" : "Le mot de passe doit contenir une majuscule et un chiffre"    );
   };
 
   const handleRePasswordChange = (text) => {
     setRePassword(text);
-    setRePasswordError(text === password ? "" : "كلمات المرور غير متطابقة!");
-  };
+    setRePasswordError(text === password ? "" : "Les mots de passe ne correspondent pas !");  };
 
   const validatePhone = (phone) => {
     let re = /^[\d]{8}$/;
@@ -62,8 +60,7 @@ const Signup = ({ navigation }) => {
   const handlePhoneChange = (text) => {
     setPhone(text);
     const isValid = validatePhone(text);
-    setPhoneError(isValid ? "" : " رقم هاتف غير صالح");
-  };
+    setPhoneError(isValid ? "" : "Numéro de téléphone invalide");  };
 
   const handleSubmit = async () => {
     setMessage("");
@@ -236,8 +233,7 @@ const Signup = ({ navigation }) => {
                 keyboardType="name-phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={firstName}
                 onChangeText={setFirstname}
@@ -278,8 +274,7 @@ const Signup = ({ navigation }) => {
                 keyboardType="name-phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={lastName}
                 onChangeText={setLastname}
@@ -323,8 +318,7 @@ const Signup = ({ navigation }) => {
                 secureTextEntry={isPasswordShown}
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={password}
                 onChangeText={handlePasswordChange}
@@ -382,8 +376,7 @@ const Signup = ({ navigation }) => {
                 secureTextEntry={isPasswordShown}
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={rePassword}
                 onChangeText={handleRePasswordChange}
@@ -439,8 +432,7 @@ const Signup = ({ navigation }) => {
                 keyboardType="phone-pad"
                 style={{
                   width: "100%",
-                  textAlign: "right",
-                  paddingHorizontal: 20,
+                  paddingHorizontal: 5,
                 }}
                 value={phoneNumber}
                 onChangeText={handlePhoneChange}
@@ -496,7 +488,7 @@ const Signup = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={{ marginBottom: 12 }}>
+          {/* <View style={{ marginBottom: 12 }}>
             <Text
               style={{
                 fontSize: 16,
@@ -514,7 +506,7 @@ const Signup = ({ navigation }) => {
               image={profileImage}
               onImageChange={(image) => setProfileImage(image)}
             />
-          </View>
+          </View> */}
 
           <View style={{ marginBottom: 12 }}>
             <Text

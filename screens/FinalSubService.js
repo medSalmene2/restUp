@@ -30,7 +30,7 @@ const FinalSubService = ({ route, navigation }) => {
             />
           ))
         ) : (
-          <Text style={styles.noContactsText}>لا يوجد جهات اتصال لهذه الخدمة</Text>
+          <Text style={styles.noContactsText}>Aucun contact disponible pour ce service</Text>
         )}
       </ScrollView>
     </View>

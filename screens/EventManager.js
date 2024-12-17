@@ -63,20 +63,20 @@ const EventManager = ({ navigation }) => {
 
       const userId = user?.id;
       if (!userId) {
-        throw new Error("User not authenticated");
+        throw new Error("Utilisateur non authentifié");
       }
 
-      // Fetch booked events
+      // Récupérer les événements réservés
       const { pastEvents, upcomingEvents, upcomingOrganizedEvents } =
         await fetchUserBookedEvents(userId);
 
-      // Update state with fetched data
+      // Mettre à jour l'état avec les données récupérées
       setUpcomingEvents(upcomingEvents);
       setPastEvents(pastEvents);
       setUpcomingOrganizedEvents(upcomingOrganizedEvents);
     } catch (err) {
-      console.error("Error loading events:", err);
-      setError("خطأ في تحميل الأحداث");
+      console.error("Erreur lors du chargement des événements:", err);
+      setError("Erreur lors du chargement des événements");
     } finally {
       setIsLoading(false);
     }
@@ -85,10 +85,10 @@ const EventManager = ({ navigation }) => {
   const renderError = () => (
     <View style={styles.errorContainer}>
       <Text style={styles.errorText}>
-        {error || "حدث خطأ في تحميل الفعاليات"}
+        {error || "Une erreur est survenue lors du chargement des événements"}
       </Text>
       <TouchableOpacity style={styles.retryButton} onPress={loadEvents}>
-        <Text style={styles.retryButtonText}>حاول مرة أخرى</Text>
+        <Text style={styles.retryButtonText}>Essayer à nouveau</Text>
       </TouchableOpacity>
     </View>
   );
@@ -99,14 +99,14 @@ const EventManager = ({ navigation }) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("EventExplore")}>
-          <Text style={styles.buttonText}>استكشف الفعاليات</Text>
+          <Text style={styles.buttonText}>Explorer les événements</Text>
           <Icon name='compass-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("EventCreation")}>
-          <Text style={styles.buttonText}>إنشاء فعالية</Text>
+          <Text style={styles.buttonText}>Créer un événement</Text>
           <Icon name='plus-circle-outline' size={24} color='#ffffff' />
         </TouchableOpacity>
       </View>
@@ -117,19 +117,19 @@ const EventManager = ({ navigation }) => {
         ) : (
           <>
             <EventSection
-              title='فعالياتي المجدولة'
+              title='Mes événements programmés'
               events={upcomingEvents}
               iconName='calendar-clock'
               isLoading={isLoading}
             />
             <EventSection
-              title='الفعاليات المنظمة'
+              title='Événements organisés'
               events={upcomingOrganizedEvents}
               iconName='calendar-star'
               isLoading={isLoading}
             />
             <EventSection
-              title='سجل الفعاليات'
+              title='Historique des événements'
               events={pastEvents}
               iconName='history'
               isLoading={isLoading}
@@ -140,6 +140,7 @@ const EventManager = ({ navigation }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

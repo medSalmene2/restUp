@@ -15,7 +15,7 @@ const EventCreation = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [guestCount, setGuestCount] = useState(1);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [location, setLocation] = useState("اختر مكانا للحدث");
+  const [location, setLocation] = useState("Choisissez un lieu pour l'événement");
   const [locationPoint, setLocationPoint] = useState(null);
   const [isAllDay, setIsAllDay] = useState(false);
   const [fromTime, setFromTime] = useState(new Date());
