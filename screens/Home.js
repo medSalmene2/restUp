@@ -518,7 +518,7 @@ export default function HomeScreen({ navigation }) {
           source={require("../assets/flower.png")}
           style={styles.flowerIcon}
         />
-        <Text style={styles.greeting}>صباح النور {user?.firstName}</Text>
+        <Text style={styles.greeting}> Bonjour {user?.firstName}</Text>
       </View>
 
   <View style={styles.logoSection}>
