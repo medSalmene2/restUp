@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Contact } from "../components/Contact";
 import * as Speech from "expo-speech";
-import { ContactList } from '../components/Contact';
+import { ContactList } from "../components/Contact";
+import { useAuth } from "../firestore/auth/AuthContext";
 
 export default function HomeScreen({ navigation }) {
   // Subservices categorized by main service with appropriate color shades
@@ -509,16 +510,16 @@ export default function HomeScreen({ navigation }) {
       image: require("../assets/38.jpg"),
     },
   ];
-
+  const { user } = useAuth();
   return (
-<View style={styles.container}>
-  <View style={styles.header}>
-    <Image
-      source={require("../assets/flower.png")}
-      style={styles.flowerIcon}
-    />
-    <Text style={styles.greeting}>Bonjour, Monsieur Ali</Text>
-  </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          source={require("../assets/flower.png")}
+          style={styles.flowerIcon}
+        />
+        <Text style={styles.greeting}>صباح النور {user?.firstName}</Text>
+      </View>
 
   <View style={styles.logoSection}>
     <Image source={require("../assets/Logo.png")} style={styles.logo} />
