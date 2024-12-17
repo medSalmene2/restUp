@@ -18,11 +18,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n, { changeLanguage } from "../i18n";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../firestore/auth/AuthContext";
-import {updateUserLocation}  from "../firestore/User"
 
 const ProfileScreen = ({ route, navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("fr");
 
   const languages = [
     { label: "العربية", flag: require("../assets/tunisia.png") },
@@ -55,14 +54,7 @@ const ProfileScreen = ({ route, navigation }) => {
       await changeLanguage(selectedLang.value);
     }
   };
-  
 const {user} = useAuth();
-const userLocation =(route.params?.adress  || user?.locationName  ||"Enter Location");
-
-// if(route.params?.adress){
-// setUserLocation(route.params.adress)
-// }
-console.log(route.params)
   return (
     <ScrollView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -75,6 +67,7 @@ console.log(route.params)
                 {
                   marginTop: 15,
                   marginBottom: 5,
+                  marginLeft:10,
                 },
               ]}>
               {user?.firstName} {user?.lastName}
@@ -100,7 +93,7 @@ console.log(route.params)
           }}>
           <View style={[styles.row, { marginTop: 30 }]}>
             <Text style={{ marginLeft: 20, fontSize: 18, fontWeight: "bold" }}>
-              {userLocation}
+              {route.params?.adress || " --"}
               <Icon name='chevron-down' color='#777777' size={20} />
             </Text>
 
@@ -125,25 +118,32 @@ console.log(route.params)
         </View>
       </View>
 
-      <ScrollView style={styles.menuWrapper}>
+      <View style={styles.menuWrapper}>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>
-              {i18n.t("profile.favorites")}
+              {("Services Favoris")}
             </Text>
             <Icon name='heart-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
-            <Text style={styles.menuItemText}>{i18n.t("profile.help")}</Text>
+            <Text style={styles.menuItemText}>{("Paiement")}</Text>
+            <Icon name='credit-card' color='#FF6347' size={25} />
+          </View>
+        </TouchableRipple>
+        <TouchableRipple onPress={() => {}}>
+          <View style={styles.menuItem}>
+            <Text style={styles.menuItemText}>{("Aide")}</Text>
             <Icon name='account-check-outline' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
         <TouchableRipple onPress={() => setIsModalVisible(true)}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>
-              {i18n.t("profile.language")} ({selectedLanguage})
+              {("Changer la Langue")} 
+              ({selectedLanguage})
             </Text>
             <Icon name='translate' color='#FF6347' size={25} />
           </View>
@@ -151,12 +151,13 @@ console.log(route.params)
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Text style={styles.menuItemText}>
-              {i18n.t("profile.logout")}{" "}
+              {" "}
+              {("Déconnexion")}{" "}
             </Text>
             <Icon name='logout' color='#FF6347' size={25} />
           </View>
         </TouchableRipple>
-      </ScrollView>
+      </View>
 
       {/* Language Selection Modal */}
       <Modal
@@ -194,12 +195,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    direction: "rtl",
+    // direction: "rtl",
     paddingVertical:40
   },
   userInfoSection: {
     paddingHorizontal: 30,
-    // marginBottom: 25,
+    marginBottom: 25,
   },
   title: {
     fontSize: 26,
@@ -241,7 +242,6 @@ const styles = StyleSheet.create({
   },
   menuItemText: {
     color: "#777777",
-    marginLeft: 20,
     fontWeight: "600",
     fontSize: 16,
     lineHeight: 26,

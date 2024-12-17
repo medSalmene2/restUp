@@ -67,33 +67,33 @@ function AppNavigator() {
           name='FinalSubService'
           component={FinalSubService}
           options={({ route }) => ({
-            title: route.params?.subServiceTitle || i18n.t("home.service"),
+            title: route.params?.subServiceTitle || "Service",
           })}
         />
         <Stack.Screen
           name='Home'
           component={HomeScreen}
-          options={{ title: i18n.t("home.greeting") }}
+          options={{ title: "Bonjour" }}
         />
-        <Stack.Screen 
-          name="Schedule" 
+        <Stack.Screen
+          name="Schedule"
           component={AppointmentScreen}
           options={{
-            title: 'حجز موعد',
+            title: 'Réserver un rendez-vous',
           }}
         />
         <Stack.Screen
           name='List'
           component={SubServicesList}
           options={({ route }) => ({
-            title: route.params?.serviceTitle || i18n.t("home.serviceList"),
+            title: route.params?.serviceTitle || "Liste des services",
           })}
         />
         <Stack.Screen
           name='Profile'
           component={ProfileScreen}
           options={{
-            title: i18n.t("profile.title"),
+            title: "Profil",
             headerRight: null,
           }}
         />
@@ -101,7 +101,7 @@ function AppNavigator() {
           name='Map'
           component={Map}
           options={{
-            title: i18n.t("home.location"),
+            title: "Emplacement",
             headerRight: null,
           }}
         />
@@ -109,7 +109,7 @@ function AppNavigator() {
           name='EventManager'
           component={EventManager}
           options={{
-            title: i18n.t("home.events"),
+            title: "Événements",
           }}
         />
         <Stack.Screen
@@ -122,34 +122,23 @@ function AppNavigator() {
         <Stack.Screen
           name='EventExplore'
           component={EventExplore}
-          // options={{
-          //   headerShown: false,
-          // }}
         />
         <Stack.Screen
           name='EventBooking'
           component={EventBooking}
-          // options={{
-          //   headerShown: false,
-          // }}
         />
-                <Stack.Screen
+        <Stack.Screen
           name='EventOverview'
           component={EventDetailsScreen}
-          // options={{
-          //   headerShown: false,
-          // }}
         />
         <Stack.Screen
           name='TransportMap'
           component={TransportMap}
-          // options={{
-          //   headerShown: false,
-          // }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
+  
 }
 
 export default function App() {
