@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     borderColor: "#EAEAEA",
     flex: 1,
     flexDirection: "row",
+    width:"110%"
   },
   feeLabel: {
     fontSize: 14,
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#1A936F",
     textAlign: "right",
-    marginLeft: 8,
+    marginLeft: 5,
     fontFamily: "System",
   },
   callButton: {
