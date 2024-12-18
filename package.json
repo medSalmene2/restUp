@@ -23,7 +23,6 @@
     "expo-location": "~18.0.1",
     "expo-speech": "~13.0.0",
     "expo-status-bar": "~2.0.0",
-    "expo-updates": "^0.26.7",
     "firebase": "^11.0.2",
     "haversine": "^1.1.1",
     "i18n-js": "^4.5.0",
