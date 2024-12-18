@@ -2,6 +2,16 @@
   "expo": {
     "name": "freelance",
     "slug": "freelance",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "android": {
+      "package": "com.freelance.gg",
+      "versionCode" :1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "88380839-f083-45fd-bb8a-9bf04ea8715c"
+      }
+    }
   }
+
 }
