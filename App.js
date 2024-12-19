@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { View, Image, StyleSheet, Dimensions  } from "react-native";
 import { changeLanguage } from "./i18n";
 import HomeScreen from "./screens/Home";
 import FinalSubService from "./screens/FinalSubService";
@@ -23,17 +24,32 @@ import EventBooking from "./screens/EventBooking";
 import AppointmentScreen from "./components/schedule";
 import TranslationProvider ,{ useTranslation }from "./components/TranslationContext"
 import { AuthContextProvider } from "./firestore/auth/AuthContext";
-import { I18nManager } from "react-native";
-import RNRestart from "react-native-restart";
-import i18n from "./i18n";
+import { ActivityIndicator } from "react-native-paper";
 
 import ExampleScreen from "./test";
 import RidePriceMap from "./screens/TransportMap";
 import TransportMap from "./screens/TransportMap";
 
 const Stack = createStackNavigator();
+
+const SplashScreen = () => {
+  return (
+    <View style={styles.splashContainer}>
+      <Image 
+        source={require('./assets/splash_screen.jpg')}
+        style={styles.splashImage}
+        resizeMode="cover"
+      />
+      <ActivityIndicator 
+        size="large" 
+        color="#ffffff" 
+        style={styles.loader}
+      />
+    </View>
+  );
+};
 function AppNavigator() {
-  // const { t, currentLanguage } = useTranslation();
+
 
   return (
     <NavigationContainer>
@@ -142,6 +158,30 @@ function AppNavigator() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    // Simulate loading time or perform actual initialization tasks
+    const initializeApp = async () => {
+      try {
+        // Add any initialization logic here
+        // For example: await Font.loadAsync({...})
+        // Or: await loadInitialData()
+        
+        // Simulate minimum splash screen duration
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch (error) {
+        console.error('Error during initialization:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeApp();
+  }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
   return (
     <AuthContextProvider>   
      {/* <TranslationProvider> */}
@@ -150,3 +190,21 @@ export default function App() {
     </AuthContextProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  splashImage: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    position: 'absolute',
+  },
+  loader: {
+    position: 'absolute',
+    bottom: 100,
+  },
+});
